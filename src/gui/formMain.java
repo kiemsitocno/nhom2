@@ -5,7 +5,15 @@
  */
 package gui;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.Window;
+import java.beans.PropertyVetoException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JScrollPane;
+import javax.swing.border.Border;
 
 /**
  *
@@ -16,6 +24,7 @@ public class formMain extends javax.swing.JFrame {
     /**
      * Creates new form formMain
      */
+    private JScrollPane scrollPane = new JScrollPane();
     public formMain() {
         initComponents();
         this.setLocationRelativeTo(this);
@@ -50,14 +59,15 @@ public class formMain extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        dtContent = new javax.swing.JDesktopPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        menuItemChangePass = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        menuItemAddManager = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
@@ -70,7 +80,7 @@ public class formMain extends javax.swing.JFrame {
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenuItem16 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
-        jMenuItem11 = new javax.swing.JMenuItem();
+        menuCreateBill = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
         jMenuItem15 = new javax.swing.JMenuItem();
         jMenuItem19 = new javax.swing.JMenuItem();
@@ -205,16 +215,42 @@ public class formMain extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        dtContent.setBackground(new java.awt.Color(240, 240, 240));
+        dtContent.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
+        dtContent.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout dtContentLayout = new javax.swing.GroupLayout(dtContent);
+        dtContent.setLayout(dtContentLayout);
+        dtContentLayout.setHorizontalGroup(
+            dtContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dtContentLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1))
+        );
+        dtContentLayout.setVerticalGroup(
+            dtContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dtContentLayout.createSequentialGroup()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
+        );
 
         jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconSystem.png"))); // NOI18N
         jMenu1.setText("System");
         jMenu1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
 
-        jMenuItem1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconChangePassword.png"))); // NOI18N
-        jMenuItem1.setText("Change password");
-        jMenu1.add(jMenuItem1);
+        menuItemChangePass.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        menuItemChangePass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconChangePassword.png"))); // NOI18N
+        menuItemChangePass.setText("Change password");
+        menuItemChangePass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemChangePassActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuItemChangePass);
 
         jMenuItem2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconLogout.png"))); // NOI18N
@@ -235,10 +271,15 @@ public class formMain extends javax.swing.JFrame {
         jMenu2.setText("Director");
         jMenu2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
 
-        jMenuItem4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconNewUser.png"))); // NOI18N
-        jMenuItem4.setText("Create New Manager /Inventory         ");
-        jMenu2.add(jMenuItem4);
+        menuItemAddManager.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        menuItemAddManager.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconNewUser.png"))); // NOI18N
+        menuItemAddManager.setText("Create New Manager /Inventory         ");
+        menuItemAddManager.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemAddManagerActionPerformed(evt);
+            }
+        });
+        jMenu2.add(menuItemAddManager);
 
         jMenuItem10.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jMenuItem10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconStore.png"))); // NOI18N
@@ -303,10 +344,15 @@ public class formMain extends javax.swing.JFrame {
         jMenu5.setText("Sales");
         jMenu5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
 
-        jMenuItem11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jMenuItem11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconCreateBill.png"))); // NOI18N
-        jMenuItem11.setText("Create Bill              ");
-        jMenu5.add(jMenuItem11);
+        menuCreateBill.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        menuCreateBill.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconCreateBill.png"))); // NOI18N
+        menuCreateBill.setText("Create Bill              ");
+        menuCreateBill.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuCreateBillActionPerformed(evt);
+            }
+        });
+        jMenu5.add(menuCreateBill);
 
         jMenuItem12.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jMenuItem12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconSearch.png"))); // NOI18N
@@ -358,8 +404,8 @@ public class formMain extends javax.swing.JFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(1, 1, 1)
+                        .addComponent(dtContent)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -367,20 +413,18 @@ public class formMain extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(191, 191, 191)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(dtContent))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem3ActionPerformed
@@ -388,6 +432,38 @@ public class formMain extends javax.swing.JFrame {
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void menuItemAddManagerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAddManagerActionPerformed
+        // TODO add your handling code here:
+        frmCreateNewManager create = new frmCreateNewManager();
+        jScrollPane1.add(create);
+        create.show();
+        try {
+            create.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(formMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_menuItemAddManagerActionPerformed
+
+    private void menuItemChangePassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemChangePassActionPerformed
+        // TODO add your handling code here:
+        frmChangePassword changePass =  new frmChangePassword();
+        dtContent.add(changePass);
+        changePass.show();
+    }//GEN-LAST:event_menuItemChangePassActionPerformed
+
+    private void menuCreateBillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCreateBillActionPerformed
+        // TODO add your handling code here:
+        frmCreateBill createBill =  new frmCreateBill();
+        dtContent.add(createBill);
+        createBill.show();
+        try {
+            createBill.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(formMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_menuCreateBillActionPerformed
 
     /**
      * @param args the command line arguments
@@ -425,6 +501,7 @@ public class formMain extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JDesktopPane dtContent;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -435,7 +512,6 @@ public class formMain extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -450,9 +526,7 @@ public class formMain extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
-    private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
@@ -463,12 +537,15 @@ public class formMain extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem20;
     private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JMenuItem menuCreateBill;
+    private javax.swing.JMenuItem menuItemAddManager;
+    private javax.swing.JMenuItem menuItemChangePass;
     // End of variables declaration//GEN-END:variables
 }
