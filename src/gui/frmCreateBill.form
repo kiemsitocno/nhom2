@@ -245,7 +245,7 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="btnCreate" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="btnCreate1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnCancel" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
                                   <Component id="lblTotal" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="98" max="-2" attributes="0"/>
@@ -273,7 +273,7 @@
                           <Component id="jScrollPane1" min="-2" pref="177" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="btnCreate1" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnCancel" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                                   <Component id="btnCreate" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="lblTotal" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -292,7 +292,7 @@
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                   <SubComponents>
-                    <Component class="javax.swing.JTable" name="tblOrder">
+                    <Component class="javax.swing.JTable" name="tableOrder">
                       <Properties>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                           <Table columnCount="0" rowCount="0"/>
@@ -302,7 +302,7 @@
                         </Property>
                       </Properties>
                       <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTable(){&#xa;    public boolean isCellEditable(int rowIndex, int colIndex) {&#xa;        return false;   //Disallow the editing of any cell&#xa;    }&#xa;};&#xa;tblOrder.getTableHeader().setReorderingAllowed(false);"/>
+                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTable(){&#xa;    public boolean isCellEditable(int rowIndex, int colIndex) {&#xa;        return false;   //Disallow the editing of any cell&#xa;    }&#xa;};&#xa;tableOrder.getTableHeader().setReorderingAllowed(false);"/>
                       </AuxValues>
                     </Component>
                   </SubComponents>
@@ -394,7 +394,7 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBrowerProductActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="btnCreate1">
+                <Component class="javax.swing.JButton" name="btnCancel">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="11" style="1"/>
@@ -405,7 +405,7 @@
                     <Property name="text" type="java.lang.String" value="Cancel Order"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCreate1ActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancelActionPerformed"/>
                   </Events>
                 </Component>
               </SubComponents>
@@ -535,10 +535,10 @@
                                       <Group type="102" alignment="1" attributes="0">
                                           <Group type="103" groupAlignment="1" attributes="0">
                                               <Component id="cboOrder" alignment="1" min="-2" pref="120" max="-2" attributes="0"/>
-                                              <Component id="txtCustomerID_detail" alignment="1" min="-2" pref="120" max="-2" attributes="0"/>
+                                              <Component id="txtCustomerID1" alignment="1" min="-2" pref="120" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Component id="btnBrowerCustomerDetail" min="-2" max="-2" attributes="0"/>
+                                          <Component id="btnBrowerCustomer1" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace min="-2" pref="80" max="-2" attributes="0"/>
                                           <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                                       </Group>
@@ -561,7 +561,7 @@
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="230" max="-2" attributes="0"/>
-                                  <Component id="btnDetroy1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnRefresh" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
@@ -576,8 +576,8 @@
                               <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                                   <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtCustomerID_detail" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="btnBrowerCustomerDetail" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtCustomerID1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnBrowerCustomer1" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Component id="txtDateForm" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel15" alignment="1" min="-2" max="-2" attributes="0"/>
@@ -607,8 +607,7 @@
                                       <Group type="102" alignment="1" attributes="0">
                                           <Component id="btnDetroy" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
-                                          <Component id="btnDetroy1" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                                          <Component id="btnRefresh" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" alignment="1" attributes="0">
                                           <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
@@ -638,7 +637,7 @@
                     <Property name="text" type="java.lang.String" value="Customer ID :"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txtCustomerID_detail">
+                <Component class="javax.swing.JTextField" name="txtCustomerID1">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -646,7 +645,7 @@
                     </Property>
                   </Properties>
                   <Events>
-                    <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtCustomerID_detailKeyReleased"/>
+                    <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtCustomerID1KeyReleased"/>
                   </Events>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
@@ -689,7 +688,7 @@
                     <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cboOrderItemStateChanged"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="btnBrowerCustomerDetail">
+                <Component class="javax.swing.JButton" name="btnBrowerCustomer1">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="12" style="1"/>
@@ -700,7 +699,7 @@
                     <Property name="text" type="java.lang.String" value="Brower"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBrowerCustomerDetailActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBrowerCustomer1ActionPerformed"/>
                   </Events>
                 </Component>
                 <Component class="com.toedter.calendar.JDateChooser" name="txtDateForm">
@@ -737,7 +736,7 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDetroyActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="btnDetroy1">
+                <Component class="javax.swing.JButton" name="btnRefresh">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="12" style="1"/>
@@ -748,7 +747,7 @@
                     <Property name="text" type="java.lang.String" value="Refresh"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDetroy1ActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRefreshActionPerformed"/>
                   </Events>
                 </Component>
                 <Container class="javax.swing.JScrollPane" name="jScrollPane4">

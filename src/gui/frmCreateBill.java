@@ -40,12 +40,12 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblOrder = new javax.swing.JTable(){
+        tableOrder = new javax.swing.JTable(){
             public boolean isCellEditable(int rowIndex, int colIndex) {
                 return false;   //Disallow the editing of any cell
             }
         };
-        tblOrder.getTableHeader().setReorderingAllowed(false);
+        tableOrder.getTableHeader().setReorderingAllowed(false);
         jLabel6 = new javax.swing.JLabel();
         txtProductID = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
@@ -55,25 +55,25 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
         btnCreate = new javax.swing.JButton();
         lblTotal = new javax.swing.JLabel();
         btnBrowerProduct = new javax.swing.JButton();
-        btnCreate1 = new javax.swing.JButton();
+        btnCancel = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        txtCustomerID_detail = new javax.swing.JTextField();
+        txtCustomerID1 = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         txtTotal = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         cboOrder = new javax.swing.JComboBox();
-        btnBrowerCustomerDetail = new javax.swing.JButton();
+        btnBrowerCustomer1 = new javax.swing.JButton();
         txtDateForm = new com.toedter.calendar.JDateChooser();
         txtDateTo = new com.toedter.calendar.JDateChooser();
         jLabel15 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         btnDetroy = new javax.swing.JButton();
-        btnDetroy1 = new javax.swing.JButton();
+        btnRefresh = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         txtReason = new javax.swing.JTextArea();
         jPanel7 = new javax.swing.JPanel();
@@ -127,7 +127,7 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Order Details", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
-        tblOrder.setModel(new javax.swing.table.DefaultTableModel(
+        tableOrder.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -135,7 +135,7 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
 
             }
         ));
-        jScrollPane1.setViewportView(tblOrder);
+        jScrollPane1.setViewportView(tableOrder);
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel6.setText("Product ID :");
@@ -182,12 +182,12 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
             }
         });
 
-        btnCreate1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        btnCreate1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconCancel.png"))); // NOI18N
-        btnCreate1.setText("Cancel Order");
-        btnCreate1.addActionListener(new java.awt.event.ActionListener() {
+        btnCancel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconCancel.png"))); // NOI18N
+        btnCancel.setText("Cancel Order");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCreate1ActionPerformed(evt);
+                btnCancelActionPerformed(evt);
             }
         });
 
@@ -220,7 +220,7 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(btnCreate)
                         .addGap(18, 18, 18)
-                        .addComponent(btnCreate1)
+                        .addComponent(btnCancel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lblTotal)
                         .addGap(98, 98, 98))))
@@ -242,7 +242,7 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnCreate1)
+                    .addComponent(btnCancel)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnCreate)
                         .addComponent(lblTotal)))
@@ -339,11 +339,11 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel10.setText("Customer ID :");
 
-        txtCustomerID_detail.setEditable(false);
-        txtCustomerID_detail.setBackground(new java.awt.Color(204, 204, 204));
-        txtCustomerID_detail.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtCustomerID1.setEditable(false);
+        txtCustomerID1.setBackground(new java.awt.Color(204, 204, 204));
+        txtCustomerID1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtCustomerID_detailKeyReleased(evt);
+                txtCustomerID1KeyReleased(evt);
             }
         });
 
@@ -366,12 +366,12 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
             }
         });
 
-        btnBrowerCustomerDetail.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btnBrowerCustomerDetail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconBrower.png"))); // NOI18N
-        btnBrowerCustomerDetail.setText("Brower");
-        btnBrowerCustomerDetail.addActionListener(new java.awt.event.ActionListener() {
+        btnBrowerCustomer1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnBrowerCustomer1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconBrower.png"))); // NOI18N
+        btnBrowerCustomer1.setText("Brower");
+        btnBrowerCustomer1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBrowerCustomerDetailActionPerformed(evt);
+                btnBrowerCustomer1ActionPerformed(evt);
             }
         });
 
@@ -390,12 +390,12 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
             }
         });
 
-        btnDetroy1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btnDetroy1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconRefresh.png"))); // NOI18N
-        btnDetroy1.setText("Refresh");
-        btnDetroy1.addActionListener(new java.awt.event.ActionListener() {
+        btnRefresh.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconRefresh.png"))); // NOI18N
+        btnRefresh.setText("Refresh");
+        btnRefresh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDetroy1ActionPerformed(evt);
+                btnRefreshActionPerformed(evt);
             }
         });
 
@@ -424,9 +424,9 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(cboOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtCustomerID_detail, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txtCustomerID1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
-                                .addComponent(btnBrowerCustomerDetail)
+                                .addComponent(btnBrowerCustomer1)
                                 .addGap(80, 80, 80)
                                 .addComponent(jLabel9)))
                         .addGap(18, 18, 18)
@@ -443,7 +443,7 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
                                 .addComponent(btnDetroy))))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(230, 230, 230)
-                        .addComponent(btnDetroy1)))
+                        .addComponent(btnRefresh)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
@@ -454,8 +454,8 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
                     .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel9)
                         .addComponent(jLabel10)
-                        .addComponent(txtCustomerID_detail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnBrowerCustomerDetail))
+                        .addComponent(txtCustomerID1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnBrowerCustomer1))
                     .addComponent(txtDateForm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(txtDateTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -479,8 +479,7 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                                 .addComponent(btnDetroy)
                                 .addGap(22, 22, 22)
-                                .addComponent(btnDetroy1)
-                                .addGap(0, 0, 0))
+                                .addComponent(btnRefresh))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                                 .addComponent(jLabel13)
                                 .addGap(80, 80, 80))))))
@@ -640,13 +639,13 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_btnBrowerProductActionPerformed
 
-    private void btnCreate1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreate1ActionPerformed
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnCreate1ActionPerformed
+    }//GEN-LAST:event_btnCancelActionPerformed
 
-    private void txtCustomerID_detailKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCustomerID_detailKeyReleased
+    private void txtCustomerID1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCustomerID1KeyReleased
 
-    }//GEN-LAST:event_txtCustomerID_detailKeyReleased
+    }//GEN-LAST:event_txtCustomerID1KeyReleased
 
     private void txtTotalKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTotalKeyReleased
 
@@ -656,17 +655,17 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_cboOrderItemStateChanged
 
-    private void btnBrowerCustomerDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBrowerCustomerDetailActionPerformed
+    private void btnBrowerCustomer1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBrowerCustomer1ActionPerformed
 
-    }//GEN-LAST:event_btnBrowerCustomerDetailActionPerformed
+    }//GEN-LAST:event_btnBrowerCustomer1ActionPerformed
 
     private void btnDetroyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetroyActionPerformed
 
     }//GEN-LAST:event_btnDetroyActionPerformed
 
-    private void btnDetroy1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetroy1ActionPerformed
+    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnDetroy1ActionPerformed
+    }//GEN-LAST:event_btnRefreshActionPerformed
 
     private void tableBillMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableBillMouseClicked
 
@@ -675,14 +674,14 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBrowerCustomer;
-    private javax.swing.JButton btnBrowerCustomerDetail;
+    private javax.swing.JButton btnBrowerCustomer1;
     private javax.swing.JButton btnBrowerProduct;
+    private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnCreate;
-    private javax.swing.JButton btnCreate1;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnDetroy;
-    private javax.swing.JButton btnDetroy1;
     private javax.swing.JButton btnOrder;
+    private javax.swing.JButton btnRefresh;
     private javax.swing.JComboBox cboOrder;
     private javax.swing.JComboBox cboPayment;
     private javax.swing.JLabel jLabel1;
@@ -714,10 +713,10 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel lblTotal;
     private javax.swing.JTable tableBill;
+    private javax.swing.JTable tableOrder;
     private javax.swing.JTable tablelOrderDetails;
-    private javax.swing.JTable tblOrder;
     public javax.swing.JTextField txtCustomerID;
-    public javax.swing.JTextField txtCustomerID_detail;
+    public javax.swing.JTextField txtCustomerID1;
     private com.toedter.calendar.JDateChooser txtDateForm;
     private com.toedter.calendar.JDateChooser txtDateTo;
     private javax.swing.JTextField txtDiscount;
