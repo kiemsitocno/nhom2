@@ -5,7 +5,19 @@
  */
 package gui;
 
+import entity.Remember;
+import interact.CheckForm;
 import java.awt.Toolkit;
+import interact.Configs;
+import interact.DataInteraction;
+import interact.GUIInteraction;
+import interact.Login;
+import java.io.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.*;
 
 /**
  *
@@ -17,10 +29,42 @@ public class formLogin extends javax.swing.JFrame {
      * Creates new form formLogin
      */
     public formLogin() {
+        Configs.loadConfigurations();
+        if (!DataInteraction.connect(Configs.getProperty(Configs.CONFIG_SERVERNAME),
+                Configs.getProperty(Configs.CONFIG_PORTNUMBER),
+                Configs.getProperty(Configs.CONFIG_SERVERUSERNAME),
+                Configs.getProperty(Configs.CONFIG_SERVERPASSWORD),
+                Configs.getProperty(Configs.CONFIG_DATABASENAME))) {
+            JOptionPane.showMessageDialog(null, "Cannot connect to server");
+        }
+
         initComponents();
         this.setLocationRelativeTo(this);
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("../images/iconMain.png")));
         setTitle("Login System");
+
+        GUIInteraction.readToCombo("select * from Roles", cbbRole, "RoleName");
+        try {
+            ObjectInputStream fis = new ObjectInputStream(new FileInputStream("info.dat"));
+            entity.Remember re = (Remember) fis.readObject();
+            ResultSet rsper = DataInteraction.queryResultSet("select RoleName from Roles where RoleID='" + re.getPermit() + "'");
+            String role = null;
+            while (rsper.next()) {
+                role = rsper.getString("RoleName");
+            }
+            txtUsername.setText(re.getUsername());
+            txtPassword.setText(re.getPassword());
+            cbbRole.setSelectedItem(role);
+            chkRemember.setSelected(re.isCheck());
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(formLogin.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(formLogin.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(formLogin.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(formLogin.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -38,12 +82,12 @@ public class formLogin extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         txtUsername = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        txtPassword = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         cbbRole = new javax.swing.JComboBox();
         chkRemember = new javax.swing.JCheckBox();
         btnLogon = new javax.swing.JButton();
         btnExit = new javax.swing.JButton();
+        txtPassword = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -87,12 +131,6 @@ public class formLogin extends javax.swing.JFrame {
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconPassword.png"))); // NOI18N
         jLabel3.setText("Password :");
 
-        txtPassword.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPasswordActionPerformed(evt);
-            }
-        });
-
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconPermission.png"))); // NOI18N
         jLabel4.setText("Permission :");
@@ -129,7 +167,7 @@ public class formLogin extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
@@ -137,7 +175,7 @@ public class formLogin extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtPassword))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
@@ -185,17 +223,77 @@ public class formLogin extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUsernameActionPerformed
 
-    private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPasswordActionPerformed
-
     private void btnLogonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogonActionPerformed
-
+        if (!check()) {
+            return;
+        }
+        String user = txtUsername.getText();
+        char[] strpass = txtPassword.getPassword();
+        String pass = new String(strpass);
+        String permit = String.valueOf(cbbRole.getSelectedItem());
+        ResultSet rsper = DataInteraction.queryResultSet("select RoleID from Roles where RoleName='" + permit + "'");
+        String id = null;
+        try {
+            while (rsper.next()) {
+                id = rsper.getString("RoleID");
+            }
+            String sql = "select * from Users where Username='" + user + "' and Password='" + pass + "' and RoleID='" + id + "'";
+            ResultSet rs = DataInteraction.queryResultSet(sql);
+            if (rs.next()) {
+                Login.setAdminID(rs.getString("UserID"));
+                Login.setUsername(user);
+                Login.setPassword(pass);
+                Login.setPermit(id);
+                if (chkRemember.isSelected() == true) {
+                    try {
+                        ObjectOutputStream fos = new ObjectOutputStream(new FileOutputStream("info.dat"));
+                        entity.Remember r = new Remember(Login.getUsername(), Login.getPassword(), Login.getPermit(), true);
+                        fos.writeObject(r);
+                    } catch (FileNotFoundException ex) {
+                        Logger.getLogger(formLogin.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(formLogin.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }else {
+                    try {
+                        ObjectOutputStream fos;
+                        fos = new ObjectOutputStream(new FileOutputStream("info.dat"));
+                        entity.Remember r = new Remember("", "", "AD", false);
+                        fos.writeObject(r);
+                    } catch (FileNotFoundException ex) {
+                        Logger.getLogger(formLogin.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(formLogin.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                this.dispose();
+                formMain main = new formMain();
+                main.setVisible(true);
+            }else{
+                lblStatus.setText("Login fail!Try again later!");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(formLogin.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnLogonActionPerformed
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnExitActionPerformed
+
+    private boolean check() {
+        if (!CheckForm.isPwdUsername(txtUsername.getText())) {
+            lblStatus.setText("Username invalid.");
+            txtUsername.requestFocus();
+            return false;
+        }
+        if (!CheckForm.isPwdUsername(txtPassword.getText())) {
+            lblStatus.setText("Password invalid.");
+            txtPassword.requestFocus();
+            return false;
+        }
+        return true;
+    }
 
     /**
      * @param args the command line arguments
@@ -243,7 +341,7 @@ public class formLogin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblStatus;
-    private javax.swing.JTextField txtPassword;
+    private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 }

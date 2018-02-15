@@ -5,6 +5,7 @@
  */
 package gui;
 
+import interact.Login;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -12,6 +13,7 @@ import java.awt.Window;
 import java.beans.PropertyVetoException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.border.Border;
 
@@ -25,11 +27,13 @@ public class formMain extends javax.swing.JFrame {
      * Creates new form formMain
      */
     private JScrollPane scrollPane = new JScrollPane();
+
     public formMain() {
         initComponents();
         this.setLocationRelativeTo(this);
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("../images/iconMain.png")));
         setTitle("Perfume Store Management System");
+        permissing();
     }
 
     /**
@@ -65,20 +69,20 @@ public class formMain extends javax.swing.JFrame {
         menuItemChangePass = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
+        menuDirector = new javax.swing.JMenu();
         menuItemAddManager = new javax.swing.JMenuItem();
         nemuItemManagementStore = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
+        menuManagement = new javax.swing.JMenu();
         menuItemManagementSale = new javax.swing.JMenuItem();
         menuItemManagementBill = new javax.swing.JMenuItem();
         jMenuItem17 = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
+        menuInventory = new javax.swing.JMenu();
         jMenuItem14 = new javax.swing.JMenuItem();
         menuItemCategory_Product = new javax.swing.JMenuItem();
         jMenuItem16 = new javax.swing.JMenuItem();
-        jMenu5 = new javax.swing.JMenu();
+        menuSales = new javax.swing.JMenu();
         menuCreateBill = new javax.swing.JMenuItem();
         menuItemSearchProduct = new javax.swing.JMenuItem();
         menuItemCustomer = new javax.swing.JMenuItem();
@@ -246,6 +250,11 @@ public class formMain extends javax.swing.JFrame {
         jMenuItem2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconLogout.png"))); // NOI18N
         jMenuItem2.setText("Log out");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem2);
 
         jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconExit.png"))); // NOI18N
@@ -258,9 +267,9 @@ public class formMain extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconDirector.png"))); // NOI18N
-        jMenu2.setText("Director");
-        jMenu2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        menuDirector.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconDirector.png"))); // NOI18N
+        menuDirector.setText("Director");
+        menuDirector.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
 
         menuItemAddManager.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         menuItemAddManager.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconNewUser.png"))); // NOI18N
@@ -270,7 +279,7 @@ public class formMain extends javax.swing.JFrame {
                 menuItemAddManagerActionPerformed(evt);
             }
         });
-        jMenu2.add(menuItemAddManager);
+        menuDirector.add(menuItemAddManager);
 
         nemuItemManagementStore.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         nemuItemManagementStore.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconStore.png"))); // NOI18N
@@ -280,23 +289,23 @@ public class formMain extends javax.swing.JFrame {
                 nemuItemManagementStoreActionPerformed(evt);
             }
         });
-        jMenu2.add(nemuItemManagementStore);
+        menuDirector.add(nemuItemManagementStore);
 
         jMenuItem5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconReport.png"))); // NOI18N
         jMenuItem5.setText("View Report Manager");
-        jMenu2.add(jMenuItem5);
+        menuDirector.add(jMenuItem5);
 
         jMenuItem6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconReport2.png"))); // NOI18N
         jMenuItem6.setText("View Report Inventory");
-        jMenu2.add(jMenuItem6);
+        menuDirector.add(jMenuItem6);
 
-        jMenuBar1.add(jMenu2);
+        jMenuBar1.add(menuDirector);
 
-        jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconManager.png"))); // NOI18N
-        jMenu3.setText("Manager");
-        jMenu3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        menuManagement.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconManager.png"))); // NOI18N
+        menuManagement.setText("Manager");
+        menuManagement.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
 
         menuItemManagementSale.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         menuItemManagementSale.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconManagementSales.png"))); // NOI18N
@@ -306,7 +315,7 @@ public class formMain extends javax.swing.JFrame {
                 menuItemManagementSaleActionPerformed(evt);
             }
         });
-        jMenu3.add(menuItemManagementSale);
+        menuManagement.add(menuItemManagementSale);
 
         menuItemManagementBill.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         menuItemManagementBill.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconManagementBill.png"))); // NOI18N
@@ -316,18 +325,18 @@ public class formMain extends javax.swing.JFrame {
                 menuItemManagementBillActionPerformed(evt);
             }
         });
-        jMenu3.add(menuItemManagementBill);
+        menuManagement.add(menuItemManagementBill);
 
         jMenuItem17.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jMenuItem17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconReport.png"))); // NOI18N
         jMenuItem17.setText("View Report Sales");
-        jMenu3.add(jMenuItem17);
+        menuManagement.add(jMenuItem17);
 
-        jMenuBar1.add(jMenu3);
+        jMenuBar1.add(menuManagement);
 
-        jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconIventory.png"))); // NOI18N
-        jMenu4.setText("Inventory");
-        jMenu4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        menuInventory.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconIventory.png"))); // NOI18N
+        menuInventory.setText("Inventory");
+        menuInventory.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
 
         jMenuItem14.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jMenuItem14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconInventoryManagement.png"))); // NOI18N
@@ -337,7 +346,7 @@ public class formMain extends javax.swing.JFrame {
                 jMenuItem14ActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem14);
+        menuInventory.add(jMenuItem14);
 
         menuItemCategory_Product.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         menuItemCategory_Product.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconManagementItem.png"))); // NOI18N
@@ -347,18 +356,18 @@ public class formMain extends javax.swing.JFrame {
                 menuItemCategory_ProductActionPerformed(evt);
             }
         });
-        jMenu4.add(menuItemCategory_Product);
+        menuInventory.add(menuItemCategory_Product);
 
         jMenuItem16.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jMenuItem16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconReport2.png"))); // NOI18N
         jMenuItem16.setText("View Report Inventory");
-        jMenu4.add(jMenuItem16);
+        menuInventory.add(jMenuItem16);
 
-        jMenuBar1.add(jMenu4);
+        jMenuBar1.add(menuInventory);
 
-        jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconStaff.png"))); // NOI18N
-        jMenu5.setText("Sales");
-        jMenu5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        menuSales.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconStaff.png"))); // NOI18N
+        menuSales.setText("Sales");
+        menuSales.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
 
         menuCreateBill.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         menuCreateBill.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconCreateBill.png"))); // NOI18N
@@ -368,7 +377,7 @@ public class formMain extends javax.swing.JFrame {
                 menuCreateBillActionPerformed(evt);
             }
         });
-        jMenu5.add(menuCreateBill);
+        menuSales.add(menuCreateBill);
 
         menuItemSearchProduct.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         menuItemSearchProduct.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconSearch.png"))); // NOI18N
@@ -378,7 +387,7 @@ public class formMain extends javax.swing.JFrame {
                 menuItemSearchProductActionPerformed(evt);
             }
         });
-        jMenu5.add(menuItemSearchProduct);
+        menuSales.add(menuItemSearchProduct);
 
         menuItemCustomer.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         menuItemCustomer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconCustomer.png"))); // NOI18N
@@ -388,7 +397,7 @@ public class formMain extends javax.swing.JFrame {
                 menuItemCustomerActionPerformed(evt);
             }
         });
-        jMenu5.add(menuItemCustomer);
+        menuSales.add(menuItemCustomer);
 
         menuItemInformationSale.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         menuItemInformationSale.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconView.png"))); // NOI18N
@@ -398,9 +407,9 @@ public class formMain extends javax.swing.JFrame {
                 menuItemInformationSaleActionPerformed(evt);
             }
         });
-        jMenu5.add(menuItemInformationSale);
+        menuSales.add(menuItemInformationSale);
 
-        jMenuBar1.add(jMenu5);
+        jMenuBar1.add(menuSales);
 
         jMenu6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconHelp.png"))); // NOI18N
         jMenu6.setText("Help");
@@ -454,8 +463,7 @@ public class formMain extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
-    
+
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem3ActionPerformed
@@ -478,14 +486,14 @@ public class formMain extends javax.swing.JFrame {
 
     private void menuItemChangePassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemChangePassActionPerformed
         // TODO add your handling code here:
-        frmChangePassword changePass =  new frmChangePassword();
+        frmChangePassword changePass = new frmChangePassword();
         dtContent.add(changePass);
         changePass.show();
     }//GEN-LAST:event_menuItemChangePassActionPerformed
 
     private void menuCreateBillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCreateBillActionPerformed
         // TODO add your handling code here:
-        frmCreateBill createBill =  new frmCreateBill();
+        frmCreateBill createBill = new frmCreateBill();
         dtContent.add(createBill);
         createBill.show();
         try {
@@ -591,6 +599,42 @@ public class formMain extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_menuItemSearchProductActionPerformed
 
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        formLogin log = new formLogin();
+        log.setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    public void permissing() {
+        if (Login.getAdminID() == null && Login.getUsername() == null && Login.getPassword() == null && Login.getPermit() == null) {
+            int i = JOptionPane.showConfirmDialog(this, "Truy cập đã bị chặn, yêu cầu đăng nhập trước.");
+            if (i == JOptionPane.YES_OPTION) {
+                System.exit(1);
+            }
+        } else if (Login.getPermit().equals("DI")) {
+            menuDirector.setVisible(true);
+            menuInventory.setVisible(false);
+            menuManagement.setVisible(false);
+            menuSales.setVisible(false);
+        } else if (Login.getPermit().equals("MN")) {
+            menuDirector.setVisible(false);
+            menuInventory.setVisible(false);
+            menuManagement.setVisible(true);
+            menuSales.setVisible(false);
+        } else if (Login.getPermit().equals("IV")) {
+            menuDirector.setVisible(false);
+            menuInventory.setVisible(true);
+            menuManagement.setVisible(false);
+            menuSales.setVisible(false);
+        } else {
+            menuDirector.setVisible(false);
+            menuInventory.setVisible(false);
+            menuManagement.setVisible(false);
+            menuSales.setVisible(true);
+        }
+
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -646,10 +690,6 @@ public class formMain extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem14;
@@ -663,6 +703,8 @@ public class formMain extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JMenuItem menuCreateBill;
+    private javax.swing.JMenu menuDirector;
+    private javax.swing.JMenu menuInventory;
     private javax.swing.JMenuItem menuItemAddManager;
     private javax.swing.JMenuItem menuItemCategory_Product;
     private javax.swing.JMenuItem menuItemChangePass;
@@ -671,6 +713,8 @@ public class formMain extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuItemManagementBill;
     private javax.swing.JMenuItem menuItemManagementSale;
     private javax.swing.JMenuItem menuItemSearchProduct;
+    private javax.swing.JMenu menuManagement;
+    private javax.swing.JMenu menuSales;
     private javax.swing.JMenuItem nemuItemManagementStore;
     // End of variables declaration//GEN-END:variables
 }
