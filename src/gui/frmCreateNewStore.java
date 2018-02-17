@@ -10,6 +10,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import entity.Store;
 import interact.GUIInteraction;
+import interact.CheckForm;
+import java.awt.Color;
+import javax.swing.*;
 
 /**
  *
@@ -54,6 +57,7 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
         txtSearch = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         txtRent = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
         tablePanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableStores = new javax.swing.JTable();
@@ -134,6 +138,11 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
         btnCancel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconCancel.png"))); // NOI18N
         btnCancel.setText("Cancel");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
 
         btnDelete.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconDelete.png"))); // NOI18N
@@ -147,6 +156,11 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
         btnSearch.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconBrower.png"))); // NOI18N
         btnSearch.setText("Search");
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
 
         txtSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -158,6 +172,14 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
         jLabel6.setText("Search ID Store or Name Store :");
 
         txtRent.setEnabled(false);
+        txtRent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtRentActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel5.setText("Store Rent:");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -165,23 +187,25 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel5))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtRent)
+                    .addComponent(txtID, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                    .addComponent(txtPhone, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                    .addComponent(txtName, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel3))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(19, 19, 19)
                         .addComponent(jLabel4)
                         .addGap(27, 27, 27)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(460, 460, 460)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(165, 165, 165)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel6)
@@ -196,9 +220,7 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(btnCancel)
                                 .addGap(18, 18, 18)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnDelete)
-                                    .addComponent(txtRent, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                .addComponent(btnDelete)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -219,18 +241,24 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3)))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtRent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCancel)
-                    .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, 0)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnCancel)
+                            .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, 0)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, 0)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtRent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5)))))
         );
 
         tablePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Table Information", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
@@ -309,12 +337,15 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
         enableTXT();
-        if(btnCreate.getText().equals("Create")){
+        if (btnCreate.getText().equals("Create")) {
             resetTXT();
             btnCreate.setText("Save");
-        }else if(btnCreate.getText().equals("Save")){
-            int countStore= GUIInteraction.indentityID("select top 1 * from Stores order by StoreID Desc", "StoreID")+1;
-            String storeID = "ST"+countStore;
+        } else if (btnCreate.getText().equals("Save")) {
+            if (!validateStore()) {
+                return;
+            }
+            int countStore = GUIInteraction.indentityID("select top 1 * from Stores order by StoreID Desc", "StoreID") + 1;
+            String storeID = "ST" + countStore;
             Store store = new Store(
                     storeID,
                     txtName.getText(),
@@ -331,9 +362,19 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         // TODO add your handling code here:
-        Store store=new Store(txtID.getText(),txtName.getText(),txtPhone.getText(),txtAddress.getText(),Integer.parseInt(txtRent.getText()));
-        interact.Store.editStore(store);
-        refresh();
+        enableTXT();
+        if (btnEdit.getText().equals("Edit")) {
+            btnEdit.setText("Save");
+        } else if (btnEdit.getText().equals("Save")) {
+            if (!validateStore()) {
+                return;
+            }
+            Store store = new Store(txtID.getText(), txtName.getText(), txtPhone.getText(), txtAddress.getText(), Integer.parseInt(txtRent.getText()));
+            interact.Store.editStore(store);
+            refresh();
+            btnEdit.setText("Edit");
+            disableTXT();
+        }
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
@@ -344,13 +385,33 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
 
     private void tableStoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableStoresMouseClicked
         // TODO add your handling code here:
-        int i=tableStores.getSelectedRow();
-        txtID.setText(String.valueOf(tableStores.getValueAt(i,0)));
-        txtName.setText(String.valueOf(tableStores.getValueAt(i,1)));
-        txtPhone.setText(String.valueOf(tableStores.getValueAt(i,2)));
-        txtAddress.setText(String.valueOf(tableStores.getValueAt(i,3)));
-        txtRent.setText(String.valueOf(tableStores.getValueAt(i,4)));
+        int i = tableStores.getSelectedRow();
+        txtID.setText(String.valueOf(tableStores.getValueAt(i, 0)));
+        txtName.setText(String.valueOf(tableStores.getValueAt(i, 1)));
+        txtPhone.setText(String.valueOf(tableStores.getValueAt(i, 2)));
+        txtAddress.setText(String.valueOf(tableStores.getValueAt(i, 3)));
+        txtRent.setText(String.valueOf(tableStores.getValueAt(i, 4)));
     }//GEN-LAST:event_tableStoresMouseClicked
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        // TODO add your handling code here:
+        disableTXT();
+        resetTXT();
+    }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void txtRentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRentActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtRentActionPerformed
+
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        // TODO add your handling code here:
+        String searchName = txtSearch.getText().trim();
+        try {
+            GUIInteraction.readToTable("select * from Stores where StoreName like N'%" + searchName + "%'", tableStores);
+        } catch (SQLException ex) {
+            Logger.getLogger(frmCreateNewStore.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnSearchActionPerformed
 
     private void refresh() {
         try {
@@ -360,21 +421,69 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
         }
     }
 
-    private void enableTXT(){
+    private boolean validateStore() {
+        boolean flag = true;
+        if (!CheckForm.isEmpty(txtName.getText())) {
+            JOptionPane.showMessageDialog(this, "Name is not blank", "Error", JOptionPane.ERROR_MESSAGE);
+            txtName.requestFocus();
+            txtName.setBackground(Color.red);
+            flag = false;
+        } else if (!GUIInteraction.checkDuplicateName(txtName.getText().trim(), "select * from Stores", "StoreName")) {
+            JOptionPane.showMessageDialog(this, "Name is not duplicatated", "Error", JOptionPane.ERROR_MESSAGE);
+            txtName.requestFocus();
+            txtName.setBackground(Color.red);
+            flag = false;
+        } else if (!CheckForm.overLength(txtName.getText())) {
+            JOptionPane.showMessageDialog(this, "Name is not than 50", "Error", JOptionPane.ERROR_MESSAGE);
+            txtName.requestFocus();
+            txtName.setBackground(Color.red);
+            flag = false;
+        } else if (!CheckForm.checkPhoneNumber(txtPhone.getText())) {
+            JOptionPane.showMessageDialog(this, "Phone is not phone format", "Error", JOptionPane.ERROR_MESSAGE);
+            txtPhone.requestFocus();
+            txtPhone.setBackground(Color.red);
+            txtName.setBackground(Color.white);
+            flag = false;
+        } else if (!CheckForm.overLength(txtAddress.getText())) {
+            JOptionPane.showMessageDialog(this, "Address not than 50 ", "Error", JOptionPane.ERROR_MESSAGE);
+            txtAddress.requestFocus();
+            txtAddress.setBackground(Color.red);
+            txtPhone.setBackground(Color.white);
+            txtName.setBackground(Color.white);
+            flag = false;
+        } else if (!CheckForm.isNumberic(txtRent.getText())) {
+            JOptionPane.showMessageDialog(this, "Rent is not numberic", "Error", JOptionPane.ERROR_MESSAGE);
+            txtRent.requestFocus();
+            txtRent.setBackground(Color.red);
+            txtAddress.setBackground(Color.white);
+            txtPhone.setBackground(Color.white);
+            txtName.setBackground(Color.white);
+            flag = false;
+        } else {
+            txtName.setBackground(Color.white);
+            txtPhone.setBackground(Color.white);
+            txtAddress.setBackground(Color.white);
+            txtRent.setBackground(Color.white);
+            flag = true;
+        }
+        return flag;
+    }
+
+    private void enableTXT() {
         txtName.setEnabled(true);
         txtPhone.setEnabled(true);
         txtAddress.setEnabled(true);
         txtRent.setEnabled(true);
     }
-    
-    private void disableTXT(){
+
+    private void disableTXT() {
         txtName.setEnabled(false);
         txtPhone.setEnabled(false);
         txtAddress.setEnabled(false);
         txtRent.setEnabled(false);
     }
-    
-    private void resetTXT(){
+
+    private void resetTXT() {
         txtName.setText(null);
         txtPhone.setText(null);
         txtAddress.setText(null);
@@ -391,6 +500,7 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel9;

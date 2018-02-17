@@ -24,6 +24,7 @@ public class Store {
             pst.setString(3, store.getStorePhone());
             pst.setString(4, store.getStoreAddress());
             pst.setInt(5, store.getStoreRent());
+            JOptionPane.showMessageDialog(null, "Insert to stores success","Successfully",JOptionPane.INFORMATION_MESSAGE);
             return (pst.executeUpdate() == 1);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Insert to stores Fail" + ex.getMessage());

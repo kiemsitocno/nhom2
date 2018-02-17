@@ -62,7 +62,7 @@ public class GUIInteraction {
     }
     //check id duplicate
 
-    public static boolean checkDuplicateID(String _id, String sql, String field) {
+    public static boolean checkDuplicateName(String name, String sql, String field) {
         boolean flag = true;
         Vector vt = new Vector();
         try {
@@ -72,7 +72,7 @@ public class GUIInteraction {
             }
             for (int i = 0; i < vt.size(); i++) {
                 String str = (String) vt.get(i);
-                if (str.equalsIgnoreCase(_id)) {
+                if (str.equalsIgnoreCase(name)) {
                     flag = false;
                 }
             }
