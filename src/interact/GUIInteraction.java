@@ -92,7 +92,7 @@ public class GUIInteraction {
             }
             for (int i = 0; i < vt.size(); i++) {
                 String str = (String) vt.get(i);
-                count = Integer.parseInt(str.substring(2));
+                count = Integer.parseInt(str.substring(str.length() - 1));
             }
             return count;
         } catch (SQLException ex) {

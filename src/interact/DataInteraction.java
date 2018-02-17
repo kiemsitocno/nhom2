@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package interact;
 
 import com.sun.rowset.CachedRowSetImpl;
@@ -16,20 +15,20 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Bach Ngoc  Toan
+ * @author Bach Ngoc Toan
  */
 public class DataInteraction {
-    public static  String url;
-    private static  String servername;
-    public static  String port;
-    private static  String driverName;
-    private static  String username;
+
+    public static String url;
+    private static String servername;
+    public static String port;
+    private static String driverName;
+    private static String username;
     private static String password;
-    private static  String databaseName;
+    private static String databaseName;
     private static Connection conn;
 
-
-   public static boolean connect(String _serverName, String _port, String _username, String _password, String _database) {
+    public static boolean connect(String _serverName, String _port, String _username, String _password, String _database) {
         servername = _serverName;
         port = _port;
         username = _username;
@@ -45,6 +44,7 @@ public class DataInteraction {
 
         return true;
     }
+
     public static String getConnectionString() throws Exception {
         StringBuilder sb = new StringBuilder();
         sb.append("jdbc:sqlserver://");
@@ -95,14 +95,14 @@ public class DataInteraction {
     public static Connection getCon() {
         return conn;
     }
-    
-    //set get
 
-     public String getConnectionUrl() {
-        return getUrl() + getServername() + ":" + getPort() + ";databaseName=" +getDatabaseName();
+    //set get
+    public String getConnectionUrl() {
+        return getUrl() + getServername() + ":" + getPort() + ";databaseName=" + getDatabaseName();
     }
+
     //method get connection
-    public static Connection getConnect(){
+    public static Connection getConnect() {
         /*Connection con = null;
         try {
 
@@ -118,11 +118,12 @@ public class DataInteraction {
         }*/
         return conn;
     }
+
     //method
     public static CachedRowSetImpl queryCachedRowSet(String sql) {
-        CachedRowSetImpl crs=null;
+        CachedRowSetImpl crs = null;
         try {
-            crs= new CachedRowSetImpl();
+            crs = new CachedRowSetImpl();
             crs.setUsername(getUsername());
             crs.setPassword(getPassword());
             crs.setUrl(getUrl());
@@ -136,20 +137,21 @@ public class DataInteraction {
             return null;
         }
     }
-    public static ResultSet queryResultSet(String sql)
-    {
-        ResultSet rs=null;
+
+    public static ResultSet queryResultSet(String sql) {
+        ResultSet rs = null;
         try {
             Statement st = getConnect().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            rs=st.executeQuery(sql);
+            rs = st.executeQuery(sql);
         } catch (SQLException ex) {
             Logger.getLogger(DataInteraction.class.getName()).log(Level.SEVERE, null, ex);
-        }finally{
+        } finally {
             return rs;
         }
     }
+
     //method security
-   public static void exec(String sql) {
+    public static void exec(String sql) {
         try {
             Statement query = getConnect().createStatement();
             query.executeUpdate(sql);
@@ -158,11 +160,12 @@ public class DataInteraction {
         }
 
     }
- public static  int topid(){
-    int id = 1;
-    try {
-         Connection cn = getConnect();
-         Statement st = cn.createStatement();
+
+    public static int topid() {
+        int id = 1;
+        try {
+            Connection cn = getConnect();
+            Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery("select top(1) BillID from Bills order by BillID Desc");
             while (rs.next()) {
                 id = Integer.valueOf(rs.getString("BillID"));
@@ -170,44 +173,43 @@ public class DataInteraction {
         } catch (SQLException ex) {
             Logger.getLogger(DataInteraction.class.getName()).log(Level.SEVERE, null, ex);
         }
-      return id;
+        return id;
 
- }
- public  static int  getCode(String Table,String Column,String Condition,String code){
-  int id=0;
-    try {
+    }
 
-           Connection cn = getConnect();
+    public static String getCode(String Table, String Column, String Condition, String code) {
+        String id = null;
+        try {
+
+            Connection cn = getConnect();
             Statement st = cn.createStatement();
-            ResultSet rs = st.executeQuery("select * from  "+Table+" where "+Column+"="+"N'"+Condition+"'"+"");
+            ResultSet rs = st.executeQuery("select * from  " + Table + " where " + Column + "=" + "N'" + Condition + "'" + "");
             while (rs.next()) {
-                    id=Integer.valueOf(rs.getString(code));
+                id = rs.getString(code);
 
-                }
+            }
 
-         //System.out.println(rs.getString("TenTPho"));
-
-          // JOptionPane.showMessageDialog(null,"B?n H�y Nh?p T�n Ph�ng: "+id);
+            //System.out.println(rs.getString("TenTPho"));
+            // JOptionPane.showMessageDialog(null,"B?n H�y Nh?p T�n Ph�ng: "+id);
         } catch (SQLException ex) {
             Logger.getLogger(DataInteraction.class.getName()).log(Level.SEVERE, null, ex);
         }
-      return id;
-}
+        return id;
+    }
 
-public  String  getLines(String Table,String Coulnm,String dk,String line){
-  String column = null;
-    try {
-           Connection cn = getConnect();
+    public String getLines(String Table, String Coulnm, String dk, String line) {
+        String column = null;
+        try {
+            Connection cn = getConnect();
             Statement st = cn.createStatement();
-            ResultSet rs = st.executeQuery("select * from  "+Table+" where "+Coulnm+ " ='"+dk+"'");
+            ResultSet rs = st.executeQuery("select * from  " + Table + " where " + Coulnm + " ='" + dk + "'");
             while (rs.next()) {
-                    column=rs.getString(line);
+                column = rs.getString(line);
             }
         } catch (SQLException ex) {
             System.out.println(ex);
         }
-      return column;
-}
-
+        return column;
+    }
 
 }
