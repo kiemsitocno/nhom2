@@ -103,11 +103,6 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
         jLabel3.setText("Store Phone :");
 
         txtPhone.setEnabled(false);
-        txtPhone.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPhoneActionPerformed(evt);
-            }
-        });
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel4.setText("Store Address :");
@@ -162,21 +157,10 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
             }
         });
 
-        txtSearch.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSearchActionPerformed(evt);
-            }
-        });
-
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel6.setText("Search ID Store or Name Store :");
 
         txtRent.setEnabled(false);
-        txtRent.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtRentActionPerformed(evt);
-            }
-        });
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel5.setText("Store Rent:");
@@ -327,14 +311,6 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtPhoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPhoneActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPhoneActionPerformed
-
-    private void txtSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSearchActionPerformed
-
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
         enableTXT();
         if (btnCreate.getText().equals("Create")) {
@@ -378,9 +354,18 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        // TODO add your handling code here:
-        interact.Store.deleteStore(txtID.getText());
-        refresh();
+        try {
+            // TODO add your handling code here:
+            int countUser = GUIInteraction.countRecord("select * from Users where StoreID='" + txtID.getText() + "'");
+            if (countUser > 0) {
+                JOptionPane.showMessageDialog(this, "This store have users, can't delete it");
+            } else {
+                interact.Store.deleteStore(txtID.getText());
+                refresh();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(frmCreateNewStore.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void tableStoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableStoresMouseClicked
@@ -398,10 +383,6 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
         disableTXT();
         resetTXT();
     }//GEN-LAST:event_btnCancelActionPerformed
-
-    private void txtRentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRentActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtRentActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         // TODO add your handling code here:

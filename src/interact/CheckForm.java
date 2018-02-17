@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package interact;
 
 import java.text.ParseException;
@@ -12,10 +11,11 @@ import java.util.regex.Pattern;
 
 /**
  *
- * @author Bach Ngoc  Toan
+ * @author Bach Ngoc Toan
  */
 public class CheckForm {
-       //Method check a field empty.
+    //Method check a field empty.
+
     public static boolean isEmpty(String value) {
         if (value.trim().length() == 0) {
             return false;
@@ -24,6 +24,7 @@ public class CheckForm {
         }
     }
 //Method check a field is username or not
+
     public static boolean isPwdUsername(String Value) {
         Pattern pattern = Pattern.compile("\\w+");
         Matcher matcher = pattern.matcher(Value);

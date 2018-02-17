@@ -82,7 +82,7 @@ public class GUIInteraction {
         return flag;
     }
 
-    public static int indentityID(String sql,String field){
+    public static int indentityID(String sql, String field) {
         int count = 0;
         Vector vt = new Vector();
         try {
@@ -92,7 +92,7 @@ public class GUIInteraction {
             }
             for (int i = 0; i < vt.size(); i++) {
                 String str = (String) vt.get(i);
-                count=Integer.parseInt(str.substring(2));
+                count = Integer.parseInt(str.substring(2));
             }
             return count;
         } catch (SQLException ex) {
@@ -100,7 +100,7 @@ public class GUIInteraction {
         }
         return count;
     }
-    
+
     public static int countRecord(String sql) throws SQLException {
         ResultSet rs = DataInteraction.queryResultSet(sql);
         int count = 0;

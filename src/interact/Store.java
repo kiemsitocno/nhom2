@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
  * @author kiems
  */
 public class Store {
+
     public static boolean insertStore(entity.Store store) {
         String sql = "insert into Stores values(?,?,?,?,?)";
         try {
@@ -24,38 +25,38 @@ public class Store {
             pst.setString(3, store.getStorePhone());
             pst.setString(4, store.getStoreAddress());
             pst.setInt(5, store.getStoreRent());
-            JOptionPane.showMessageDialog(null, "Insert to stores success","Successfully",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Insert to stores success", "Successfully", JOptionPane.INFORMATION_MESSAGE);
             return (pst.executeUpdate() == 1);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Insert to stores Fail" + ex.getMessage());
             return false;
         }
     }
-    
-    public static boolean editStore(entity.Store store){
+
+    public static boolean editStore(entity.Store store) {
         String sql = "update Stores set StoreName=?, StorePhone=?, StoreAddress=?, StoreRent=? where StoreID=?";
         try {
             PreparedStatement ps = interact.DataInteraction.getConnect().prepareCall(sql);
-            ps.setString(1,store.getStoreName());
-            ps.setString(2,store.getStorePhone());
-            ps.setString(3,store.getStoreAddress());
-            ps.setInt(4,store.getStoreRent());
-            ps.setString(5,store.getStoreID());
-            JOptionPane.showMessageDialog(null, "Update Category successfully","Successfully",JOptionPane.INFORMATION_MESSAGE);
-            return (ps.executeUpdate()==1);
+            ps.setString(1, store.getStoreName());
+            ps.setString(2, store.getStorePhone());
+            ps.setString(3, store.getStoreAddress());
+            ps.setInt(4, store.getStoreRent());
+            ps.setString(5, store.getStoreID());
+            JOptionPane.showMessageDialog(null, "Update Category successfully", "Successfully", JOptionPane.INFORMATION_MESSAGE);
+            return (ps.executeUpdate() == 1);
         } catch (SQLException ex) {
             Logger.getLogger(Store.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
     }
-    
-    public static void deleteStore(String ID){
+
+    public static void deleteStore(String ID) {
         String sql = "delete from Stores where StoreID='" + ID + "'";
         java.sql.Statement st;
         try {
             st = interact.DataInteraction.getConnect().createStatement();
             st.executeUpdate(sql);
-            JOptionPane.showMessageDialog(null, "Delete Store successfully","Successfully",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Delete Store successfully", "Successfully", JOptionPane.INFORMATION_MESSAGE);
         } catch (SQLException ex) {
             Logger.getLogger(Store.class.getName()).log(Level.SEVERE, null, ex);
         }
