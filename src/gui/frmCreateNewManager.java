@@ -708,8 +708,11 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         // TODO add your handling code here:
-        interact.User.deleteUser(txtID.getText());
-        refresh();
+        int i = JOptionPane.showConfirmDialog(this, "Do you want to delete this Store.?");
+        if (i == JOptionPane.YES_OPTION) {
+            interact.User.deleteUser(txtID.getText());
+            refresh();
+        }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
