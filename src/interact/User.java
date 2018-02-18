@@ -32,7 +32,7 @@ public class User {
             JOptionPane.showMessageDialog(null, "Insert User success", "Successfully", JOptionPane.INFORMATION_MESSAGE);
             return (pst.executeUpdate() == 1);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Insert to Users Fail" + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Từ chối thêm mới! Mỗi cửa hàng chỉ có 1 Manager");
             return false;
         }
     }
