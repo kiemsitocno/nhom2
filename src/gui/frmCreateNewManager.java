@@ -130,30 +130,27 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
         jLabel3.setText("Manager ID :");
 
         txtID.setEditable(false);
-        txtID.setBackground(new java.awt.Color(204, 204, 204));
+        txtID.setBackground(new java.awt.Color(255, 255, 255));
+        txtID.setEnabled(false);
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel5.setText("Name :");
 
-        txtName.setBackground(new java.awt.Color(255, 255, 255));
         txtName.setEnabled(false);
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel6.setText("Phone :");
 
-        txtPhone.setBackground(new java.awt.Color(255, 255, 255));
         txtPhone.setEnabled(false);
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel7.setText("Email :");
 
-        txtEmail.setBackground(new java.awt.Color(255, 255, 255));
         txtEmail.setEnabled(false);
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel12.setText("Salary :");
 
-        txtSalary.setBackground(new java.awt.Color(255, 255, 255));
         txtSalary.setEnabled(false);
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -174,10 +171,20 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
         btnEdit.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconEdit.png"))); // NOI18N
         btnEdit.setText("Edit");
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditActionPerformed(evt);
+            }
+        });
 
         btnCancel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconCancel.png"))); // NOI18N
         btnCancel.setText("Cancel");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
 
         btnDelete.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconDelete.png"))); // NOI18N
@@ -194,7 +201,6 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
         jLabel27.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel27.setText("UserName :");
 
-        txtUsername.setBackground(new java.awt.Color(255, 255, 255));
         txtUsername.setEnabled(false);
 
         jLabel16.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -203,6 +209,11 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
         btnSearch.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconBrower.png"))); // NOI18N
         btnSearch.setText("Search");
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
 
         txtPassword.setEnabled(false);
 
@@ -290,9 +301,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
                         .addGap(10, 10, 10))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(jLabel27)
-                                .addGap(70, 70, 70))
+                            .addComponent(jLabel27)
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -655,11 +664,12 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
         // TODO add your handling code here:
         enableTXT();
+        btnEdit.setEnabled(false);
         if(btnCreate.getText().equals("Create")){
             resetTXT();
             btnCreate.setText("Save");
         }else if(btnCreate.getText().equals("Save")){
-            if (!validateManager()) {
+            if (!validateInsertManager()) {
                 return;
             }
             String condition = cboStore.getSelectedItem().toString();
@@ -681,6 +691,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
             btnCreate.setText("Create");
             resetTXT();
             disableTXT();
+            btnEdit.setEnabled(true);
         }
     }//GEN-LAST:event_btnCreateActionPerformed
 
@@ -700,6 +711,56 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
         interact.User.deleteUser(txtID.getText());
         refresh();
     }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        // TODO add your handling code here:
+        btnCreate.setEnabled(false);
+        if(txtName.getText().trim().length()==0){
+            JOptionPane.showMessageDialog(this, "Please chose one row from table");
+            return;
+        }
+        enableTxtMN();
+        if (btnEdit.getText().equals("Edit")) {
+            btnEdit.setText("Save");
+        } else if (btnEdit.getText().equals("Save")) {
+            if (!validateEditManager()) {
+                return;
+            }
+            User user = new User(
+                    txtID.getText(),
+                    txtUsername.getText(),
+                    txtPassword.getText(),
+                    txtName.getText(),
+                    txtPhone.getText(), 
+                    txtEmail.getText(),
+                    "MN",
+                    cboStore.getSelectedItem().toString(),
+                    Integer.valueOf(txtSalary.getText()));
+            interact.User.editUser(user);
+            refresh();
+            btnEdit.setText("Edit");
+            disableTXT();
+            btnCreate.setEnabled(true);
+        }
+    }//GEN-LAST:event_btnEditActionPerformed
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        // TODO add your handling code here:
+        disableTXT();
+        resetTXT();
+        btnCreate.setText("Create");
+        btnEdit.setText("Edit");
+    }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        // TODO add your handling code here:
+        String searchName = txtSearch.getText().trim();
+        try {
+            GUIInteraction.readToTable("select * from View_Manager where Name like N'%" + searchName + "%' AND RoleName='Manager'", tableManager);
+        } catch (SQLException ex) {
+            Logger.getLogger(frmCreateNewStore.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnSearchActionPerformed
     
     private void refresh() {
         try {
@@ -730,6 +791,12 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
         cboStore.setEnabled(false);
     }
     
+    private void enableTxtMN(){
+        txtPhone.setEnabled(true);
+        txtEmail.setEnabled(true);
+        txtSalary.setEnabled(true);
+    }
+    
     private void resetTXT(){
         txtName.setText(null);
         txtPhone.setText(null);
@@ -740,7 +807,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
         cboStore.setSelectedIndex(-1);
     }
         
-    private boolean validateManager(){
+    private boolean validateInsertManager(){
         boolean flag = true;
         String username = txtUsername.getText();
         String password = txtPassword.getText();
@@ -762,21 +829,6 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
             txtName.requestFocus();
             flag = false;
         }
-        if (!CheckForm.checkPhoneNumber(txtPhone.getText())) {
-            JOptionPane.showMessageDialog(this, "Phone is not phone format", "Error", JOptionPane.ERROR_MESSAGE);
-            txtName.setBackground(Color.white);
-            txtPhone.setBackground(Color.red);
-            txtPhone.requestFocus();
-            flag = false;
-        }
-        if (!CheckForm.checkEmail(txtEmail.getText())) {
-            JOptionPane.showMessageDialog(this, "Email is not email format", "Error", JOptionPane.ERROR_MESSAGE);
-            txtEmail.requestFocus();
-            txtName.setBackground(Color.white);
-            txtPhone.setBackground(Color.white);
-            txtEmail.setBackground(Color.red);
-            flag = false;
-        }
         if (!CheckForm.isWhiteSpace(username)||!CheckForm.isEmpty(username) || !GUIInteraction.checkDuplicateName(username,"select * from Users", "Username")) {
             JOptionPane.showMessageDialog(this, "Username not have white space AND not blank AND dont duplicate", "Error", JOptionPane.ERROR_MESSAGE);
             txtUsername.requestFocus();
@@ -796,15 +848,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
             txtPassword.setBackground(Color.red);
             flag = false;
         }
-        if (!CheckForm.isNumberic(txtSalary.getText())) {
-            JOptionPane.showMessageDialog(this, "Salary must numberic", "Error", JOptionPane.ERROR_MESSAGE);
-            txtSalary.requestFocus();
-            txtName.setBackground(Color.white);
-            txtPhone.setBackground(Color.white);
-            txtEmail.setBackground(Color.white);
-            txtUsername.setBackground(Color.white);
-            txtPassword.setBackground(Color.white);
-            txtSalary.setBackground(Color.red);
+        if(!validateEditManager()){
             flag = false;
         }
         if (cboStore.getSelectedItem() == null) {
@@ -817,6 +861,39 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
             txtPassword.setBackground(Color.white);
             txtSalary.setBackground(Color.white);
             cboStore.setBackground(Color.red);
+            flag = false;
+        }
+        return flag;
+    }
+    
+    private boolean validateEditManager(){
+        boolean flag = true;
+        String username = txtUsername.getText();
+        String password = txtPassword.getText();
+        if (!CheckForm.checkPhoneNumber(txtPhone.getText())) {
+            JOptionPane.showMessageDialog(this, "Phone is not phone format", "Error", JOptionPane.ERROR_MESSAGE);
+            txtName.setBackground(Color.white);
+            txtPhone.setBackground(Color.red);
+            txtPhone.requestFocus();
+            flag = false;
+        }
+        if (!CheckForm.checkEmail(txtEmail.getText())) {
+            JOptionPane.showMessageDialog(this, "Email is not email format", "Error", JOptionPane.ERROR_MESSAGE);
+            txtEmail.requestFocus();
+            txtName.setBackground(Color.white);
+            txtPhone.setBackground(Color.white);
+            txtEmail.setBackground(Color.red);
+            flag = false;
+        }
+        if (!CheckForm.isNumberic(txtSalary.getText())) {
+            JOptionPane.showMessageDialog(this, "Salary must numberic", "Error", JOptionPane.ERROR_MESSAGE);
+            txtSalary.requestFocus();
+            txtName.setBackground(Color.white);
+            txtPhone.setBackground(Color.white);
+            txtEmail.setBackground(Color.white);
+            txtUsername.setBackground(Color.white);
+            txtPassword.setBackground(Color.white);
+            txtSalary.setBackground(Color.red);
             flag = false;
         }
         return flag;
