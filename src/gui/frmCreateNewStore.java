@@ -354,17 +354,20 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        try {
-            // TODO add your handling code here:
-            int countUser = GUIInteraction.countRecord("select * from Users where StoreID='" + txtID.getText() + "'");
-            if (countUser > 0) {
-                JOptionPane.showMessageDialog(this, "This store have users, can't delete it");
-            } else {
-                interact.Store.deleteStore(txtID.getText());
-                refresh();
+        int i = JOptionPane.showConfirmDialog(this, "Do you want to delete this Store.?");
+        if (i == JOptionPane.YES_OPTION) {
+            try {
+                // TODO add your handling code here:
+                int countUser = GUIInteraction.countRecord("select * from Users where StoreID='" + txtID.getText() + "'");
+                if (countUser > 0) {
+                    JOptionPane.showMessageDialog(this, "This store have users, can't delete it");
+                } else {
+                    interact.Store.deleteStore(txtID.getText());
+                    refresh();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(frmCreateNewStore.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(frmCreateNewStore.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
