@@ -312,6 +312,7 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
+        btnEdit.setEnabled(false);
         enableTXT();
         if (btnCreate.getText().equals("Create")) {
             resetTXT();
@@ -333,11 +334,13 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
             btnCreate.setText("Create");
             resetTXT();
             disableTXT();
+            btnEdit.setEnabled(true);
         }
     }//GEN-LAST:event_btnCreateActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         // TODO add your handling code here:
+        btnCreate.setEnabled(true);
         enableTXT();
         if (btnEdit.getText().equals("Edit")) {
             btnEdit.setText("Save");
@@ -350,6 +353,7 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
             refresh();
             btnEdit.setText("Edit");
             disableTXT();
+            btnCreate.setEnabled(false);
         }
     }//GEN-LAST:event_btnEditActionPerformed
 
@@ -385,6 +389,10 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         disableTXT();
         resetTXT();
+        btnCreate.setText("Create");
+        btnCreate.setEnabled(true);
+        btnEdit.setText("Edit");
+        btnEdit.setEnabled(true);
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
