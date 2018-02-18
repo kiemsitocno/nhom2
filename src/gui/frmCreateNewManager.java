@@ -708,7 +708,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         // TODO add your handling code here:
-        int i = JOptionPane.showConfirmDialog(this, "Do you want to delete this Store.?");
+        int i = JOptionPane.showConfirmDialog(this, "Do you want to delete this Manager.?");
         if (i == JOptionPane.YES_OPTION) {
             interact.User.deleteUser(txtID.getText());
             refresh();
@@ -752,7 +752,9 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
         disableTXT();
         resetTXT();
         btnCreate.setText("Create");
+        btnCreate.setEnabled(true);
         btnEdit.setText("Edit");
+        btnEdit.setEnabled(true);
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
@@ -819,20 +821,17 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
             txtName.setBackground(Color.red);
             txtName.requestFocus();
             flag = false;
-        }
-        if (!GUIInteraction.checkDuplicateName(txtName.getText().trim(), "select * from Users", "UserName")) {
+        }else if (!GUIInteraction.checkDuplicateName(txtName.getText().trim(), "select * from Users", "UserName")) {
             JOptionPane.showMessageDialog(this, "Name is not duplicatated", "Error", JOptionPane.ERROR_MESSAGE);
             txtName.setBackground(Color.red);
             txtName.requestFocus();
             flag = false;
-        }
-        if (!CheckForm.overLength(txtName.getText())) {
+        }else if (!CheckForm.overLength(txtName.getText())) {
             JOptionPane.showMessageDialog(this, "Name is not than 50", "Error", JOptionPane.ERROR_MESSAGE);
             txtName.setBackground(Color.red);
             txtName.requestFocus();
             flag = false;
-        }
-        if (!CheckForm.isWhiteSpace(username)||!CheckForm.isEmpty(username) || !GUIInteraction.checkDuplicateName(username,"select * from Users", "Username")) {
+        }else if (!CheckForm.isWhiteSpace(username)||!CheckForm.isEmpty(username) || !GUIInteraction.checkDuplicateName(username,"select * from Users", "Username")) {
             JOptionPane.showMessageDialog(this, "Username not have white space AND not blank AND dont duplicate", "Error", JOptionPane.ERROR_MESSAGE);
             txtUsername.requestFocus();
             txtName.setBackground(Color.white);
@@ -840,8 +839,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
             txtEmail.setBackground(Color.white);
             txtUsername.setBackground(Color.red);
             flag = false;
-        }
-        if (!CheckForm.isPwdUsername(password)||!CheckForm.isEmpty(password) || !CheckForm.isWhiteSpace(password)) {
+        }else if (!CheckForm.isPwdUsername(password)||!CheckForm.isEmpty(password) || !CheckForm.isWhiteSpace(password)) {
             JOptionPane.showMessageDialog(this, "Password not valid ", "Error", JOptionPane.ERROR_MESSAGE);
             txtPassword.requestFocus();
             txtName.setBackground(Color.white);
@@ -850,11 +848,9 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
             txtUsername.setBackground(Color.white);
             txtPassword.setBackground(Color.red);
             flag = false;
-        }
-        if(!validateEditManager()){
+        }else if(!validateEditManager()){
             flag = false;
-        }
-        if (cboStore.getSelectedItem() == null) {
+        }else if (cboStore.getSelectedItem() == null) {
             JOptionPane.showMessageDialog(this, "Store must select one", "Error", JOptionPane.ERROR_MESSAGE);
             txtSalary.requestFocus();
             txtName.setBackground(Color.white);
@@ -865,6 +861,8 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
             txtSalary.setBackground(Color.white);
             cboStore.setBackground(Color.red);
             flag = false;
+        }else{
+            flag = true;
         }
         return flag;
     }
@@ -879,16 +877,14 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
             txtPhone.setBackground(Color.red);
             txtPhone.requestFocus();
             flag = false;
-        }
-        if (!CheckForm.checkEmail(txtEmail.getText())) {
+        }else if (!CheckForm.checkEmail(txtEmail.getText())) {
             JOptionPane.showMessageDialog(this, "Email is not email format", "Error", JOptionPane.ERROR_MESSAGE);
             txtEmail.requestFocus();
             txtName.setBackground(Color.white);
             txtPhone.setBackground(Color.white);
             txtEmail.setBackground(Color.red);
             flag = false;
-        }
-        if (!CheckForm.isNumberic(txtSalary.getText())) {
+        }else if (!CheckForm.isNumberic(txtSalary.getText())) {
             JOptionPane.showMessageDialog(this, "Salary must numberic", "Error", JOptionPane.ERROR_MESSAGE);
             txtSalary.requestFocus();
             txtName.setBackground(Color.white);
@@ -898,6 +894,8 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
             txtPassword.setBackground(Color.white);
             txtSalary.setBackground(Color.red);
             flag = false;
+        }else{
+            flag = true;
         }
         return flag;
     }
