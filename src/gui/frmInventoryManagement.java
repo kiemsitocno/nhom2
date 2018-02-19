@@ -4,7 +4,10 @@
  * and open the template in the editor.
  */
 package gui;
-
+import interact.GUIInteraction;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author kiems
@@ -16,6 +19,7 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
      */
     public frmInventoryManagement() {
         initComponents();
+        refresh();
     }
 
     /**
@@ -224,11 +228,6 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
 
             }
         ));
-        tableInventory.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tableInventoryMouseClicked(evt);
-            }
-        });
         jScrollPane1.setViewportView(tableInventory);
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Input Items", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
@@ -304,11 +303,8 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
                     .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, 0)))
+                    .addComponent(jLabel7)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -331,25 +327,53 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSoldQuantityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSoldQuantityActionPerformed
-        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            GUIInteraction.readToTable("select * from View_ProductSold where datediff(dd,Date,getdate())=1", tableInventory);
+        } catch (SQLException ex) {
+            Logger.getLogger(frmInventoryManagement.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnSoldQuantityActionPerformed
 
     private void btnExpireDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExpireDateActionPerformed
-        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            GUIInteraction.readToTable("select * from Products where datediff(dd,ExpireDate,getdate())<7", tableInventory);
+        } catch (SQLException ex) {
+            Logger.getLogger(frmInventoryManagement.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnExpireDateActionPerformed
 
-    private void tableInventoryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableInventoryMouseClicked
-
-    }//GEN-LAST:event_tableInventoryMouseClicked
-
-    private void btnQuantityUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuantityUpdateActionPerformed
-
-    }//GEN-LAST:event_btnQuantityUpdateActionPerformed
-
     private void btnProductNAvailableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductNAvailableActionPerformed
-
+        try {
+            // TODO add your handling code here:
+            GUIInteraction.readToTable("select * from Products where QuantityAvailable=0", tableInventory);
+        } catch (SQLException ex) {
+            Logger.getLogger(frmInventoryManagement.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnProductNAvailableActionPerformed
 
+    private void btnQuantityUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuantityUpdateActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_btnQuantityUpdateActionPerformed
+    
+    private void refresh(){
+        int totalCate=GUIInteraction.countQuantity("select count(*) as c from Categories");
+        txtTotalCate.setText(String.valueOf(totalCate));
+        int totalProduct=GUIInteraction.countQuantity("select count(*) as c from Products");
+        txtTotalProduct.setText(String.valueOf(totalProduct));
+        int productAvaliable=GUIInteraction.countQuantity("select sum(QuantityAvailable) as Total from Products");
+        txtProductAvailable.setText(String.valueOf(productAvaliable));
+        int productNotAvaliable=GUIInteraction.countQuantity("select sum(QuantityAvailable) as Total from Products where QuantityAvailable<0");
+        txtProductNAvailable.setText(String.valueOf(productNotAvaliable));
+        int productTranstract=GUIInteraction.countQuantity("select sum(Quantity) as Total from View_Trantract where datediff(dd,Date,getdate())=1");
+        txtProductTranstract.setText(String.valueOf(productTranstract));
+        int productSold=GUIInteraction.countQuantity("select sum(Sold) as Total from View_ProductSold where datediff(dd,Date,getdate())=1");
+        txtSoldQuantity.setText(String.valueOf(productSold));
+        int productExpire=GUIInteraction.countQuantity("select count(*) from Products where datediff(dd,ExpireDate,getdate())<7");
+        txtExpireDate.setText(String.valueOf(productExpire));
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExpireDate;
