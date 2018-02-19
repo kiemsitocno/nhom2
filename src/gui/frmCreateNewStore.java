@@ -341,6 +341,10 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         // TODO add your handling code here:
         btnCreate.setEnabled(true);
+        if(txtName.getText().trim().length()==0){
+            JOptionPane.showMessageDialog(this, "Please chose one row from table");
+            return;
+        }
         enableTXT();
         if (btnEdit.getText().equals("Edit")) {
             btnEdit.setText("Save");
