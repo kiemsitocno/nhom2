@@ -488,6 +488,11 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
         btnInventorySearch.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnInventorySearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconBrower.png"))); // NOI18N
         btnInventorySearch.setText("Search");
+        btnInventorySearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInventorySearchActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
         jPanel15.setLayout(jPanel15Layout);
@@ -885,6 +890,16 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
             refresh();
         }
     }//GEN-LAST:event_btnInventoryDeleteActionPerformed
+
+    private void btnInventorySearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventorySearchActionPerformed
+        // TODO add your handling code here:
+        String searchName = txtInventorySearch.getText().trim();
+        try {
+            GUIInteraction.readToTable("select * from View_Manager where Name like N'%" + searchName + "%' AND RoleName='Inventory'", tableInventory);
+        } catch (SQLException ex) {
+            Logger.getLogger(frmCreateNewStore.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnInventorySearchActionPerformed
     
     private void refresh() {
         try {
