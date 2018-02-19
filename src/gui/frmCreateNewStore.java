@@ -362,6 +362,10 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        if(txtName.getText().trim().length()==0){
+            JOptionPane.showMessageDialog(this, "Please chose one row from table");
+            return;
+        }
         int i = JOptionPane.showConfirmDialog(this, "Do you want to delete this Store.?");
         if (i == JOptionPane.YES_OPTION) {
             try {
