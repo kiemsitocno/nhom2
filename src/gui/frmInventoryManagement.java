@@ -24,6 +24,8 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
     public frmInventoryManagement() {
         initComponents();
         getStatus();
+        valid();
+        warning();
     }
 
     /**
@@ -52,7 +54,7 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
         btnExpireDate = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         txtProductTranstract = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
+        labelValid = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableInventory = new javax.swing.JTable();
@@ -144,9 +146,9 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
         txtProductTranstract.setEditable(false);
         txtProductTranstract.setBackground(new java.awt.Color(204, 204, 204));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 0, 0));
-        jLabel1.setText("Valid :");
+        labelValid.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        labelValid.setForeground(new java.awt.Color(255, 0, 0));
+        labelValid.setText("Valid :");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -188,7 +190,7 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnSoldQuantity)
-                            .addComponent(jLabel1))))
+                            .addComponent(labelValid))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -199,7 +201,7 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtProductTranstract, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel11)
-                        .addComponent(jLabel1))
+                        .addComponent(labelValid))
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel2)
                         .addComponent(txtTotalCate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -420,8 +422,23 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
         return true;
     }
     
-    private void getDataProduct(){
-        
+    private void valid(){
+        if(txtSoldQuantity.getText().equals(txtProductTranstract.getText())){
+            labelValid.setText("Data valid");
+        }else{
+            labelValid.setText("Data invalid");
+        }
+    }
+    
+    private void warning(){
+        int productNotAvaliable=GUIInteraction.countQuantity("select count(*) as Total from Products where QuantityAvailable=0");
+        if(productNotAvaliable!=0){
+            JOptionPane.showMessageDialog(null, "CẢNH BÁO! CÓ " + productNotAvaliable + " SẢN PHẨM HẾT HÀNG, HÃY NHẬP VỀ NGAY");
+        }
+        int productExpire=GUIInteraction.countQuantity("select count(*) from Products where datediff(dd,ExpireDate,getdate())<7");
+        if(productExpire!=0){
+            JOptionPane.showMessageDialog(null, "CẢNH BÁO! CÓ " + productExpire + " SẢN PHẨM SẮP HẾT HẠN SỬ DỤNG");
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -429,7 +446,6 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnProductNAvailable;
     private javax.swing.JButton btnQuantityUpdate;
     private javax.swing.JButton btnSoldQuantity;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
@@ -444,6 +460,7 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel labelValid;
     private javax.swing.JTable tableInventory;
     private javax.swing.JTextField txtExpireDate;
     private javax.swing.JTextField txtProductAvailable;
