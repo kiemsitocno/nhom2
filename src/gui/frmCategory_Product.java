@@ -6,6 +6,8 @@
 package gui;
 
 import entity.Category;
+import entity.Product;
+import interact.CheckForm;
 import interact.DataInteraction;
 import interact.GUIInteraction;
 import java.awt.Color;
@@ -23,7 +25,6 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
     public frmCategory_Product() {
         initComponents();
         refresh();
-        refreshProduct();
     }
 
     /**
@@ -291,6 +292,8 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
 
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Information", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
+        txtProductID.setEnabled(false);
+
         jLabel7.setText("ID :");
 
         btnAddProduct.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -320,26 +323,33 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
 
         jLabel8.setText("Name :");
 
+        txtProductName.setEnabled(false);
+
         jLabel9.setText("Volume :");
+
+        txtVolume.setEnabled(false);
 
         jLabel10.setText("Price :");
 
+        txtPrice.setEnabled(false);
+
         jLabel11.setText("Exprired date :");
+
+        txtExpireDate.setEnabled(false);
 
         jLabel12.setText("Quantity :");
 
+        txtQuantity.setEnabled(false);
+
         jLabel13.setText("Category :");
 
-        cbbCategory.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbbCategoryItemStateChanged(evt);
-            }
-        });
+        cbbCategory.setEnabled(false);
 
         jLabel14.setText("Description :");
 
         txtDescription.setColumns(20);
         txtDescription.setRows(5);
+        txtDescription.setEnabled(false);
         jScrollPane3.setViewportView(txtDescription);
 
         jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Table Information", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
@@ -352,6 +362,11 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
 
             }
         ));
+        tableProduct.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableProductMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tableProduct);
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
@@ -521,35 +536,12 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
 
-    private void cbbCategoryItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbCategoryItemStateChanged
-//        try {                                             
-//            String cateName=cbbCategory.getSelectedItem().toString();
-//            int cateid = 0;
-//            try {
-//                
-//                ResultSet rs = DataInteraction.queryResultSet("select CategoryID from Categories where CategoryName='" + cateName+"'");
-//                
-//                while(rs.next())
-//                    cateid= rs.getInt("CategoryID");
-//            } catch (SQLException ex) {
-//                Logger.getLogger(frmCategory_Product.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//            String sql="select * from Products where CategoryID="+cateid;
-//            
-//            interact.GUIInteraction.readToTable(sql,tableProduct);
-//            
-//        } catch (SQLException ex) {
-//            Logger.getLogger(frmCategory_Product.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        
-    }//GEN-LAST:event_cbbCategoryItemStateChanged
-
     private void btnAddCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCategoryActionPerformed
         // TODO add your handling code here:
-        enabletxtCategoryName();
+        enabletxt();
         btnEditCategory.setEnabled(false);
         if (btnAddCategory.getText().equals("Add")) {
-            resettxtCategoryName();
+            resettxt();
             btnAddCategory.setText("Save");
         } else if (btnAddCategory.getText().equals("Save")) {
             if (!validateCategory()) {
@@ -563,23 +555,56 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
             refresh();
             resetForm();
             btnAddCategory.setText("Add");
-            resettxtCategoryName();
-            disabletxtCategoryName();
+            resettxt();
+            disabletxt();
             btnEditCategory.setEnabled(true);
         }
     }//GEN-LAST:event_btnAddCategoryActionPerformed
 
     private void btnAddProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddProductActionPerformed
         // TODO add your handling code here:
+        enabletxt();
+        btnEditProduct.setEnabled(false);
+        if (btnAddProduct.getText().equals("Add")) {
+            resettxt();
+            btnAddProduct.setText("Save");
+        } else if (btnAddProduct.getText().equals("Save")) {
+            if (!validateCategory()) {
+                return;
+            }
+            
+            String condition = cbbCategory.getSelectedItem().toString();
+            String categoryID = DataInteraction.getCode("Categories", "CategoryName", condition, "CategoryID");
+            int countProduct = GUIInteraction.indentityID("select top 1 * from Products where CategoryID='"+categoryID+"' order by ProductID Desc", "ProductID") + 1;
+            String productID = categoryID + "PD" +countProduct;
+            entity.Product product = new Product(
+                    productID, 
+                    txtProductName.getText(),
+                    Integer.valueOf(txtQuantity.getText()),
+                    Integer.valueOf(txtPrice.getText()),
+                    entity.DateUtils.now("MM/dd/yy"),
+                    txtExpireDate.getText(),
+                    txtDescription.getText(),
+                    categoryID,
+                    Integer.valueOf(txtVolume.getText()));
+            
+            interact.Product.insertProduct(product);
+            refresh();
+            resetForm();
+            btnAddProduct.setText("Add");
+            resettxt();
+            disabletxt();
+            btnEditProduct.setEnabled(true);
+        }
     }//GEN-LAST:event_btnAddProductActionPerformed
 
     private void btnSearchCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchCategoryActionPerformed
         // TODO add your handling code here:
-        enabletxtCategoryName();
+        enabletxt();
         btnEditCategory.setEnabled(false);
         btnAddCategory.setEnabled(false);
         if (btnSearchCategory.getText().equals("Search")) {
-            resettxtCategoryName();
+            resettxt();
             btnSearchCategory.setText("OKE");
         }else if (btnSearchCategory.getText().equals("OKE")) {
             String cateName = txtCategoryName.getText().trim();
@@ -590,8 +615,8 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
             }
             resetForm();
             btnSearchCategory.setText("Search");
-            resettxtCategoryName();
-            disabletxtCategoryName();
+            resettxt();
+            disabletxt();
             btnEditCategory.setEnabled(true);
             btnAddCategory.setEnabled(true);
         }
@@ -627,7 +652,7 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Please chose one row from table");
             return;
         }
-        enabletxtCategoryName();
+        enabletxt();
         if (btnEditCategory.getText().equals("Edit")) {
             btnEditCategory.setText("Save");
         } else if (btnEditCategory.getText().equals("Save")) {
@@ -638,7 +663,7 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
             interact.Categories.editCategory(ct);
             refresh();
             btnEditCategory.setText("Edit");
-            disabletxtCategoryName();
+            disabletxt();
             btnAddCategory.setEnabled(true);
         }
 
@@ -650,6 +675,19 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
         txtCategoryID.setText(String.valueOf(tableCategory.getValueAt(i, 0)));
         txtCategoryName.setText(String.valueOf(tableCategory.getValueAt(i, 1)));
     }//GEN-LAST:event_tableCategoryMouseClicked
+
+    private void tableProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableProductMouseClicked
+        // TODO add your handling code here:
+        int i = tableProduct.getSelectedRow();
+        txtProductID.setText(String.valueOf(tableProduct.getValueAt(i, 0)));
+        txtProductName.setText(String.valueOf(tableProduct.getValueAt(i, 1)));
+        txtQuantity.setText(String.valueOf(tableProduct.getValueAt(i, 2)));
+        txtPrice.setText(String.valueOf(tableProduct.getValueAt(i, 3)));
+        txtExpireDate.setText(String.valueOf(tableProduct.getValueAt(i, 5)));
+        txtDescription.setText(String.valueOf(tableProduct.getValueAt(i, 6)));
+        txtCategoryID.setText(String.valueOf(tableProduct.getValueAt(i, 7)));
+        txtVolume.setText(String.valueOf(tableProduct.getValueAt(i, 8)));
+    }//GEN-LAST:event_tableProductMouseClicked
     
     private boolean validateCategory() {
         boolean flag = true;
@@ -669,20 +707,36 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
         }
         return flag;
     }
+    
+    private boolean validateAddProduct() {
+        boolean flag = true;
+        if (!CheckForm.isEmpty(txtProductName.getText())) {
+            JOptionPane.showMessageDialog(this, "Name is not blank", "Error", JOptionPane.ERROR_MESSAGE);
+            txtProductName.setBackground(Color.red);
+            txtProductName.requestFocus();
+            flag = false;
+        }else if (!GUIInteraction.checkDuplicateName(txtProductName.getText().trim(), "select * from Products", "ProductName")) {
+            JOptionPane.showMessageDialog(this, "Name is not duplicatated", "Error", JOptionPane.ERROR_MESSAGE);
+            txtProductName.setBackground(Color.red);
+            txtProductName.requestFocus();
+            flag = false;
+        }else if (!CheckForm.isNumberic(txtVolume.getText())) {
+            JOptionPane.showMessageDialog(this, "Volume must numberic", "Error", JOptionPane.ERROR_MESSAGE);
+            txtVolume.requestFocus();
+            txtProductName.setBackground(Color.white);
+            txtVolume.setBackground(Color.red);
+            flag = false;
+        }else{
+            flag = true;
+        }
+        return flag;
+    }
 
     private void refresh() {
         try {
             interact.GUIInteraction.readToTable("select * from Categories", tableCategory);
             interact.GUIInteraction.readToCombo("select * from Categories", cbbCategory, "CategoryName");
-        } catch (SQLException ex) {
-            Logger.getLogger(frmCategory_Product.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void refreshProduct() {
-        String sql = "SELECT ProductID,ProductName,QuantityAvailable,Price,DateImport,ExpireDate,Descript,CategoryName,Volume FROM Products,Categories where Categories.CategoryID=Products.CategoryID";
-        try {
-            interact.GUIInteraction.readToTable(sql, tableProduct);
+            interact.GUIInteraction.readToTable("SELECT ProductID,ProductName,QuantityAvailable,Price,DateImport,ExpireDate,Descript,CategoryName,Volume FROM Products,Categories where Categories.CategoryID=Products.CategoryID", tableProduct);
         } catch (SQLException ex) {
             Logger.getLogger(frmCategory_Product.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -692,27 +746,41 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
         txtCategoryName.setText("");
     }
 
-    public void resetProductForm() {
-        txtProductID.setText("");
-        txtProductName.setText("");
-        txtVolume.setText("");
-        txtPrice.setText("");
-        txtExpireDate.setText("");
-        txtQuantity.setText("");
-        cbbCategory.setSelectedIndex(0);
-        txtDescription.setText("");
-    }
-
-    private void enabletxtCategoryName() {
+    private void enabletxt() {
         txtCategoryName.setEnabled(true);
+        
+        txtProductName.setEnabled(true);
+        txtVolume.setEnabled(true);
+        txtPrice.setEnabled(true);
+        txtExpireDate.setEnabled(true);
+        txtQuantity.setEnabled(true);
+        cbbCategory.setEnabled(true);
+        txtDescription.setEnabled(true);
     }
 
-    private void disabletxtCategoryName() {
+    private void disabletxt() {
         txtCategoryName.setEnabled(false);
+        
+        txtProductName.setEnabled(false);
+        txtVolume.setEnabled(false);
+        txtPrice.setEnabled(false);
+        txtExpireDate.setEnabled(false);
+        txtQuantity.setEnabled(false);
+        cbbCategory.setEnabled(false);
+        txtDescription.setEnabled(false);
     }
 
-    private void resettxtCategoryName() {
+    private void resettxt() {
         txtCategoryName.setText(null);
+        
+        txtProductID.setText(null);
+        txtProductName.setText(null);
+        txtVolume.setText(null);
+        txtPrice.setText(null);
+        txtExpireDate.setText(null);
+        txtQuantity.setText(null);
+        cbbCategory.setSelectedIndex(-1);
+        txtDescription.setText(null);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

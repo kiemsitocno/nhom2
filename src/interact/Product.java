@@ -15,6 +15,27 @@ import javax.swing.*;
  * @author kiems
  */
 public class Product {
+    public static boolean insertProduct(entity.Product product) {
+        String sql = "insert into Products values(?,?,?,?,?,?,?,?,?)";
+        try {
+            PreparedStatement pst = DataInteraction.getConnect().prepareStatement(sql);
+            pst.setString(1, product.getProductID());
+            pst.setString(2, product.getProductName());
+            pst.setInt(3, product.getQuantityAvailable());
+            pst.setInt(4, product.getPrice());
+            pst.setString(5, product.getDateImport());
+            pst.setString(6, product.getExpireDate());
+            pst.setString(7, product.getDescript());
+            pst.setString(8, product.getCategoryID());
+            pst.setInt(9, product.getVolume());
+            JOptionPane.showMessageDialog(null, "Insert product success", "Successfully", JOptionPane.INFORMATION_MESSAGE);
+            return (pst.executeUpdate() == 1);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+            return false;
+        }
+    }
+    
     public static boolean editProducts(entity.Product product) {
         String sql = "update Products set ProductName=?, QuantityAvailable=?, Price=?, DateImport=?, ExpireDate=?, Descript=?, CategoryID=?, Volume=? where ProductID=?";
         try {
