@@ -5,9 +5,13 @@
  */
 package gui;
 import interact.GUIInteraction;
+import interact.CheckForm;
+import entity.Product;
+import java.awt.Color;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 /**
  *
  * @author kiems
@@ -19,7 +23,7 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
      */
     public frmInventoryManagement() {
         initComponents();
-        refresh();
+        getStatus();
     }
 
     /**
@@ -235,6 +239,8 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel10.setText("Quantity update :");
 
+        txtQuantityUpdate.setEnabled(false);
+
         btnQuantityUpdate.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnQuantityUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconUpdate.png"))); // NOI18N
         btnQuantityUpdate.setText("Update");
@@ -355,17 +361,43 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
 
     private void btnQuantityUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuantityUpdateActionPerformed
         // TODO add your handling code here:
-        
+        txtQuantityUpdate.setEnabled(true);
+        if(txtProductNAvailable.getText().trim().length()==0){
+            JOptionPane.showMessageDialog(this, "Please chose one row from table");
+            return;
+        }
+        if (btnQuantityUpdate.getText().equals("Update")) {
+            btnQuantityUpdate.setText("Save");
+        } else if (btnQuantityUpdate.getText().equals("Save")) {
+            if (!validateProduct()) {
+                return;
+            }
+            int i = tableInventory.getSelectedRow();
+            Product product = new Product(
+                String.valueOf(tableInventory.getValueAt(i, 0)),
+                String.valueOf(tableInventory.getValueAt(i, 1)),
+                Integer.parseInt(txtQuantityUpdate.getText()),
+                Integer.valueOf((String) tableInventory.getValueAt(i, 3)),
+                String.valueOf(tableInventory.getValueAt(i, 4)),
+                String.valueOf(tableInventory.getValueAt(i, 5)),
+                String.valueOf(tableInventory.getValueAt(i, 6)),
+                String.valueOf(tableInventory.getValueAt(i, 7)),
+                Integer.valueOf((String) tableInventory.getValueAt(i, 8)));
+            interact.Product.editProducts(product);
+            getStatus();
+            btnQuantityUpdate.setText("Update");
+            txtQuantityUpdate.setEnabled(false);
+        }
     }//GEN-LAST:event_btnQuantityUpdateActionPerformed
     
-    private void refresh(){
+    private void getStatus(){
         int totalCate=GUIInteraction.countQuantity("select count(*) as c from Categories");
         txtTotalCate.setText(String.valueOf(totalCate));
         int totalProduct=GUIInteraction.countQuantity("select count(*) as c from Products");
         txtTotalProduct.setText(String.valueOf(totalProduct));
         int productAvaliable=GUIInteraction.countQuantity("select sum(QuantityAvailable) as Total from Products");
         txtProductAvailable.setText(String.valueOf(productAvaliable));
-        int productNotAvaliable=GUIInteraction.countQuantity("select sum(QuantityAvailable) as Total from Products where QuantityAvailable<0");
+        int productNotAvaliable=GUIInteraction.countQuantity("select count(*) as Total from Products where QuantityAvailable=0");
         txtProductNAvailable.setText(String.valueOf(productNotAvaliable));
         int productTranstract=GUIInteraction.countQuantity("select sum(Quantity) as Total from View_Trantract where datediff(dd,Date,getdate())=1");
         txtProductTranstract.setText(String.valueOf(productTranstract));
@@ -373,6 +405,23 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
         txtSoldQuantity.setText(String.valueOf(productSold));
         int productExpire=GUIInteraction.countQuantity("select count(*) from Products where datediff(dd,ExpireDate,getdate())<7");
         txtExpireDate.setText(String.valueOf(productExpire));
+    }
+    
+    private boolean validateProduct(){
+        boolean flag = true;
+        if (!CheckForm.isNumberic(txtQuantityUpdate.getText())) {
+            JOptionPane.showMessageDialog(this, "Quantity is not numberic", "Error", JOptionPane.ERROR_MESSAGE);
+            txtQuantityUpdate.requestFocus();
+            txtQuantityUpdate.setBackground(Color.red);
+            flag = false;
+        }else{
+            flag = true;
+        }
+        return true;
+    }
+    
+    private void getDataProduct(){
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

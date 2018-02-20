@@ -426,6 +426,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtQuantityUpdate">
+          <Properties>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btnQuantityUpdate">
           <Properties>
