@@ -6,8 +6,8 @@
 package entity;
 
 /**
- *
- * @author kiems
+ * ĐỐI TƯỢNG USER 
+ * @author NHÓM 2
  */
 public class User {
     private String userID;

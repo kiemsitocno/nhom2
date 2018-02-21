@@ -11,12 +11,15 @@ import interact.CheckForm;
 import interact.DataInteraction;
 import interact.GUIInteraction;
 import java.awt.Color;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
+/**
+ * GIAO DIỆN QUẢN LÝ PRODUCT VÀ CATEGORY
+ * @author NHÓM 2
+ */
 public class frmCategory_Product extends javax.swing.JInternalFrame {
 
     /**
@@ -36,7 +39,7 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        tabCategoryProducts = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -91,7 +94,12 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
         };
         tableCategory.getTableHeader().setReorderingAllowed(false);
 
-        jTabbedPane1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tabCategoryProducts.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tabCategoryProducts.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabCategoryProductsMouseClicked(evt);
+            }
+        });
 
         jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -262,7 +270,7 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Categories", new javax.swing.ImageIcon(getClass().getResource("/images/iconCategories.png")), jPanel1); // NOI18N
+        tabCategoryProducts.addTab("Categories", new javax.swing.ImageIcon(getClass().getResource("/images/iconCategories.png")), jPanel1); // NOI18N
 
         jPanel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -308,18 +316,38 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
         btnDeleteProduct.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnDeleteProduct.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconDelete.png"))); // NOI18N
         btnDeleteProduct.setText("Delete");
+        btnDeleteProduct.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteProductActionPerformed(evt);
+            }
+        });
 
         btnSearchProduct.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnSearchProduct.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconSearch.png"))); // NOI18N
         btnSearchProduct.setText("Search");
+        btnSearchProduct.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchProductActionPerformed(evt);
+            }
+        });
 
         btnCancelProduct.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnCancelProduct.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconCancel.png"))); // NOI18N
         btnCancelProduct.setText("Cancel");
+        btnCancelProduct.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelProductActionPerformed(evt);
+            }
+        });
 
         btnEditProduct.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnEditProduct.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconEdit.png"))); // NOI18N
         btnEditProduct.setText("Edit");
+        btnEditProduct.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditProductActionPerformed(evt);
+            }
+        });
 
         jLabel8.setText("Name :");
 
@@ -513,7 +541,7 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
                 .addGap(0, 0, 0))
         );
 
-        jTabbedPane1.addTab("Products", new javax.swing.ImageIcon(getClass().getResource("/images/iconProducts.png")), jPanel2); // NOI18N
+        tabCategoryProducts.addTab("Products", new javax.swing.ImageIcon(getClass().getResource("/images/iconProducts.png")), jPanel2); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -521,14 +549,14 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1392, Short.MAX_VALUE)
+                .addComponent(tabCategoryProducts, javax.swing.GroupLayout.DEFAULT_SIZE, 1392, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 924, Short.MAX_VALUE)
+                .addComponent(tabCategoryProducts, javax.swing.GroupLayout.DEFAULT_SIZE, 924, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
 
@@ -537,11 +565,11 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
 
 
     private void btnAddCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCategoryActionPerformed
-        // TODO add your handling code here:
-        enabletxt();
+        // THÊM 1 CATEGORY MỚI
+        enableTXT();
         btnEditCategory.setEnabled(false);
         if (btnAddCategory.getText().equals("Add")) {
-            resettxt();
+            resetTXT();
             btnAddCategory.setText("Save");
         } else if (btnAddCategory.getText().equals("Save")) {
             if (!validateCategory()) {
@@ -553,23 +581,23 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
             entity.Category ct = new Category(CategoryID, txtCategoryName.getText());
             interact.Categories.insertCategory(ct);
             refresh();
-            resetForm();
+            resetTXT();
             btnAddCategory.setText("Add");
-            resettxt();
-            disabletxt();
+            resetTXT();
+            disableTXT();
             btnEditCategory.setEnabled(true);
         }
     }//GEN-LAST:event_btnAddCategoryActionPerformed
 
     private void btnAddProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddProductActionPerformed
-        // TODO add your handling code here:
-        enabletxt();
+        // THÊM 1 SẢN PHẨM MỚI
+        enableTXT();
         btnEditProduct.setEnabled(false);
         if (btnAddProduct.getText().equals("Add")) {
-            resettxt();
+            resetTXT();
             btnAddProduct.setText("Save");
         } else if (btnAddProduct.getText().equals("Save")) {
-            if (!validateCategory()) {
+            if (!validateAddProduct()) {
                 return;
             }
             
@@ -590,21 +618,21 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
             
             interact.Product.insertProduct(product);
             refresh();
-            resetForm();
+            resetTXT();
             btnAddProduct.setText("Add");
-            resettxt();
-            disabletxt();
+            resetTXT();
+            disableTXT();
             btnEditProduct.setEnabled(true);
         }
     }//GEN-LAST:event_btnAddProductActionPerformed
 
     private void btnSearchCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchCategoryActionPerformed
-        // TODO add your handling code here:
-        enabletxt();
+        // TÌM KIẾM CATEGORY THEO TÊN
+        enableTXT();
         btnEditCategory.setEnabled(false);
         btnAddCategory.setEnabled(false);
         if (btnSearchCategory.getText().equals("Search")) {
-            resettxt();
+            resetTXT();
             btnSearchCategory.setText("OKE");
         }else if (btnSearchCategory.getText().equals("OKE")) {
             String cateName = txtCategoryName.getText().trim();
@@ -613,17 +641,17 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
             } catch (SQLException ex) {
                 Logger.getLogger(frmCategory_Product.class.getName()).log(Level.SEVERE, null, ex);
             }
-            resetForm();
+            resetTXT();
             btnSearchCategory.setText("Search");
-            resettxt();
-            disabletxt();
+            resetTXT();
+            disableTXT();
             btnEditCategory.setEnabled(true);
             btnAddCategory.setEnabled(true);
         }
     }//GEN-LAST:event_btnSearchCategoryActionPerformed
 
     private void btnDeleteCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteCategoryActionPerformed
-        // TODO add your handling code here:
+        // XÓA 1 CATEGORY NẾU NÓ KHÔNG CHỨA SẢN PHẨM NÀO
         if(txtCategoryID.getText().trim().length()==0){
             JOptionPane.showMessageDialog(this, "Please chose one row from table");
             return;
@@ -646,13 +674,13 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnDeleteCategoryActionPerformed
 
     private void btnEditCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditCategoryActionPerformed
-        // TODO add your handling code here:
+        // SỬA THÔNG TIN 1 CATEGORY
         btnAddCategory.setEnabled(false);
         if(txtCategoryID.getText().trim().length()==0){
             JOptionPane.showMessageDialog(this, "Please chose one row from table");
             return;
         }
-        enabletxt();
+        enableTXT();
         if (btnEditCategory.getText().equals("Edit")) {
             btnEditCategory.setText("Save");
         } else if (btnEditCategory.getText().equals("Save")) {
@@ -663,33 +691,129 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
             interact.Categories.editCategory(ct);
             refresh();
             btnEditCategory.setText("Edit");
-            disabletxt();
+            disableTXT();
             btnAddCategory.setEnabled(true);
         }
 
     }//GEN-LAST:event_btnEditCategoryActionPerformed
 
     private void tableCategoryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableCategoryMouseClicked
-        // VŨ THÊM VÀO (NHỚ XÓA DÒNG COMMENT NÀY KHI DEMO)
+        // LOAD DỮ LIỆU TỪ BẢNG CATEGORY LÊN TEXTFIELD
         int i = tableCategory.getSelectedRow();
         txtCategoryID.setText(String.valueOf(tableCategory.getValueAt(i, 0)));
         txtCategoryName.setText(String.valueOf(tableCategory.getValueAt(i, 1)));
     }//GEN-LAST:event_tableCategoryMouseClicked
 
     private void tableProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableProductMouseClicked
-        // TODO add your handling code here:
+        // LOAD DỮ LIỆU TỪ BẢNG PRODUCT LÊN TEXTFIELD
         int i = tableProduct.getSelectedRow();
         txtProductID.setText(String.valueOf(tableProduct.getValueAt(i, 0)));
         txtProductName.setText(String.valueOf(tableProduct.getValueAt(i, 1)));
         txtQuantity.setText(String.valueOf(tableProduct.getValueAt(i, 2)));
         txtPrice.setText(String.valueOf(tableProduct.getValueAt(i, 3)));
-        txtExpireDate.setText(String.valueOf(tableProduct.getValueAt(i, 5)));
+        txtExpireDate.setText(String.valueOf(tableProduct.getValueAt(i, 5)).substring(0,10));
         txtDescription.setText(String.valueOf(tableProduct.getValueAt(i, 6)));
-        txtCategoryID.setText(String.valueOf(tableProduct.getValueAt(i, 7)));
+        cbbCategory.setSelectedItem(String.valueOf(tableProduct.getValueAt(i, 7)));
         txtVolume.setText(String.valueOf(tableProduct.getValueAt(i, 8)));
     }//GEN-LAST:event_tableProductMouseClicked
+
+    private void btnDeleteProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteProductActionPerformed
+        // XÓA 1 SẢN PHẨM NẾU NÓ KHÔNG NẰM TRONG BẤT KỲ HÓA ĐƠN NÀO
+        if(txtProductID.getText().trim().length()==0){
+            JOptionPane.showMessageDialog(this, "Please chose one row from table");
+            return;
+        }
+        int i = JOptionPane.showConfirmDialog(this, "Do you want to delete this Product.?");
+        if (i == JOptionPane.YES_OPTION) {
+            try {
+                int countUser = GUIInteraction.countRecord("select * from OrderDetails where ProductID='" + txtProductID.getText() + "'");
+                if (countUser > 0) {
+                    JOptionPane.showMessageDialog(this, "This Product belong to some Bills, can't delete it");
+                }else{
+                    interact.Product.deleteProduct(txtProductID.getText());
+                    refresh();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(frmCategory_Product.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_btnDeleteProductActionPerformed
+
+    private void btnCancelProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelProductActionPerformed
+        // RESET TẤT CẢ BUTTON VÀ TEXTFIELD VỀ MẶC ĐỊNH
+        disableTXT();
+        resetTXT();
+        btnAddProduct.setText("Add");
+        btnAddProduct.setEnabled(true);
+        btnEditProduct.setText("Edit");
+        btnEditProduct.setEnabled(true);
+    }//GEN-LAST:event_btnCancelProductActionPerformed
+
+    private void btnEditProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditProductActionPerformed
+        // SỬA THÔNG TIN 1 SẢN PHẨM
+        btnAddProduct.setEnabled(false);
+        if(txtProductName.getText().trim().length()==0){
+            JOptionPane.showMessageDialog(this, "Please chose one row from table");
+            return;
+        }
+        enabletxtProduct();
+        if (btnEditProduct.getText().equals("Edit")) {
+            btnEditProduct.setText("Save");
+        } else if (btnEditProduct.getText().equals("Save")) {
+            if (!validateEditProduct()) {
+                return;
+            }
+            Product product = new Product(
+                    txtProductID.getText(), 
+                    txtProductName.getText(),
+                    Integer.valueOf(txtQuantity.getText()),
+                    Integer.valueOf(txtPrice.getText()),
+                    entity.DateUtils.now("MM/dd/yy"),
+                    txtExpireDate.getText(),
+                    txtDescription.getText(),
+                    DataInteraction.getCode("Categories", "CategoryName", cbbCategory.getSelectedItem().toString(), "CategoryID"),
+                    Integer.valueOf(txtVolume.getText()));
+            interact.Product.editProducts(product);
+            refresh();
+            btnEditProduct.setText("Edit");
+            disableTXT();
+            btnAddProduct.setEnabled(false);
+        }
+    }//GEN-LAST:event_btnEditProductActionPerformed
+
+    private void btnSearchProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchProductActionPerformed
+        // TÌM KIẾM SẢN PHẨM THEO TÊN
+        txtProductName.setEnabled(true);
+        btnEditProduct.setEnabled(false);
+        btnAddProduct.setEnabled(false);
+        if (btnSearchProduct.getText().equals("Search")) {
+            resetTXT();
+            btnSearchProduct.setText("OKE");
+        }else if (btnSearchProduct.getText().equals("OKE")) {
+            String productName = txtProductName.getText().trim();
+            try {
+                GUIInteraction.readToTable("select * from Products where ProductName like N'%" + productName + "%'", tableProduct);
+            } catch (SQLException ex) {
+                Logger.getLogger(frmCategory_Product.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            resetTXT();
+            btnSearchProduct.setText("Search");
+            resetTXT();
+            disableTXT();
+            btnEditProduct.setEnabled(true);
+            btnAddProduct.setEnabled(true);
+        }
+    }//GEN-LAST:event_btnSearchProductActionPerformed
+
+    private void tabCategoryProductsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabCategoryProductsMouseClicked
+        // RESET TẤT CẢ BUTTON VÀ TEXTFIELD VỀ MẶC ĐỊNH KHI CHUYỂN TAB
+        disableTXT();
+        resetTXT();
+        resetButton();
+    }//GEN-LAST:event_tabCategoryProductsMouseClicked
     
     private boolean validateCategory() {
+        // VALIDATE DỮ LIỆU NHẬP VÀO KHI INSERT HOẶC UPDATE CATEGORY
         boolean flag = true;
         if (!interact.CheckForm.isEmpty(txtCategoryName.getText())) {
             JOptionPane.showMessageDialog(this, "Name is not blank", "Required", JOptionPane.ERROR_MESSAGE);
@@ -709,6 +833,7 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
     }
     
     private boolean validateAddProduct() {
+        // VALIDATE DỮ LIỆU NHẬP VÀO KHI INSERT PRODUCT 
         boolean flag = true;
         if (!CheckForm.isEmpty(txtProductName.getText())) {
             JOptionPane.showMessageDialog(this, "Name is not blank", "Error", JOptionPane.ERROR_MESSAGE);
@@ -720,11 +845,63 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
             txtProductName.setBackground(Color.red);
             txtProductName.requestFocus();
             flag = false;
-        }else if (!CheckForm.isNumberic(txtVolume.getText())) {
+        }else if(!validateEditProduct()){
+            flag = false;
+        }else if (!CheckForm.isNumberic(txtQuantity.getText())) {
+            JOptionPane.showMessageDialog(this, "Quantity must numberic", "Error", JOptionPane.ERROR_MESSAGE);
+            txtQuantity.requestFocus();
+            txtProductName.setBackground(Color.white);
+            txtVolume.setBackground(Color.white);
+            txtPrice.setBackground(Color.white);
+            txtExpireDate.setBackground(Color.white);
+            txtQuantity.setBackground(Color.red);
+            flag = false;
+        }else if (cbbCategory.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(this, "Category must select one", "Error", JOptionPane.ERROR_MESSAGE);
+            txtQuantity.requestFocus();
+            txtProductName.setBackground(Color.white);
+            txtVolume.setBackground(Color.white);
+            txtPrice.setBackground(Color.white);
+            txtExpireDate.setBackground(Color.white);
+            txtQuantity.setBackground(Color.white);
+            cbbCategory.setBackground(Color.red);
+            flag = false;
+        }else{
+            txtQuantity.requestFocus();
+            txtProductName.setBackground(Color.white);
+            txtVolume.setBackground(Color.white);
+            txtPrice.setBackground(Color.white);
+            txtExpireDate.setBackground(Color.white);
+            txtQuantity.setBackground(Color.white);
+            cbbCategory.setBackground(Color.white);
+            flag = true;
+        }
+        return flag;
+    }
+    
+    public boolean validateEditProduct(){
+        // VALIDATE DỮ LIỆU NHẬP VÀO KHI UPDATE PRODUCT 
+        boolean flag = true;
+        if (!CheckForm.isNumberic(txtVolume.getText())) {
             JOptionPane.showMessageDialog(this, "Volume must numberic", "Error", JOptionPane.ERROR_MESSAGE);
             txtVolume.requestFocus();
             txtProductName.setBackground(Color.white);
             txtVolume.setBackground(Color.red);
+            flag = false;
+        }else if (!CheckForm.isNumberic(txtPrice.getText())) {
+            JOptionPane.showMessageDialog(this, "Price must numberic", "Error", JOptionPane.ERROR_MESSAGE);
+            txtPrice.requestFocus();
+            txtProductName.setBackground(Color.white);
+            txtVolume.setBackground(Color.white);
+            txtPrice.setBackground(Color.red);
+            flag = false;
+        }else if (!CheckForm.validateDate(txtExpireDate.getText())) {
+            JOptionPane.showMessageDialog(this, "Expire Date must is date format (MM-DD-YYYY)", "Error", JOptionPane.ERROR_MESSAGE);
+            txtExpireDate.requestFocus();
+            txtProductName.setBackground(Color.white);
+            txtVolume.setBackground(Color.white);
+            txtPrice.setBackground(Color.white);
+            txtExpireDate.setBackground(Color.red);
             flag = false;
         }else{
             flag = true;
@@ -733,6 +910,7 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
     }
 
     private void refresh() {
+        // PHƯƠNG THỨC LOAD DỮ LIỆU RA BẢNG VÀ COMBOBOX
         try {
             interact.GUIInteraction.readToTable("select * from Categories", tableCategory);
             interact.GUIInteraction.readToCombo("select * from Categories", cbbCategory, "CategoryName");
@@ -741,12 +919,21 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
             Logger.getLogger(frmCategory_Product.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    public void resetForm() {
-        txtCategoryName.setText("");
+    
+    private void resetButton(){
+        // RESET TẤT CẢ BUTTON VỀ MẶC ĐỊNH
+        btnAddCategory.setText("Add");
+        btnAddCategory.setEnabled(true);
+        btnEditCategory.setText("Edit");
+        btnEditCategory.setEnabled(true);
+        btnAddProduct.setText("Add");
+        btnAddProduct.setEnabled(true);
+        btnEditProduct.setText("Edit");
+        btnEditProduct.setEnabled(true);
     }
-
-    private void enabletxt() {
+    
+    private void enableTXT() {
+        // ENABLE TẤT CẢ TEXT FIELD
         txtCategoryName.setEnabled(true);
         
         txtProductName.setEnabled(true);
@@ -757,8 +944,18 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
         cbbCategory.setEnabled(true);
         txtDescription.setEnabled(true);
     }
+    
+    private void enabletxtProduct() {
+        // ENABLE NHỮNG TEXTFIELD CẦN CHỈNH SỬA THÔNG TIN PRODUCT
+        txtVolume.setEnabled(true);
+        txtPrice.setEnabled(true);
+        txtExpireDate.setEnabled(true);
+        cbbCategory.setEnabled(true);
+        txtDescription.setEnabled(true);
+    }
 
-    private void disabletxt() {
+    private void disableTXT() {
+        // DISABLE TẤT CẢ TEXTFIELD
         txtCategoryName.setEnabled(false);
         
         txtProductName.setEnabled(false);
@@ -770,7 +967,8 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
         txtDescription.setEnabled(false);
     }
 
-    private void resettxt() {
+    private void resetTXT() {
+        // RESET TẤT CẢ TEXTFIELD VỀ MẶC ĐỊNH
         txtCategoryName.setText(null);
         
         txtProductID.setText(null);
@@ -816,7 +1014,7 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTabbedPane tabCategoryProducts;
     public javax.swing.JTable tableCategory;
     public javax.swing.JTable tableProduct;
     private javax.swing.JTextField txtCategoryID;

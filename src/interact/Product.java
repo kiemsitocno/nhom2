@@ -56,4 +56,16 @@ public class Product {
             return false;
         }
     }
+    
+    public static void deleteProduct(String ID) {
+        String sql = "delete from Products where ProductID='" + ID + "'";
+        java.sql.Statement st;
+        try {
+            st = interact.DataInteraction.getConnect().createStatement();
+            st.executeUpdate(sql);
+            JOptionPane.showMessageDialog(null, "Delete Product successfully", "Successfully", JOptionPane.INFORMATION_MESSAGE);
+        } catch (SQLException ex) {
+            Logger.getLogger(Store.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

@@ -99,7 +99,7 @@ public class CheckForm {
 
     //Check date fomat by MM/dd/yyyy
     public static boolean validateDate(String date) {
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-DD");
         sdf.setLenient(false);
         java.sql.Date sqlDate;
         try {

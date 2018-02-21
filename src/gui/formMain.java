@@ -18,8 +18,8 @@ import javax.swing.JScrollPane;
 import javax.swing.border.Border;
 
 /**
- *
- * @author KhanhLong
+ * GIAO DIỆN CHÍNH
+ * @author NHÓM 2
  */
 public class formMain extends javax.swing.JFrame {
 

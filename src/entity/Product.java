@@ -6,9 +6,10 @@
 package entity;
 
 /**
- *
- * @author kiems
+ * ĐỐI TƯỢNG SẢN PHẨM
+ * @author NHÓM 2
  */
+
 public class Product {
     private String productID;       //1
     private String productName;     //2

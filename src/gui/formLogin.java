@@ -20,8 +20,8 @@ import java.util.logging.Logger;
 import javax.swing.*;
 
 /**
- *
- * @author KhanhLong
+ * GIAO DIỆN LOGIN
+ * @author NHÓM 2
  */
 public class formLogin extends javax.swing.JFrame {
 

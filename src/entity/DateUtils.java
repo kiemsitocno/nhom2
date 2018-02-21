@@ -9,8 +9,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
- *
- * @author Bach Ngoc  Toan
+ * GET DATE TIME HIỆN TẠI 
+ * @author NHÓM 2
  */
 public class DateUtils {
     public static String now(String dateFormat) {

@@ -5,6 +5,10 @@
 
 package entity;
 
+/**
+ * ĐỐI TƯỢNG CATEGORIES
+ * @author NHÓM 2
+ */
 
 public class Category {
     private String categoryID;
