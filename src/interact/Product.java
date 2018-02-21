@@ -5,6 +5,11 @@
  */
 package interact;
 
+/**
+ * CÁC PHƯƠNG THỨC CỦA ĐỐI TƯỢNG PRODUCT
+ * @author NHÓM 2
+ */
+
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,6 +20,7 @@ import javax.swing.*;
  * @author kiems
  */
 public class Product {
+    // PHƯƠNG THỨC INSERT CỦA ĐỐI TƯỢNG PRODUCT
     public static boolean insertProduct(entity.Product product) {
         String sql = "insert into Products values(?,?,?,?,?,?,?,?,?)";
         try {
@@ -37,6 +43,7 @@ public class Product {
     }
     
     public static boolean editProducts(entity.Product product) {
+        // PHƯƠNG THỨC EDIT CỦA ĐỐI TƯỢNG PRODUCT
         String sql = "update Products set ProductName=?, QuantityAvailable=?, Price=?, DateImport=?, ExpireDate=?, Descript=?, CategoryID=?, Volume=? where ProductID=?";
         try {
             PreparedStatement ps = interact.DataInteraction.getConnect().prepareCall(sql);
@@ -58,6 +65,7 @@ public class Product {
     }
     
     public static void deleteProduct(String ID) {
+        // PHƯƠNG THỨC DELETE CỦA ĐỐI TƯỢNG PRODUCT
         String sql = "delete from Products where ProductID='" + ID + "'";
         java.sql.Statement st;
         try {

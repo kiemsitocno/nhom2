@@ -14,8 +14,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author Bach Ngoc Toan
+ * CÁC PHƯƠNG THƯỚC CHUNG SQL
+ * @author NHÓM 2
  */
 public class DataInteraction {
 
@@ -41,7 +41,6 @@ public class DataInteraction {
         } catch (Exception ex) {
             return false;
         }
-
         return true;
     }
 
@@ -51,16 +50,12 @@ public class DataInteraction {
         sb.append(servername);
         sb.append(":");
         sb.append(port);
-
         sb.append(";databaseName=");
         sb.append(databaseName);
-
         sb.append(";user=");
         sb.append(username);
-
         sb.append(";password=");
         sb.append(password);
-
         return sb.toString();
     }
 
@@ -101,25 +96,10 @@ public class DataInteraction {
         return getUrl() + getServername() + ":" + getPort() + ";databaseName=" + getDatabaseName();
     }
 
-    //method get connection
     public static Connection getConnect() {
-        /*Connection con = null;
-        try {
-
-        Class.forName(driverName);
-        con = DriverManager.getConnection(url +servername+":"+port+ ";databaseName=" + databaseName, username, password);
-        } catch (ClassNotFoundException ex) {
-        Logger.getLogger(DataInteraction.class.getName()).log(Level.SEVERE, null, ex);
-        }catch (SQLException ex) {
-        Logger.getLogger(DataInteraction.class.getName()).log(Level.SEVERE, null, ex);
-        }finally
-        {
-        return con;
-        }*/
         return conn;
     }
-
-    //method
+    
     public static CachedRowSetImpl queryCachedRowSet(String sql) {
         CachedRowSetImpl crs = null;
         try {
@@ -150,7 +130,6 @@ public class DataInteraction {
         }
     }
 
-    //method security
     public static void exec(String sql) {
         try {
             Statement query = getConnect().createStatement();
@@ -178,6 +157,7 @@ public class DataInteraction {
     }
 
     public static String getCode(String Table, String Column, String Condition, String code) {
+        // CHUYỂN ĐỔI ID QUA NAME VÀ NGƯỢC LẠI(EX. CATEGORYID <=> CATEGORYNAME)
         String id = null;
         try {
 
@@ -186,11 +166,7 @@ public class DataInteraction {
             ResultSet rs = st.executeQuery("select * from  " + Table + " where " + Column + "=" + "N'" + Condition + "'" + "");
             while (rs.next()) {
                 id = rs.getString(code);
-
             }
-
-            //System.out.println(rs.getString("TenTPho"));
-            // JOptionPane.showMessageDialog(null,"B?n H�y Nh?p T�n Ph�ng: "+id);
         } catch (SQLException ex) {
             Logger.getLogger(DataInteraction.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -211,5 +187,4 @@ public class DataInteraction {
         }
         return column;
     }
-
 }

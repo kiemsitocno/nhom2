@@ -67,8 +67,8 @@ public class formMain extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menuItemChangePass = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        menuItemLogout = new javax.swing.JMenuItem();
+        menuItemExit = new javax.swing.JMenuItem();
         menuDirector = new javax.swing.JMenu();
         menuItemAddManager = new javax.swing.JMenuItem();
         nemuItemManagementStore = new javax.swing.JMenuItem();
@@ -79,7 +79,7 @@ public class formMain extends javax.swing.JFrame {
         menuItemManagementBill = new javax.swing.JMenuItem();
         jMenuItem17 = new javax.swing.JMenuItem();
         menuInventory = new javax.swing.JMenu();
-        jMenuItem14 = new javax.swing.JMenuItem();
+        menuItemInventoryStatus = new javax.swing.JMenuItem();
         menuItemCategory_Product = new javax.swing.JMenuItem();
         jMenuItem16 = new javax.swing.JMenuItem();
         menuSales = new javax.swing.JMenu();
@@ -247,23 +247,23 @@ public class formMain extends javax.swing.JFrame {
         });
         jMenu1.add(menuItemChangePass);
 
-        jMenuItem2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconLogout.png"))); // NOI18N
-        jMenuItem2.setText("Log out");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        menuItemLogout.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        menuItemLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconLogout.png"))); // NOI18N
+        menuItemLogout.setText("Log out");
+        menuItemLogout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                menuItemLogoutActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem2);
+        jMenu1.add(menuItemLogout);
 
-        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconExit.png"))); // NOI18N
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        menuItemExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconExit.png"))); // NOI18N
+        menuItemExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                menuItemExitActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem3);
+        jMenu1.add(menuItemExit);
 
         jMenuBar1.add(jMenu1);
 
@@ -338,15 +338,15 @@ public class formMain extends javax.swing.JFrame {
         menuInventory.setText("Inventory");
         menuInventory.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
 
-        jMenuItem14.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jMenuItem14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconInventoryManagement.png"))); // NOI18N
-        jMenuItem14.setText("View Inventory Status");
-        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
+        menuItemInventoryStatus.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        menuItemInventoryStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconInventoryManagement.png"))); // NOI18N
+        menuItemInventoryStatus.setText("View Inventory Status");
+        menuItemInventoryStatus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem14ActionPerformed(evt);
+                menuItemInventoryStatusActionPerformed(evt);
             }
         });
-        menuInventory.add(jMenuItem14);
+        menuInventory.add(menuItemInventoryStatus);
 
         menuItemCategory_Product.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         menuItemCategory_Product.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconManagementItem.png"))); // NOI18N
@@ -418,11 +418,6 @@ public class formMain extends javax.swing.JFrame {
         jMenuItem7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jMenuItem7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconSupport.png"))); // NOI18N
         jMenuItem7.setText("Support");
-        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem7ActionPerformed(evt);
-            }
-        });
         jMenu6.add(jMenuItem7);
 
         jMenuItem8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -464,16 +459,8 @@ public class formMain extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
-
-    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem7ActionPerformed
-
     private void menuItemAddManagerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAddManagerActionPerformed
-        // TODO add your handling code here:
+        // QUẢN LÝ TÀI KHOẢN MANAGER VÀ INVENTORY.
         frmCreateNewManager create = new frmCreateNewManager();
         dtContent.add(create);
         create.show();
@@ -485,14 +472,14 @@ public class formMain extends javax.swing.JFrame {
     }//GEN-LAST:event_menuItemAddManagerActionPerformed
 
     private void menuItemChangePassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemChangePassActionPerformed
-        // TODO add your handling code here:
+        // ĐỔI PASSWORD
         frmChangePassword changePass = new frmChangePassword();
         dtContent.add(changePass);
         changePass.show();
     }//GEN-LAST:event_menuItemChangePassActionPerformed
 
     private void menuCreateBillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCreateBillActionPerformed
-        // TODO add your handling code here:
+        // QUẢN LÝ BILL
         frmCreateBill createBill = new frmCreateBill();
         dtContent.add(createBill);
         createBill.show();
@@ -504,7 +491,7 @@ public class formMain extends javax.swing.JFrame {
     }//GEN-LAST:event_menuCreateBillActionPerformed
 
     private void nemuItemManagementStoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nemuItemManagementStoreActionPerformed
-        // TODO add your handling code here:
+        // QUẢN LÝ CHUỖI CỬA HÀNG
         frmCreateNewStore createStore = new frmCreateNewStore();
         dtContent.add(createStore);
         createStore.show();
@@ -516,7 +503,7 @@ public class formMain extends javax.swing.JFrame {
     }//GEN-LAST:event_nemuItemManagementStoreActionPerformed
 
     private void menuItemCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCustomerActionPerformed
-        // TODO add your handling code here:
+        // QUẢN LÝ KHÁCH HÀNG
         frmCustomer customer = new frmCustomer();
         dtContent.add(customer);
         customer.show();
@@ -528,7 +515,7 @@ public class formMain extends javax.swing.JFrame {
     }//GEN-LAST:event_menuItemCustomerActionPerformed
 
     private void menuItemInformationSaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemInformationSaleActionPerformed
-        // TODO add your handling code here:
+        // XEM THÔNG TIN CÁ NHÂN SALES
         frmInformationSales informationSales = new frmInformationSales();
         dtContent.add(informationSales);
         informationSales.show();
@@ -539,8 +526,8 @@ public class formMain extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_menuItemInformationSaleActionPerformed
 
-    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
-        // TODO add your handling code here:
+    private void menuItemInventoryStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemInventoryStatusActionPerformed
+        // XEM STATUS CỦA KHO
         frmInventoryManagement inventoryManagement = new frmInventoryManagement();
         dtContent.add(inventoryManagement);
         inventoryManagement.show();
@@ -549,10 +536,10 @@ public class formMain extends javax.swing.JFrame {
         } catch (PropertyVetoException ex) {
             Logger.getLogger(formMain.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jMenuItem14ActionPerformed
+    }//GEN-LAST:event_menuItemInventoryStatusActionPerformed
 
     private void menuItemManagementBillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemManagementBillActionPerformed
-        // TODO add your handling code here:
+        // QUẢN LÝ BILL
         frmManagementBill managementBill = new frmManagementBill();
         dtContent.add(managementBill);
         managementBill.show();
@@ -564,7 +551,7 @@ public class formMain extends javax.swing.JFrame {
     }//GEN-LAST:event_menuItemManagementBillActionPerformed
 
     private void menuItemCategory_ProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCategory_ProductActionPerformed
-        // TODO add your handling code here:
+        // QUẢN LÝ PRODUCT VÀ CATEGORY
         frmCategory_Product categoryProduct = new frmCategory_Product();
         dtContent.add(categoryProduct);
         categoryProduct.show();
@@ -576,7 +563,7 @@ public class formMain extends javax.swing.JFrame {
     }//GEN-LAST:event_menuItemCategory_ProductActionPerformed
 
     private void menuItemManagementSaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemManagementSaleActionPerformed
-        // TODO add your handling code here:
+        // QUẢN LÝ TÀI KHOẢN SALES
         frmManagementSales managementSale = new frmManagementSales();
         dtContent.add(managementSale);
         managementSale.show();
@@ -588,7 +575,7 @@ public class formMain extends javax.swing.JFrame {
     }//GEN-LAST:event_menuItemManagementSaleActionPerformed
 
     private void menuItemSearchProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemSearchProductActionPerformed
-        // TODO add your handling code here:
+        // TÌM KIẾM PRODUCT
         frmSearchProducts searchProduct = new frmSearchProducts();
         dtContent.add(searchProduct);
         searchProduct.show();
@@ -599,13 +586,19 @@ public class formMain extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_menuItemSearchProductActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        // TODO add your handling code here:
+    private void menuItemLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemLogoutActionPerformed
+        // LOGOUT
         this.dispose();
         formLogin log = new formLogin();
         log.setVisible(true);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_menuItemLogoutActionPerformed
+
+    private void menuItemExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemExitActionPerformed
+        // THOÁT CHƯƠNG TRÌNH
+        this.dispose();
+    }//GEN-LAST:event_menuItemExitActionPerformed
     public void permissing() {
+        // PHƯƠNG THỨC PHÂN QUYỀN
         if (Login.getAdminID() == null && Login.getUsername() == null && Login.getPassword() == null && Login.getPermit() == null) {
             int i = JOptionPane.showConfirmDialog(this, "Truy cập đã bị chặn, yêu cầu đăng nhập trước.");
             if (i == JOptionPane.YES_OPTION) {
@@ -632,7 +625,6 @@ public class formMain extends javax.swing.JFrame {
             menuManagement.setVisible(false);
             menuSales.setVisible(true);
         }
-
     }
 
     /**
@@ -692,11 +684,8 @@ public class formMain extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem17;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
@@ -709,7 +698,10 @@ public class formMain extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuItemCategory_Product;
     private javax.swing.JMenuItem menuItemChangePass;
     private javax.swing.JMenuItem menuItemCustomer;
+    private javax.swing.JMenuItem menuItemExit;
     private javax.swing.JMenuItem menuItemInformationSale;
+    private javax.swing.JMenuItem menuItemInventoryStatus;
+    private javax.swing.JMenuItem menuItemLogout;
     private javax.swing.JMenuItem menuItemManagementBill;
     private javax.swing.JMenuItem menuItemManagementSale;
     private javax.swing.JMenuItem menuItemSearchProduct;

@@ -16,8 +16,8 @@ import java.awt.Color;
 import javax.swing.*;
 
 /**
- *
- * @author kiems
+ * GIAO DIỆN QUẢN LÝ MANAGER VÀ INVENTORY
+ * @author NHÓM 2
  */
 public class frmCreateNewManager extends javax.swing.JInternalFrame {
 
@@ -27,6 +27,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
     public frmCreateNewManager() {
         initComponents();
         refresh();
+        warning();
     }
 
     /**
@@ -683,7 +684,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnManagerCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManagerCreateActionPerformed
-        // TODO add your handling code here:
+        // TẠO MỚI TÀI KHOẢN MANAGER
         enableTXT();
         btnManagerEdit.setEnabled(false);
         if(btnManagerCreate.getText().equals("Create")){
@@ -717,7 +718,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnManagerCreateActionPerformed
 
     private void tableManagerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableManagerMouseClicked
-        // TODO add your handling code here:
+        // LOAD DỮ LIỆU BẢNG MANAGER VÀO CÁC Ô TEXTFIELD:
         int i = tableManager.getSelectedRow();
         txtManagerID.setText(String.valueOf(tableManager.getValueAt(i, 0)));
         txtManagerName.setText(String.valueOf(tableManager.getValueAt(i, 1)));
@@ -728,7 +729,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tableManagerMouseClicked
 
     private void btnManagerDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManagerDeleteActionPerformed
-        // TODO add your handling code here:
+        // XÓA 1 TÀI KHOÀN MANAGER
         if(txtManagerName.getText().trim().length()==0){
             JOptionPane.showMessageDialog(this, "Please chose one row from table");
             return;
@@ -741,13 +742,13 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnManagerDeleteActionPerformed
 
     private void btnManagerEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManagerEditActionPerformed
-        // TODO add your handling code here:
+        // CHỈNH SỬA 1 TÀI KHOẢN MANAGER
         btnManagerCreate.setEnabled(false);
         if(txtManagerName.getText().trim().length()==0){
             JOptionPane.showMessageDialog(this, "Please chose one row from table");
             return;
         }
-        enableTxtMN();
+        enableTXTEdit();
         if (btnManagerEdit.getText().equals("Edit")) {
             btnManagerEdit.setText("Save");
         } else if (btnManagerEdit.getText().equals("Save")) {
@@ -773,14 +774,14 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnManagerEditActionPerformed
 
     private void btnManagerCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManagerCancelActionPerformed
-        // TODO add your handling code here:
+        // NÚT RESET TẤT CẢ BUTTON VÀ TEXTFIELD VỀ MẶC ĐỊNH
         disableTXT();
         resetTXT();
         resetButton();
     }//GEN-LAST:event_btnManagerCancelActionPerformed
 
     private void btnManagerSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManagerSearchActionPerformed
-        // TODO add your handling code here:
+        // TÌM KIẾM MANAGER
         String searchName = txtManagerSearch.getText().trim();
         try {
             GUIInteraction.readToTable("select * from View_Manager where Name like N'%" + searchName + "%' AND RoleName='Manager'", tableManager);
@@ -790,7 +791,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnManagerSearchActionPerformed
 
     private void btnInventoryCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventoryCreateActionPerformed
-        // TODO add your handling code here:
+        // TẠO MỚI TÀI KHOẢN 1 INVENTORY
         enableTXT();
         btnInventoryEdit.setEnabled(false);
         if(btnInventoryCreate.getText().equals("Create")){
@@ -822,27 +823,27 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnInventoryCreateActionPerformed
 
     private void btnInventoryCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventoryCancelActionPerformed
-        // TODO add your handling code here:
+        // NÚT RESET TẤT CẢ BUTTON VÀ TEXTFIELD VỀ MẶC ĐỊNH
         disableTXT();
         resetTXT();
         resetButton();
     }//GEN-LAST:event_btnInventoryCancelActionPerformed
 
     private void tabMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabMouseClicked
-        // TODO add your handling code here:
+        // RESET TẤT CẢ BUTTON VÀ TEXTFIELD VỀ MẶC ĐỊNH KHI CHUYỂN TAB
         disableTXT();
         resetTXT();
         resetButton();
     }//GEN-LAST:event_tabMouseClicked
 
     private void btnInventoryEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventoryEditActionPerformed
-        // TODO add your handling code here:
+        // CHÍNH SỬA TÀI KHOẢN 1 INVENTORY
         btnInventoryCreate.setEnabled(false);
         if(txtInventoryName.getText().trim().length()==0){
             JOptionPane.showMessageDialog(this, "Please chose one row from table");
             return;
         }
-        enableTxtMN();
+        enableTXTEdit();
         if (btnInventoryEdit.getText().equals("Edit")) {
             btnInventoryEdit.setText("Save");
         } else if (btnInventoryEdit.getText().equals("Save")) {
@@ -868,7 +869,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnInventoryEditActionPerformed
 
     private void tableInventoryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableInventoryMouseClicked
-        // TODO add your handling code here:
+        // LOAD DỮ LIỆU BẢNG INVENTORY VÀO Ô TEXTFIELD
         int i = tableInventory.getSelectedRow();
         txtInventoryID.setText(String.valueOf(tableInventory.getValueAt(i, 0)));
         txtInventoryName.setText(String.valueOf(tableInventory.getValueAt(i, 1)));
@@ -879,7 +880,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tableInventoryMouseClicked
 
     private void btnInventoryDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventoryDeleteActionPerformed
-        // TODO add your handling code here:
+        // XÓA 1 TÀI KHOẢN INVENTORY
         if(txtInventoryName.getText().trim().length()==0){
             JOptionPane.showMessageDialog(this, "Please chose one row from table");
             return;
@@ -892,7 +893,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnInventoryDeleteActionPerformed
 
     private void btnInventorySearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventorySearchActionPerformed
-        // TODO add your handling code here:
+        // TÌM KIẾM THÔNG TIN 1 INVENTORY
         String searchName = txtInventorySearch.getText().trim();
         try {
             GUIInteraction.readToTable("select * from View_Manager where Name like N'%" + searchName + "%' AND RoleName='Inventory'", tableInventory);
@@ -902,6 +903,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnInventorySearchActionPerformed
     
     private void refresh() {
+        // LOAD DỮ LIỆU VÀO BẢNG VÀ COMBOBOX
         try {
             interact.GUIInteraction.readToTable("select * from View_Manager where RoleName='Manager'", tableManager);
             interact.GUIInteraction.readToTable("select * from View_Manager where RoleName='Inventory'", tableInventory);
@@ -912,6 +914,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
     }
     
     private void resetButton(){
+        // RESET TẤT CẢ BUTTON VỀ MẶC ĐỊNH
         btnManagerCreate.setText("Create");
         btnManagerCreate.setEnabled(true);
         btnManagerEdit.setText("Edit");
@@ -921,24 +924,23 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
         btnInventoryEdit.setText("Edit");
         btnInventoryEdit.setEnabled(true);
     }
+    
     private void enableTXT() {
+        // ENABALE TẤT CẢ TEXTFIELD 
         txtManagerName.setEnabled(true);
-        txtManagerPhone.setEnabled(true);
-        txtManagerEmail.setEnabled(true);
         txtManagerUsername.setEnabled(true);
         txtManagerPassword.setEnabled(true);
-        txtManagerSalary.setEnabled(true);
         cboStore.setEnabled(true);
         
         txtInventoryName.setEnabled(true);
-        txtInventoryPhone.setEnabled(true);
-        txtInventoryEmail.setEnabled(true);
         txtInventoryUsername.setEnabled(true);
         txtInventoryPassword.setEnabled(true);
-        txtInventorySalary.setEnabled(true);
+        
+        enableTXTEdit();
     }
     
     private void disableTXT(){
+        // DISABLE TẤT CẢ TEXTFIELD
         txtManagerName.setEnabled(false);
         txtManagerPhone.setEnabled(false);
         txtManagerEmail.setEnabled(false);
@@ -955,7 +957,8 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
         txtInventorySalary.setEnabled(false);
     }
     
-    private void enableTxtMN(){
+    private void enableTXTEdit(){
+        // ENABALE TẤT CẢ TEXTFIELD CÁC Ô CẦN EDIT THÔNG TIN
         txtManagerPhone.setEnabled(true);
         txtManagerEmail.setEnabled(true);
         txtManagerSalary.setEnabled(true);
@@ -966,6 +969,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
     }
     
     private void resetTXT(){
+        // RESET TẤT CẢ TEXTFIELD VỀ MẶC ĐỊNH
         txtManagerName.setText(null);
         txtManagerPhone.setText(null);
         txtManagerEmail.setText(null);
@@ -981,8 +985,14 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
         txtInventoryPassword.setText(null);
         txtInventorySalary.setText(null);
     }
-        
+    
+    private void warning(){
+        // SHOW CẢNH BÁO NẾU 1 CỬA HÀNG NÀO ĐÓ KHÔNG CÓ MANAGER
+        // BONUS
+    }   
+    
     private boolean validateInsertManager(){
+        // VALIDATE THÔNG TIN NHẬP VÀO KHI INSERT MANAGER
         boolean flag = true;
         String username = txtManagerUsername.getText();
         String password = txtManagerPassword.getText();
@@ -1038,6 +1048,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
     }
     
     private boolean validateEditManager(){
+        // VALIDATE THÔNH TIN NHẬP VÀO KHI UPDATE MANAGER
         boolean flag = true;
         String username = txtManagerUsername.getText();
         String password = txtManagerPassword.getText();
@@ -1071,6 +1082,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
     }
     
     private boolean validateInsertInventory(){
+        // VALIDATE THÔNG TIN NHẬP VÀO KHI INSERT INVENTORY
         boolean flag = true;
         String username = txtInventoryUsername.getText();
         String password = txtInventoryPassword.getText();
@@ -1115,6 +1127,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
     }
     
     private boolean validateEditInventory(){
+        // VALIDATE THÔNG TIN NHẬP VÀO KHI UPDATE INVENTORY
         boolean flag = true;
         String username = txtInventoryUsername.getText();
         String password = txtInventoryPassword.getText();

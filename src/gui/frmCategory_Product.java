@@ -578,8 +578,8 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
             int countCategory = GUIInteraction.indentityID("select top 1 * from Categories order by CategoryID Desc", "CategoryID") + 1;
             String CategoryID = "CA" + countCategory;
 
-            entity.Category ct = new Category(CategoryID, txtCategoryName.getText());
-            interact.Categories.insertCategory(ct);
+            Category category = new Category(CategoryID, txtCategoryName.getText());
+            interact.Categories.insertCategory(category);
             refresh();
             resetTXT();
             btnAddCategory.setText("Add");
@@ -812,6 +812,74 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
         resetButton();
     }//GEN-LAST:event_tabCategoryProductsMouseClicked
     
+    private void refresh() {
+        // PHƯƠNG THỨC LOAD DỮ LIỆU RA BẢNG VÀ COMBOBOX
+        try {
+            interact.GUIInteraction.readToTable("select * from Categories", tableCategory);
+            interact.GUIInteraction.readToCombo("select * from Categories", cbbCategory, "CategoryName");
+            interact.GUIInteraction.readToTable("SELECT ProductID,ProductName,QuantityAvailable,Price,DateImport,ExpireDate,Descript,CategoryName,Volume FROM Products,Categories where Categories.CategoryID=Products.CategoryID", tableProduct);
+        } catch (SQLException ex) {
+            Logger.getLogger(frmCategory_Product.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void resetButton(){
+        // RESET TẤT CẢ BUTTON VỀ MẶC ĐỊNH
+        btnAddCategory.setText("Add");
+        btnAddCategory.setEnabled(true);
+        btnEditCategory.setText("Edit");
+        btnEditCategory.setEnabled(true);
+        btnAddProduct.setText("Add");
+        btnAddProduct.setEnabled(true);
+        btnEditProduct.setText("Edit");
+        btnEditProduct.setEnabled(true);
+    }
+    
+    private void enableTXT() {
+        // ENABLE TẤT CẢ TEXT FIELD
+        txtCategoryName.setEnabled(true);
+        
+        txtProductName.setEnabled(true);
+        txtQuantity.setEnabled(true);
+        enabletxtProduct();
+    }
+    
+    private void enabletxtProduct() {
+        // ENABLE NHỮNG TEXTFIELD CẦN CHỈNH SỬA THÔNG TIN PRODUCT
+        txtVolume.setEnabled(true);
+        txtPrice.setEnabled(true);
+        txtExpireDate.setEnabled(true);
+        cbbCategory.setEnabled(true);
+        txtDescription.setEnabled(true);
+    }
+
+    private void disableTXT() {
+        // DISABLE TẤT CẢ TEXTFIELD
+        txtCategoryName.setEnabled(false);
+        
+        txtProductName.setEnabled(false);
+        txtVolume.setEnabled(false);
+        txtPrice.setEnabled(false);
+        txtExpireDate.setEnabled(false);
+        txtQuantity.setEnabled(false);
+        cbbCategory.setEnabled(false);
+        txtDescription.setEnabled(false);
+    }
+
+    private void resetTXT() {
+        // RESET TẤT CẢ TEXTFIELD VỀ MẶC ĐỊNH
+        txtCategoryName.setText(null);
+        
+        txtProductID.setText(null);
+        txtProductName.setText(null);
+        txtVolume.setText(null);
+        txtPrice.setText(null);
+        txtExpireDate.setText(null);
+        txtQuantity.setText(null);
+        cbbCategory.setSelectedIndex(-1);
+        txtDescription.setText(null);
+    }
+    
     private boolean validateCategory() {
         // VALIDATE DỮ LIỆU NHẬP VÀO KHI INSERT HOẶC UPDATE CATEGORY
         boolean flag = true;
@@ -908,79 +976,6 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
         }
         return flag;
     }
-
-    private void refresh() {
-        // PHƯƠNG THỨC LOAD DỮ LIỆU RA BẢNG VÀ COMBOBOX
-        try {
-            interact.GUIInteraction.readToTable("select * from Categories", tableCategory);
-            interact.GUIInteraction.readToCombo("select * from Categories", cbbCategory, "CategoryName");
-            interact.GUIInteraction.readToTable("SELECT ProductID,ProductName,QuantityAvailable,Price,DateImport,ExpireDate,Descript,CategoryName,Volume FROM Products,Categories where Categories.CategoryID=Products.CategoryID", tableProduct);
-        } catch (SQLException ex) {
-            Logger.getLogger(frmCategory_Product.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    private void resetButton(){
-        // RESET TẤT CẢ BUTTON VỀ MẶC ĐỊNH
-        btnAddCategory.setText("Add");
-        btnAddCategory.setEnabled(true);
-        btnEditCategory.setText("Edit");
-        btnEditCategory.setEnabled(true);
-        btnAddProduct.setText("Add");
-        btnAddProduct.setEnabled(true);
-        btnEditProduct.setText("Edit");
-        btnEditProduct.setEnabled(true);
-    }
-    
-    private void enableTXT() {
-        // ENABLE TẤT CẢ TEXT FIELD
-        txtCategoryName.setEnabled(true);
-        
-        txtProductName.setEnabled(true);
-        txtVolume.setEnabled(true);
-        txtPrice.setEnabled(true);
-        txtExpireDate.setEnabled(true);
-        txtQuantity.setEnabled(true);
-        cbbCategory.setEnabled(true);
-        txtDescription.setEnabled(true);
-    }
-    
-    private void enabletxtProduct() {
-        // ENABLE NHỮNG TEXTFIELD CẦN CHỈNH SỬA THÔNG TIN PRODUCT
-        txtVolume.setEnabled(true);
-        txtPrice.setEnabled(true);
-        txtExpireDate.setEnabled(true);
-        cbbCategory.setEnabled(true);
-        txtDescription.setEnabled(true);
-    }
-
-    private void disableTXT() {
-        // DISABLE TẤT CẢ TEXTFIELD
-        txtCategoryName.setEnabled(false);
-        
-        txtProductName.setEnabled(false);
-        txtVolume.setEnabled(false);
-        txtPrice.setEnabled(false);
-        txtExpireDate.setEnabled(false);
-        txtQuantity.setEnabled(false);
-        cbbCategory.setEnabled(false);
-        txtDescription.setEnabled(false);
-    }
-
-    private void resetTXT() {
-        // RESET TẤT CẢ TEXTFIELD VỀ MẶC ĐỊNH
-        txtCategoryName.setText(null);
-        
-        txtProductID.setText(null);
-        txtProductName.setText(null);
-        txtVolume.setText(null);
-        txtPrice.setText(null);
-        txtExpireDate.setText(null);
-        txtQuantity.setText(null);
-        cbbCategory.setSelectedIndex(-1);
-        txtDescription.setText(null);
-    }
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddCategory;
     private javax.swing.JButton btnAddProduct;

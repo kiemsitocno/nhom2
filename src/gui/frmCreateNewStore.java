@@ -15,8 +15,8 @@ import java.awt.Color;
 import javax.swing.*;
 
 /**
- *
- * @author kiems
+ * GIAO DIỆN QUẢN LÝ STORE
+ * @author NHÓM 2
  */
 public class frmCreateNewStore extends javax.swing.JInternalFrame {
 
@@ -312,6 +312,7 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
+        // TẠO MỚI 1 CỬA HÀNG
         btnEdit.setEnabled(false);
         enableTXT();
         if (btnCreate.getText().equals("Create")) {
@@ -339,7 +340,7 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCreateActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        // TODO add your handling code here:
+        // CHỈNH SỬA THÔNG TIN 1 CỬA HÀNG
         btnCreate.setEnabled(true);
         if(txtName.getText().trim().length()==0){
             JOptionPane.showMessageDialog(this, "Please chose one row from table");
@@ -362,6 +363,7 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        // DELETE 1 CỬA HÀNG NẾU CỬA HÀNG ĐÓ KHÔNG CHỨA BẤT KỲ MANAGER NÀO
         if(txtName.getText().trim().length()==0){
             JOptionPane.showMessageDialog(this, "Please chose one row from table");
             return;
@@ -384,7 +386,7 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void tableStoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableStoresMouseClicked
-        // TODO add your handling code here:
+        // LOAD DỮ LIỆU TỪ BẢNG STORE VÀO CÁC Ô TEXTFIELD
         int i = tableStores.getSelectedRow();
         txtID.setText(String.valueOf(tableStores.getValueAt(i, 0)));
         txtName.setText(String.valueOf(tableStores.getValueAt(i, 1)));
@@ -394,7 +396,7 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tableStoresMouseClicked
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-        // TODO add your handling code here:
+        // RESET TẤT CẢ BUTTON VÀ TEXTFIELD VỀ TRẠNG THÁI MẶC ĐỊNH
         disableTXT();
         resetTXT();
         btnCreate.setText("Create");
@@ -404,7 +406,7 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        // TODO add your handling code here:
+        // TÌM KIẾM 1 CỬA HÀNG
         String searchName = txtSearch.getText().trim();
         try {
             GUIInteraction.readToTable("select * from Stores where StoreName like N'%" + searchName + "%'", tableStores);
@@ -414,6 +416,7 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void refresh() {
+        // LOAD DỮ LIỆU STORE VÀO BẢNG
         try {
             interact.GUIInteraction.readToTable("select * from Stores", tableStores);
         } catch (SQLException ex) {
@@ -422,6 +425,7 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
     }
 
     private boolean validateStore() {
+        // VALIDATE THÔNG TIN NHẬP VÀO KHI INSERT VÀ UPDATE STORE
         boolean flag = true;
         if (!CheckForm.isEmpty(txtName.getText())) {
             JOptionPane.showMessageDialog(this, "Name is not blank", "Error", JOptionPane.ERROR_MESSAGE);
@@ -470,6 +474,7 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
     }
 
     private void enableTXT() {
+        // ENABLE TẤT CẢ TEXTFIELD
         txtName.setEnabled(true);
         txtPhone.setEnabled(true);
         txtAddress.setEnabled(true);
@@ -477,6 +482,7 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
     }
 
     private void disableTXT() {
+        // DISABLE TẤT CẢ TEXTFIELD
         txtName.setEnabled(false);
         txtPhone.setEnabled(false);
         txtAddress.setEnabled(false);
@@ -484,6 +490,7 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
     }
 
     private void resetTXT() {
+        // RESET TẤT CẢ TEXTFIELD VỀ MẶC ĐỊNH.
         txtName.setText(null);
         txtPhone.setText(null);
         txtAddress.setText(null);

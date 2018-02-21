@@ -12,11 +12,12 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
- *
+ * CÁC PHƯƠNG THÚC CỦA ĐỐI TƯỢNG USER
  * @author kiems
  */
 public class User {
     public static boolean insertUser(entity.User user) {
+        // PHƯƠNG THỨC INSERT CỦA ĐỐI TƯỢNG USER
         String sql = "insert into Users values(?,?,?,?,?,?,?,?,?)";
         try {
             PreparedStatement pst = DataInteraction.getConnect().prepareStatement(sql);
@@ -38,6 +39,7 @@ public class User {
     }
 
     public static boolean editUser(entity.User user) {
+        // PHƯƠNG THỨC UPDATE CỦA ĐỐI TƯỢNG USER
         String sql = "update Users set Name=?, Phone=?, Email=?, Salary=? where UserID=?";
         try {
             PreparedStatement ps = interact.DataInteraction.getConnect().prepareCall(sql);
@@ -55,6 +57,7 @@ public class User {
     }
 
     public static void deleteUser(String ID) {
+        // PHƯƠNG THỨC DELETE CỦA ĐỐI TƯỢNG USER
         String sql = "delete from Users where UserID='" + ID + "'";
         java.sql.Statement st;
         try {

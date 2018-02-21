@@ -6,8 +6,8 @@
 package interact;
 
 /**
- *
- * @author Bach Ngoc  Toan
+ * LOGIN
+ * @author NHÓM 2
  */
 public class Login {
     private static String Username=null;

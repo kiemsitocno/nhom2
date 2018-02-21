@@ -16,13 +16,13 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
- * @author Bach Ngoc Toan
+ * CÁC PHƯƠNG THƯỚC CHUNG SQL
+ * @author NHÓM 2
  */
 public class GUIInteraction {
-//read to table
 
     public static void readToTable(String sql, JTable tableName) throws SQLException {
+        // LOAD DỮ LIỆU VÀO BẢNG
         DefaultTableModel dm = (DefaultTableModel) tableName.getModel();
         for (int i = dm.getRowCount() - 1; i >= 0; i--) {
             dm.removeRow(i);
@@ -48,8 +48,8 @@ public class GUIInteraction {
         }
     }
 
-    //read to combo
     public static void readToCombo(String sql, JComboBox cboType, String fieldName) {
+        // LOAD DỮ LIỆU VÀO COMBOBOX
         try {
             ResultSet rs = DataInteraction.queryResultSet(sql);
             while (rs.next()) {
@@ -60,9 +60,9 @@ public class GUIInteraction {
             ex.printStackTrace();
         }
     }
-    //check id duplicate
-
+    
     public static boolean checkDuplicateName(String name, String sql, String field) {
+        // CHECK TÊN NHẬP VÀO ĐÃ CÓ TRONG SQL HAY CHƯA 
         boolean flag = true;
         Vector vt = new Vector();
         try {
@@ -83,6 +83,7 @@ public class GUIInteraction {
     }
 
     public static int indentityID(String sql, String field) {
+        // PHƯƠNG THỨC TỰ ĐỘNG TĂNG ID
         int count = 0;
         Vector vt = new Vector();
         try {
@@ -102,6 +103,7 @@ public class GUIInteraction {
     }
 
     public static int countRecord(String sql) throws SQLException {
+        // ĐẾM SỐ LƯỢNG RECORD CỦA 1 BẢNG
         ResultSet rs = DataInteraction.queryResultSet(sql);
         int count = 0;
         while (rs.next()) {
@@ -111,6 +113,7 @@ public class GUIInteraction {
     }
 
     public static int countQuantity(String sql) {
+        // ĐẾM SỐ LƯỢNG QUANTITY CỦA 1 THUỘC TÍNH
         int count = 0;
         try {
             ResultSet rs = DataInteraction.getConnect().createStatement().executeQuery(sql);

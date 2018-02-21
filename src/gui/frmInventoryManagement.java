@@ -12,9 +12,10 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+
 /**
- *
- * @author kiems
+ * GIAO DIỆN TÌNH TRẠNG KHO
+ * @author NHÓM 2
  */
 public class frmInventoryManagement extends javax.swing.JInternalFrame {
 
@@ -335,8 +336,8 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSoldQuantityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSoldQuantityActionPerformed
+        // ĐẾM SỐ LƯỢNG SẢN PHẨM ĐƯỢC BÁN
         try {
-            // TODO add your handling code here:
             GUIInteraction.readToTable("select * from View_ProductSold where datediff(dd,Date,getdate())=1", tableInventory);
         } catch (SQLException ex) {
             Logger.getLogger(frmInventoryManagement.class.getName()).log(Level.SEVERE, null, ex);
@@ -344,8 +345,8 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnSoldQuantityActionPerformed
 
     private void btnExpireDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExpireDateActionPerformed
+        // ĐẾM SỐ LƯỢNG SẢN PHẨM HẾT HẠN
         try {
-            // TODO add your handling code here:
             GUIInteraction.readToTable("select * from Products where datediff(dd,ExpireDate,getdate())<7", tableInventory);
         } catch (SQLException ex) {
             Logger.getLogger(frmInventoryManagement.class.getName()).log(Level.SEVERE, null, ex);
@@ -353,8 +354,8 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnExpireDateActionPerformed
 
     private void btnProductNAvailableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductNAvailableActionPerformed
+        // ĐẾM SỐ LƯỢNG SẢN PHẨM HẾT HÀNG
         try {
-            // TODO add your handling code here:
             GUIInteraction.readToTable("select * from Products where QuantityAvailable=0", tableInventory);
         } catch (SQLException ex) {
             Logger.getLogger(frmInventoryManagement.class.getName()).log(Level.SEVERE, null, ex);
@@ -362,7 +363,7 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnProductNAvailableActionPerformed
 
     private void btnQuantityUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuantityUpdateActionPerformed
-        // TODO add your handling code here:
+        // UPDATE SỐ LƯỢNG CHO SẢN PHẨM
         txtQuantityUpdate.setEnabled(true);
         if(txtProductNAvailable.getText().trim().length()==0){
             JOptionPane.showMessageDialog(this, "Please chose one row from table");
@@ -393,6 +394,7 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnQuantityUpdateActionPerformed
     
     private void getStatus(){
+        // BỘ ĐẾM
         int totalCate=GUIInteraction.countQuantity("select count(*) as c from Categories");
         txtTotalCate.setText(String.valueOf(totalCate));
         int totalProduct=GUIInteraction.countQuantity("select count(*) as c from Products");
@@ -410,6 +412,7 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
     }
     
     private boolean validateProduct(){
+        // CHECK THÔNG TIN NHẬP VÀO CÓ PHẢI LÀ SỐ LƯỢNG HAY KHÔNG
         boolean flag = true;
         if (!CheckForm.isNumberic(txtQuantityUpdate.getText())) {
             JOptionPane.showMessageDialog(this, "Quantity is not numberic", "Error", JOptionPane.ERROR_MESSAGE);
@@ -423,6 +426,7 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
     }
     
     private void valid(){
+        // SO SÁNH SỐ LƯỢNG BÁN RA VÀ SỐ LƯỢNG BỊ GIẢM TRONG KHO
         if(txtSoldQuantity.getText().equals(txtProductTranstract.getText())){
             labelValid.setText("Data valid");
         }else{
@@ -431,6 +435,7 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
     }
     
     private void warning(){
+        // SHOW CẢNH BÁO NẾU CÓ SẢN PHẨM HẾT HÀNG HOẶC HẾT HẠN
         int productNotAvaliable=GUIInteraction.countQuantity("select count(*) as Total from Products where QuantityAvailable=0");
         if(productNotAvaliable!=0){
             JOptionPane.showMessageDialog(null, "CẢNH BÁO! CÓ " + productNotAvaliable + " SẢN PHẨM HẾT HÀNG, HÃY NHẬP VỀ NGAY");

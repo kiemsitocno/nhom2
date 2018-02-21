@@ -11,12 +11,13 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author kiems
+ * CÁC PHƯƠNG THÚC CỦA ĐỐI TƯỢNG STORE
+ * @author NHÓM 2
  */
 public class Store {
 
     public static boolean insertStore(entity.Store store) {
+        // PHƯƠNG THỨC INSERT CỦA ĐỐI TƯỢNG STORE
         String sql = "insert into Stores values(?,?,?,?,?)";
         try {
             PreparedStatement pst = DataInteraction.getConnect().prepareStatement(sql);
@@ -34,6 +35,7 @@ public class Store {
     }
 
     public static boolean editStore(entity.Store store) {
+        // PHƯƠNG THỨC EDIT CỦA ĐỐI TƯỢNG STORE
         String sql = "update Stores set StoreName=?, StorePhone=?, StoreAddress=?, StoreRent=? where StoreID=?";
         try {
             PreparedStatement ps = interact.DataInteraction.getConnect().prepareCall(sql);
@@ -51,6 +53,7 @@ public class Store {
     }
 
     public static void deleteStore(String ID) {
+        // PHƯƠNG THỨC DELETE CỦA ĐỐI TƯỢNG STORE
         String sql = "delete from Stores where StoreID='" + ID + "'";
         java.sql.Statement st;
         try {
