@@ -6,7 +6,11 @@
 package gui;
 
 import entity.Bill;
+import interact.CheckForm;
+import interact.DataInteraction;
 import interact.GUIInteraction;
+import interact.Login;
+import java.awt.Color;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -14,8 +18,8 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author kiems
+ *  GIAO DIỆN GIAO DỊCH CỦA SALES
+ * @author NHÓM 2
  */
 public class frmCreateBill extends javax.swing.JInternalFrame {
 
@@ -122,7 +126,8 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
             }
         });
 
-        txtVAT.setText("1");
+        txtVAT.setText("10");
+        txtVAT.setEnabled(false);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setText("VAT :");
@@ -593,46 +598,50 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
     private void btnOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrderActionPerformed
         // TODO add your handling code here:
         int iQuantity = 0;
-        if (!interact.CheckForm.isNumberic(txtQuantity.getText())) {
-            JOptionPane.showMessageDialog(this, "Quantity is not numberic.", "Error", JOptionPane.ERROR_MESSAGE);
-            txtQuantity.requestFocus();
+        if(!validateOrder()){
             return;
         }
-        if (Integer.valueOf(txtQuantity.getText()) < 0) {
-            JOptionPane.showMessageDialog(this, "Quantity is more than zero.", "Error", JOptionPane.ERROR_MESSAGE);
-            txtQuantity.requestFocus();
-            return;
-        }
-        try {
-            iQuantity = Integer.valueOf(txtQuantity.getText());
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Fomat invalid.", "Error", JOptionPane.ERROR_MESSAGE);
-            txtQuantity.requestFocus();
-            return;
-        }
+        iQuantity = Integer.valueOf(txtQuantity.getText());
         entity.Product product = interact.Product.getByCode(txtProductID.getText());
-        if (product == null) {
-            JOptionPane.showMessageDialog(this, "This product doesn't exist", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
         
-        boolean bFound = false;
+        boolean flag = false;
+        int count = 1;
+        int countQuantityOrder=0;
+        
+        // MỖI LẦN ORDER CÙNG 1 SẢN PHẨM THÌ TĂNG SỐ LƯỢNG CHỨ KHÔNG TĂNG ORDER
         for (entity.Order detail : alDetails) {
+            count = count+1;
             if (detail.getProductID().equals(product.getProductID())) {
                 detail.setQuantity(detail.getQuantity() + iQuantity);
-                bFound = true;
+                countQuantityOrder=detail.getQuantity() + iQuantity;
+                flag = true;
                 break;
             }
         }
         
-        if (bFound == false) {
+        // GIỚI HẠN SỐ LƯỢNG ORDER PHẢI ÍT HƠN SỐ LƯỢNG SẢN PHẨM HIỆN CÓ
+        if(product.getQuantityAvailable()-countQuantityOrder<0||product.getQuantityAvailable()-iQuantity<0){
+            JOptionPane.showMessageDialog(null, "This product of quantity not enough");
+            return;
+        }
+        
+        // GÁN ID
+        String salesID = Login.getAdminID();
+        int countBill = GUIInteraction.indentityID("select top 1 * from Bills Where SalesID='"+salesID+"' order by BillID Desc", "BillID") + 1;
+        String billID = salesID+"B"+countBill;
+        int countOrder = GUIInteraction.indentityID("select top 1 * from OrderDetails Where BillID='"+billID+"' order by OrderID Desc", "OrderID") + 1;
+        
+        // SAU KHI VÒNG FOR Ở TRÊN BREAK THÌ THỰC HIỆN THÊM ARRAYLIST ORDER VÀO BILL
+        if (flag == false) {
+            String orderID = billID+"O"+count;
             entity.Order detail = new entity.Order();
-            detail.setOrderID("2");
+            detail.setOrderID(orderID);
             detail.setProductID(product.getProductID());
             detail.setPrice(product.getPrice());
             detail.setQuantity(iQuantity);
             alDetails.add(detail);
         }
+        resetTXT();
         refresh();
     }//GEN-LAST:event_btnOrderActionPerformed
 
@@ -645,77 +654,23 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
         // TODO add your handling code here:
-        boolean testCode = false;
-        if (!interact.CheckForm.isEmpty(txtCustomerID.getText())) {
-            JOptionPane.showMessageDialog(this, "You must enter customer id.");
+        if(!validateBill()){
             return;
         }
-        if (!interact.CheckForm.isNumberic(txtCustomerID.getText())) {
-            JOptionPane.showMessageDialog(this, "Customer id fomat invalid.");
-            return;
-        }
-        String customerID = null;
-        try {
-            customerID = txtCustomerID.getText();
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Customer id fomat invalid.");
-            return;
-        }
-        for (entity.Customer cus : interact.Customer.getAll()) {
-            if (cus.getCustomerID().equals(customerID)) {
-                testCode = true;
-                break;
-            }
-        }
-        if (testCode == false) {
-            JOptionPane.showMessageDialog(this, "This customer id is not exist.");
-            return;
-        }
-        //Check discount
-        int disCount = 0;
-        try {
-            disCount = Integer.valueOf(txtDiscount.getText());
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Discount fomat invalid.");
-            return;
-        }
-        if (disCount < 0 || disCount > 100) {
-            JOptionPane.showMessageDialog(this, "Discount arrange invalid.");
-            return;
-        }
-        if (alDetails == null) {
-            JOptionPane.showMessageDialog(this, "Please enter items.");
-            return;
-        }
-        //check VAT
-        if (!interact.CheckForm.isEmpty(txtVAT.getText())) {
-            JOptionPane.showMessageDialog(this, "VAT is not empty.");
-            return;
-        }
-        int vat = 0;
-        try {
-            vat = Integer.valueOf(txtVAT.getText());
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "VAT fomat invalid.");
-            return;
-        }
-        if (vat < 0 || vat > 100) {
-            JOptionPane.showMessageDialog(this, "VAT arrange invalid.");
-            return;
-        }
-        if (cboPayment.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(this, "Please choosing payment.");
-            return;
-        }
+        
+        String salesID = Login.getAdminID();
+        int countBill = GUIInteraction.indentityID("select top 1 * from Bills Where SalesID='"+salesID+"' order by BillID Desc", "BillID") + 1;
+        String billID = salesID+"B"+countBill;
+        
         entity.Bill bill = new Bill();
-        bill.setBillID("33");
+        bill.setBillID(billID);
         bill.setSalesID(interact.Login.getAdminID());
         bill.setDate(entity.DateUtils.now("MM/dd/yy"));
-        bill.setDiscount(disCount);
-        bill.setVAT(vat);
+        bill.setDiscount(Integer.valueOf(txtDiscount.getText()));
+        bill.setVAT(Integer.valueOf(txtVAT.getText()));
         bill.setPayment(String.valueOf(cboPayment.getSelectedItem()));
         bill.setTotal(calcTotal());
-        bill.setCustomerID(customerID);
+        bill.setCustomerID(txtCustomerID.getText());
         bill.setStatus(true);
 
         try {
@@ -766,6 +721,64 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
         lblTotal.setText("Total: $" + dTotal);
         return dTotal;
     }
+    
+    private void resetTXT(){
+        txtQuantity.setText(null);
+    }
+    
+    private boolean validateOrder(){
+        boolean flag = true;
+        if (!interact.CheckForm.isEmpty(txtProductID.getText())) {
+            JOptionPane.showMessageDialog(this, "Please choice one product.", "Error", JOptionPane.ERROR_MESSAGE);
+            txtProductID.requestFocus();
+            btnBrowerProduct.setBackground(Color.red);
+            flag = false;
+        }else if(!interact.CheckForm.isNumberic(txtQuantity.getText())||Integer.valueOf(txtQuantity.getText())<0) {
+            JOptionPane.showMessageDialog(this, "Quantity is not numberic OR than zero.", "Error", JOptionPane.ERROR_MESSAGE);
+            txtQuantity.requestFocus();
+            btnBrowerProduct.setBackground(Color.white);
+            txtQuantity.setBackground(Color.red);
+            flag = false;
+        }else{
+            btnBrowerProduct.setBackground(Color.white);
+            txtQuantity.setBackground(Color.white);
+            flag = true;
+        }
+        return flag;
+    }
+    
+    private boolean validateBill(){
+        boolean flag = true;
+        String discount = txtDiscount.getText();
+        int i = calcTotal();
+        System.out.println(i);
+        if (!CheckForm.isEmpty(txtCustomerID.getText())) {
+            JOptionPane.showMessageDialog(this, "You must choice one customer.");
+            btnBrowerCustomer.setBackground(Color.red);
+            flag = false;
+        }else if (!CheckForm.isNumberic(discount)||Integer.valueOf(discount)>=100||Integer.valueOf(discount)<0) {
+            JOptionPane.showMessageDialog(this, "Discount belong [0,100]");
+            btnBrowerCustomer.setBackground(Color.white);
+            txtDiscount.setBackground(Color.red);
+            flag = false;
+        }else if (cboPayment.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(this, "Please choosing payment.");
+            btnBrowerCustomer.setBackground(Color.white);
+            txtDiscount.setBackground(Color.white);
+            cboPayment.setBackground(Color.red);
+            flag = false;
+        }else if (i<=0) {
+            JOptionPane.showMessageDialog(this, "Please order.");
+            flag = false;
+        }else{
+            btnBrowerCustomer.setBackground(Color.white);
+            txtDiscount.setBackground(Color.white);
+            cboPayment.setBackground(Color.white);
+            flag = true;
+        }
+        return flag;
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBrowerCustomer;
     private javax.swing.JButton btnBrowerCustomer1;
