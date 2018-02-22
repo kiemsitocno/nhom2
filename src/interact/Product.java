@@ -76,4 +76,30 @@ public class Product {
             Logger.getLogger(Store.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public static entity.Product getByCode(String code) {
+        String sql = "select * from Products where ProductID=?";
+        entity.Product product = null;
+        try {
+            PreparedStatement pst = DataInteraction.getConnect().prepareStatement(sql);
+            pst.setString(1, code);
+            ResultSet rsProduct = pst.executeQuery();
+            if (!rsProduct.next()) {
+                return null;
+            }
+            product = new entity.Product();
+            product.setProductID(rsProduct.getString("ProductID"));
+            product.setProductName(rsProduct.getString("ProductName"));
+            product.setQuantityAvailable(rsProduct.getInt("QuantityAvailable"));
+            product.setPrice(rsProduct.getInt("Price"));
+            product.setDateImport(String.valueOf(rsProduct.getDate("DateImport")));
+            product.setExpireDate(String.valueOf(rsProduct.getDate("ExpireDate")));
+            product.setDescript(String.valueOf(rsProduct.getString("Descript")));
+            product.setCategoryID(String.valueOf(rsProduct.getString("CategoryID")));
+            product.setVolume(rsProduct.getInt("Volume"));
+        } catch (SQLException ex) {
+            Logger.getLogger(Product.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return product;
+    }
 }

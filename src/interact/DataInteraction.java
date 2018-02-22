@@ -137,17 +137,16 @@ public class DataInteraction {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-
     }
 
-    public static int topid() {
-        int id = 1;
+    public static String topid() {
+        String id = null;
         try {
             Connection cn = getConnect();
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery("select top(1) BillID from Bills order by BillID Desc");
             while (rs.next()) {
-                id = Integer.valueOf(rs.getString("BillID"));
+                id = rs.getString("BillID");
             }
         } catch (SQLException ex) {
             Logger.getLogger(DataInteraction.class.getName()).log(Level.SEVERE, null, ex);
@@ -173,7 +172,7 @@ public class DataInteraction {
         return id;
     }
 
-    public String getLines(String Table, String Coulnm, String dk, String line) {
+    public static String getLines(String Table, String Coulnm, String dk, String line) {
         String column = null;
         try {
             Connection cn = getConnect();

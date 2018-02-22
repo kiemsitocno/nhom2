@@ -137,7 +137,6 @@ public class GUIInteraction {
                 ResultSet rs = DataInteraction.queryResultSet(sql);
                 while (rs.next()) {
                     sold = rs.getInt("Sold");
-
                 }
                 arr[i] = sold;
             }

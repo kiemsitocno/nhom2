@@ -5,6 +5,14 @@
  */
 package gui;
 
+import entity.Bill;
+import interact.GUIInteraction;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author kiems
@@ -14,8 +22,12 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
     /**
      * Creates new form frmCreateBill
      */
+    private ArrayList<entity.Order> alDetails;
+    static String code=null;
     public frmCreateBill() {
         initComponents();
+        alDetails = new ArrayList<entity.Order>();
+        refreshBills();
     }
 
     /**
@@ -98,7 +110,8 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
         jTabbedPane1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
 
         txtCustomerID.setEditable(false);
-        txtCustomerID.setBackground(new java.awt.Color(204, 204, 204));
+        txtCustomerID.setBackground(new java.awt.Color(255, 255, 255));
+        txtCustomerID.setEnabled(false);
 
         btnBrowerCustomer.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnBrowerCustomer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconBrower.png"))); // NOI18N
@@ -109,7 +122,7 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
             }
         });
 
-        txtVAT.setText("10%");
+        txtVAT.setText("1");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setText("VAT :");
@@ -118,6 +131,8 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
         jLabel4.setText("Payment :");
 
         cboPayment.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "---Choosing payment---", "Cash", "Credit Card", "Visa" }));
+
+        txtDiscount.setText("0");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setText("Discount(%) :");
@@ -140,6 +155,8 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel6.setText("Product ID :");
 
+        txtProductID.setEnabled(false);
+
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel7.setText("Quantity :");
 
@@ -155,11 +172,6 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
         btnDelete.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconDelete.png"))); // NOI18N
         btnDelete.setText("Delete");
-        btnDelete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteActionPerformed(evt);
-            }
-        });
 
         btnCreate.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnCreate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconCreateBill.png"))); // NOI18N
@@ -185,11 +197,6 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
         btnCancel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconCancel.png"))); // NOI18N
         btnCancel.setText("Cancel Order");
-        btnCancel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -341,39 +348,18 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
 
         txtCustomerID1.setEditable(false);
         txtCustomerID1.setBackground(new java.awt.Color(204, 204, 204));
-        txtCustomerID1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtCustomerID1KeyReleased(evt);
-            }
-        });
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel11.setText("Total :");
-
-        txtTotal.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtTotalKeyReleased(evt);
-            }
-        });
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel12.setText("Order by :");
 
         cboOrder.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Default", "Total", "Date", "Valid", "Invalid" }));
-        cboOrder.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cboOrderItemStateChanged(evt);
-            }
-        });
 
         btnBrowerCustomer1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnBrowerCustomer1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconBrower.png"))); // NOI18N
         btnBrowerCustomer1.setText("Brower");
-        btnBrowerCustomer1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBrowerCustomer1ActionPerformed(evt);
-            }
-        });
 
         jLabel15.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel15.setText("To :");
@@ -384,20 +370,10 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
         btnDetroy.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnDetroy.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconDestroy.png"))); // NOI18N
         btnDetroy.setText("Destroy");
-        btnDetroy.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDetroyActionPerformed(evt);
-            }
-        });
 
         btnRefresh.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconRefresh.png"))); // NOI18N
         btnRefresh.setText("Refresh");
-        btnRefresh.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRefreshActionPerformed(evt);
-            }
-        });
 
         txtReason.setColumns(20);
         txtReason.setRows(5);
@@ -495,11 +471,6 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
 
             }
         ));
-        tableBill.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tableBillMouseClicked(evt);
-            }
-        });
         jScrollPane2.setViewportView(tableBill);
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
@@ -619,59 +590,182 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnBrowerCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBrowerCustomerActionPerformed
-
-    }//GEN-LAST:event_btnBrowerCustomerActionPerformed
-
     private void btnOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrderActionPerformed
-
+        // TODO add your handling code here:
+        int iQuantity = 0;
+        if (!interact.CheckForm.isNumberic(txtQuantity.getText())) {
+            JOptionPane.showMessageDialog(this, "Quantity is not numberic.", "Error", JOptionPane.ERROR_MESSAGE);
+            txtQuantity.requestFocus();
+            return;
+        }
+        if (Integer.valueOf(txtQuantity.getText()) < 0) {
+            JOptionPane.showMessageDialog(this, "Quantity is more than zero.", "Error", JOptionPane.ERROR_MESSAGE);
+            txtQuantity.requestFocus();
+            return;
+        }
+        try {
+            iQuantity = Integer.valueOf(txtQuantity.getText());
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Fomat invalid.", "Error", JOptionPane.ERROR_MESSAGE);
+            txtQuantity.requestFocus();
+            return;
+        }
+        entity.Product product = interact.Product.getByCode(txtProductID.getText());
+        if (product == null) {
+            JOptionPane.showMessageDialog(this, "This product doesn't exist", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        boolean bFound = false;
+        for (entity.Order detail : alDetails) {
+            if (detail.getProductID().equals(product.getProductID())) {
+                detail.setQuantity(detail.getQuantity() + iQuantity);
+                bFound = true;
+                break;
+            }
+        }
+        
+        if (bFound == false) {
+            entity.Order detail = new entity.Order();
+            detail.setOrderID("2");
+            detail.setProductID(product.getProductID());
+            detail.setPrice(product.getPrice());
+            detail.setQuantity(iQuantity);
+            alDetails.add(detail);
+        }
+        refresh();
     }//GEN-LAST:event_btnOrderActionPerformed
 
-    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-
-    }//GEN-LAST:event_btnDeleteActionPerformed
-
-    private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
-
-    }//GEN-LAST:event_btnCreateActionPerformed
-
     private void btnBrowerProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBrowerProductActionPerformed
-
+        // TODO add your handling code here:
+        frmProductBrower product = new frmProductBrower();
+        product.code = this;
+        product.show();
     }//GEN-LAST:event_btnBrowerProductActionPerformed
 
-    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+    private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnCancelActionPerformed
+        boolean testCode = false;
+        if (!interact.CheckForm.isEmpty(txtCustomerID.getText())) {
+            JOptionPane.showMessageDialog(this, "You must enter customer id.");
+            return;
+        }
+        if (!interact.CheckForm.isNumberic(txtCustomerID.getText())) {
+            JOptionPane.showMessageDialog(this, "Customer id fomat invalid.");
+            return;
+        }
+        String customerID = null;
+        try {
+            customerID = txtCustomerID.getText();
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Customer id fomat invalid.");
+            return;
+        }
+        for (entity.Customer cus : interact.Customer.getAll()) {
+            if (cus.getCustomerID().equals(customerID)) {
+                testCode = true;
+                break;
+            }
+        }
+        if (testCode == false) {
+            JOptionPane.showMessageDialog(this, "This customer id is not exist.");
+            return;
+        }
+        //Check discount
+        int disCount = 0;
+        try {
+            disCount = Integer.valueOf(txtDiscount.getText());
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Discount fomat invalid.");
+            return;
+        }
+        if (disCount < 0 || disCount > 100) {
+            JOptionPane.showMessageDialog(this, "Discount arrange invalid.");
+            return;
+        }
+        if (alDetails == null) {
+            JOptionPane.showMessageDialog(this, "Please enter items.");
+            return;
+        }
+        //check VAT
+        if (!interact.CheckForm.isEmpty(txtVAT.getText())) {
+            JOptionPane.showMessageDialog(this, "VAT is not empty.");
+            return;
+        }
+        int vat = 0;
+        try {
+            vat = Integer.valueOf(txtVAT.getText());
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "VAT fomat invalid.");
+            return;
+        }
+        if (vat < 0 || vat > 100) {
+            JOptionPane.showMessageDialog(this, "VAT arrange invalid.");
+            return;
+        }
+        if (cboPayment.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(this, "Please choosing payment.");
+            return;
+        }
+        entity.Bill bill = new Bill();
+        bill.setBillID("33");
+        bill.setSalesID(interact.Login.getAdminID());
+        bill.setDate(entity.DateUtils.now("MM/dd/yy"));
+        bill.setDiscount(disCount);
+        bill.setVAT(vat);
+        bill.setPayment(String.valueOf(cboPayment.getSelectedItem()));
+        bill.setTotal(calcTotal());
+        bill.setCustomerID(customerID);
+        bill.setStatus(true);
 
-    private void txtCustomerID1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCustomerID1KeyReleased
+        try {
+            interact.Bill.insertBill(bill, alDetails);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Cannot create a new bill");
+            return;
+        }
 
-    }//GEN-LAST:event_txtCustomerID1KeyReleased
+        alDetails.clear();
+        txtCustomerID.setText("");
+        txtDiscount.setText("0");
+        refresh();
+    }//GEN-LAST:event_btnCreateActionPerformed
 
-    private void txtTotalKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTotalKeyReleased
-
-    }//GEN-LAST:event_txtTotalKeyReleased
-
-    private void cboOrderItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboOrderItemStateChanged
-
-    }//GEN-LAST:event_cboOrderItemStateChanged
-
-    private void btnBrowerCustomer1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBrowerCustomer1ActionPerformed
-
-    }//GEN-LAST:event_btnBrowerCustomer1ActionPerformed
-
-    private void btnDetroyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetroyActionPerformed
-
-    }//GEN-LAST:event_btnDetroyActionPerformed
-
-    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
+    private void btnBrowerCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBrowerCustomerActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnRefreshActionPerformed
+        frmCustomerBrower customer = new frmCustomerBrower();
+        customer.code=this;
+        customer.show();
+    }//GEN-LAST:event_btnBrowerCustomerActionPerformed
 
-    private void tableBillMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableBillMouseClicked
-
-    }//GEN-LAST:event_tableBillMouseClicked
-
-
+    private void refreshBills() {
+        try {
+            GUIInteraction.readToTable("select * from Bills where Status=1", tableBill);
+        } catch (SQLException ex) {
+            Logger.getLogger(frmCreateBill.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void refresh() {
+        tableOrder.setModel(new model.OrderDetails(alDetails));
+        calcTotal();
+    }
+    
+    private int calcTotal() {
+        int dTotal = 0;
+        for (entity.Order detail : alDetails) {
+            dTotal += detail.getPrice() * detail.getQuantity();
+        }
+        int dDiscount = 0;
+        try {
+            dDiscount = Integer.valueOf(txtDiscount.getText());
+        } catch (Exception ex) {
+        }
+        dDiscount = Math.min(Math.max(dDiscount, 0), 100);
+        dTotal *= (100 - dDiscount) / 100;
+        lblTotal.setText("Total: $" + dTotal);
+        return dTotal;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBrowerCustomer;
     private javax.swing.JButton btnBrowerCustomer1;
