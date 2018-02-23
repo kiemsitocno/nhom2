@@ -177,6 +177,11 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
         btnDelete.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconDelete.png"))); // NOI18N
         btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         btnCreate.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnCreate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconCreateBill.png"))); // NOI18N
@@ -202,6 +207,11 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
         btnCancel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconCancel.png"))); // NOI18N
         btnCancel.setText("Cancel Order");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -366,6 +376,10 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
         btnBrowerCustomer1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconBrower.png"))); // NOI18N
         btnBrowerCustomer1.setText("Brower");
 
+        txtDateForm.setDateFormatString("yyyy-MM-dd");
+
+        txtDateTo.setDateFormatString("yyyy-MM-dd");
+
         jLabel15.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel15.setText("To :");
 
@@ -476,6 +490,11 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
 
             }
         ));
+        tableBill.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableBillMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tableBill);
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
@@ -619,21 +638,37 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
             }
         }
         
-        // GIỚI HẠN SỐ LƯỢNG ORDER PHẢI ÍT HƠN SỐ LƯỢNG SẢN PHẨM HIỆN CÓ
-        if(product.getQuantityAvailable()-countQuantityOrder<0||product.getQuantityAvailable()-iQuantity<0){
-            JOptionPane.showMessageDialog(null, "This product of quantity not enough");
-            return;
-        }
-        
         // GÁN ID
         String salesID = Login.getAdminID();
         int countBill = GUIInteraction.indentityID("select top 1 * from Bills Where SalesID='"+salesID+"' order by BillID Desc", "BillID") + 1;
         String billID = salesID+"B"+countBill;
-        int countOrder = GUIInteraction.indentityID("select top 1 * from OrderDetails Where BillID='"+billID+"' order by OrderID Desc", "OrderID") + 1;
+        while(true){
+            if(!GUIInteraction.checkDuplicateID(String.valueOf(billID), "select * from Bills", "BillID")){
+                countBill = countBill+1;
+                billID = salesID+"B"+countBill;
+            }else{
+                break;
+            }
+        }
         
         // SAU KHI VÒNG FOR Ở TRÊN BREAK THÌ THỰC HIỆN THÊM ARRAYLIST ORDER VÀO BILL
         if (flag == false) {
             String orderID = billID+"O"+count;
+            while(true){
+                if(!GUIInteraction.checkDuplicateID(orderID, "select * from OrderDetails", "OrderID")){
+                    count = count+1;
+                    orderID = billID+"O"+count;
+                }else{
+                    break;
+                }
+            }
+            
+            // GIỚI HẠN SỐ LƯỢNG ORDER PHẢI ÍT HƠN SỐ LƯỢNG SẢN PHẨM HIỆN CÓ
+            if(product.getQuantityAvailable()-countQuantityOrder<0||product.getQuantityAvailable()-iQuantity<0){
+                JOptionPane.showMessageDialog(null, "This product of quantity not enough");
+                return;
+            }
+            
             entity.Order detail = new entity.Order();
             detail.setOrderID(orderID);
             detail.setProductID(product.getProductID());
@@ -661,6 +696,15 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
         String salesID = Login.getAdminID();
         int countBill = GUIInteraction.indentityID("select top 1 * from Bills Where SalesID='"+salesID+"' order by BillID Desc", "BillID") + 1;
         String billID = salesID+"B"+countBill;
+        
+        while(true){
+            if(!GUIInteraction.checkDuplicateID(String.valueOf(billID), "select * from Bills", "BillID")){
+                countBill = countBill+1;
+                billID = salesID+"B"+countBill;
+            }else{
+                break;
+            }
+        }
         
         entity.Bill bill = new Bill();
         bill.setBillID(billID);
@@ -692,6 +736,38 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
         customer.code=this;
         customer.show();
     }//GEN-LAST:event_btnBrowerCustomerActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        // TODO add your handling code here:
+        int iSelected = tableOrder.getSelectedRow();
+        if (iSelected < 0) {
+            JOptionPane.showMessageDialog(this, "Please choose one.");
+            return;
+        }
+        alDetails.remove(iSelected);
+        refresh();
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        // TODO add your handling code here:
+        int count = tableOrder.getRowCount();
+        tableOrder.clearSelection();
+        for(int i=count-1;i>-1;i--){
+            alDetails.remove(i);
+        }
+        refresh();
+    }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void tableBillMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableBillMouseClicked
+        // TODO add your handling code here:
+        int row = tableBill.getSelectedRow();
+        String billId = tableBill.getValueAt(row, 0).toString();
+        try {
+            GUIInteraction.readToTable("select * from OrderDetails where BillID='"+billId+"'", tablelOrderDetails);
+        } catch (SQLException ex) {
+            Logger.getLogger(frmCreateBill.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_tableBillMouseClicked
 
     private void refreshBills() {
         try {

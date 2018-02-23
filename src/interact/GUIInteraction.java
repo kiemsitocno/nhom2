@@ -82,6 +82,26 @@ public class GUIInteraction {
         return flag;
     }
 
+    public static boolean checkDuplicateID(String _id, String sql, String field) {
+        boolean flag = true;
+        Vector vt = new Vector();
+        try {
+            ResultSet rs = DataInteraction.getConnect().createStatement().executeQuery(sql);
+            while (rs.next()) {
+                vt.add(rs.getString(field));
+            }
+            for (int i = 0; i < vt.size(); i++) {
+                String str = (String) vt.get(i);
+                if (str.equalsIgnoreCase(_id)) {
+                    flag = false;
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(GUIInteraction.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return flag;
+    }
+    
     public static int indentityID(String sql, String field) {
         // PHƯƠNG THỨC TỰ ĐỘNG TĂNG ID
         int count = 0;
