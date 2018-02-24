@@ -19,11 +19,12 @@ public class Bill {
     private int total;          //7    
     private String customerID;  //8
     private boolean Status;     //9
+    private String descript;    // 10
 
     public Bill() {
     }
 
-    public Bill(String billID, String salesID, String date, int discount, int VAT, String payment, int total, String customerID, boolean Status) {
+    public Bill(String billID, String salesID, String date, int discount, int VAT, String payment, int total, String customerID, boolean Status, String descript) {
         this.billID = billID;
         this.salesID = salesID;
         this.date = date;
@@ -33,8 +34,9 @@ public class Bill {
         this.total = total;
         this.customerID = customerID;
         this.Status = Status;
+        this.descript = descript;
     }
-
+    
     public String getBillID() {
         return billID;
     }
@@ -107,4 +109,11 @@ public class Bill {
         this.Status = Status;
     }
     
+    public String getDescript() {
+        return descript;
+    }
+
+    public void setDescript(String descript) {
+        this.descript = descript;
+    }
 }

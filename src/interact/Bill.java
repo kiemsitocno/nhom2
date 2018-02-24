@@ -35,6 +35,7 @@ public class Bill {
             pst.setInt(7, bill.getTotal());
             pst.setString(8, bill.getCustomerID());
             pst.setBoolean(9, bill.isStatus());
+            pst.setString(10, bill.getDescript());
             
             pst.executeUpdate();
             bill.setBillID(DataInteraction.topid());
@@ -48,7 +49,7 @@ public class Bill {
     }
     
     public static boolean editBill(entity.Bill bill) {
-        // PHƯƠNG THỨC DELETE CỦA ĐỐI TƯỢNG BILL (EDIT STATUS = FALSE)
+        // PHƯƠNG THỨC DESTROY CỦA ĐỐI TƯỢNG BILL (EDIT STATUS = FALSE)
         String sql = "update Bills set "
                 + "BillID=?, "
                 + "SalesID=?, "
@@ -71,7 +72,7 @@ public class Bill {
             pst.setString(7, bill.getCustomerID());
             pst.setBoolean(8, bill.isStatus());
             pst.setString(9, bill.getBillID());
-            JOptionPane.showMessageDialog(null, "Delete Bill Successfully", "Successfully", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Destroy Bill Successfully", "Successfully", JOptionPane.INFORMATION_MESSAGE);
             return (pst.executeUpdate() == 1);
         } catch (SQLException ex) {
             Logger.getLogger(Store.class.getName()).log(Level.SEVERE, null, ex);
@@ -110,6 +111,7 @@ public class Bill {
                 bill.setTotal(rs.getInt("Total"));
                 bill.setCustomerID(rs.getString("CustomerID"));
                 bill.setStatus(rs.getBoolean("Status"));
+                bill.setDescript(rs.getString("Descript"));
                 bills.add(bill);
 
             }
