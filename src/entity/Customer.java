@@ -10,12 +10,12 @@ package entity;
  * @author kiems
  */
 public class Customer {
-    private String customerID;
-    private String customerName;
-    private String address;
-    private String phone;
-    private String email;
-    private String gender;
+    private String customerID;  //1
+    private String customerName;//2
+    private String address;     //3
+    private String phone;       //4
+    private String email;       //5
+    private String gender;      //6
 
     public Customer() {
     }

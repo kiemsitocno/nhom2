@@ -5,6 +5,11 @@
  */
 package gui;
 
+import interact.GUIInteraction;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author kiems
@@ -16,6 +21,7 @@ public class frmSearchProducts extends javax.swing.JInternalFrame {
      */
     public frmSearchProducts() {
         initComponents();
+        refresh();
     }
 
     /**
@@ -68,32 +74,21 @@ public class frmSearchProducts extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Products ID :");
 
-        txtProductID.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtProductIDKeyReleased(evt);
+        txtProductID.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtProductIDMouseClicked(evt);
             }
         });
 
         jLabel4.setText("Price :");
 
-        txtPrice.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtPriceKeyReleased(evt);
-            }
-        });
-
         cboCategory.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "All" }));
-        cboCategory.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cboCategoryItemStateChanged(evt);
-            }
-        });
 
         jLabel5.setText("Category :");
 
-        txtProductName.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtProductNameKeyReleased(evt);
+        txtProductName.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtProductNameMouseClicked(evt);
             }
         });
 
@@ -111,6 +106,11 @@ public class frmSearchProducts extends javax.swing.JInternalFrame {
         btnSearch.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconBrower.png"))); // NOI18N
         btnSearch.setText("Search");
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Table Information", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
@@ -154,13 +154,14 @@ public class frmSearchProducts extends javax.swing.JInternalFrame {
                             .addComponent(jLabel2))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtProductName)
+                            .addComponent(txtProductID, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtProductID, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(82, 82, 82)
                                 .addComponent(jLabel4))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtProductName, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(60, 60, 60)
                                 .addComponent(jLabel5)))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -200,26 +201,59 @@ public class frmSearchProducts extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtProductIDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtProductIDKeyReleased
-
-    }//GEN-LAST:event_txtProductIDKeyReleased
-
-    private void txtPriceKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPriceKeyReleased
-
-    }//GEN-LAST:event_txtPriceKeyReleased
-
-    private void cboCategoryItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboCategoryItemStateChanged
-
-    }//GEN-LAST:event_cboCategoryItemStateChanged
-
-    private void txtProductNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtProductNameKeyReleased
-
-    }//GEN-LAST:event_txtProductNameKeyReleased
-
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
-
+        // TODO add your handling code here:
+        txtProductID.setText("");
+        txtProductName.setText("");
+        txtPrice.setText("");
+        cboCategory.setSelectedIndex(0);
+        try {
+            interact.GUIInteraction.readToTable("select * from Products", tableProduct);
+        } catch (SQLException ex) {
+            Logger.getLogger(frmSearchProducts.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnRefreshActionPerformed
 
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        try {
+            // TODO add your handling code here:
+            String id = txtProductID.getText().trim();
+            String name = txtProductName.getText().trim();
+            String price = txtPrice.getText().trim();
+            String category;
+            if(cboCategory.getSelectedIndex()==0){
+                category="";
+            }else{
+                category = cboCategory.getSelectedItem().toString();
+            }
+            String sql = "select * from Products where ProductID like N'%" + id + "%' AND "
+                                                    + "ProductName like N'%" + name + "%' AND "
+                                                    + "Price like N'%" + price + "%' AND "
+                                                    + "CategoryID like N'%" + category + "%'";
+            GUIInteraction.readToTable(sql, tableProduct);
+        } catch (SQLException ex) {
+            Logger.getLogger(frmSearchProducts.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void txtProductIDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtProductIDMouseClicked
+        // TODO add your handling code here:
+        txtProductName.setText("");
+    }//GEN-LAST:event_txtProductIDMouseClicked
+
+    private void txtProductNameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtProductNameMouseClicked
+        // TODO add your handling code here:
+        txtProductID.setText("");
+    }//GEN-LAST:event_txtProductNameMouseClicked
+
+    private void refresh() {
+        try {
+            interact.GUIInteraction.readToTable("select * from Products", tableProduct);
+            interact.GUIInteraction.readToCombo("select * from Categories", cboCategory,"CategoryID");
+        } catch (SQLException ex) {
+            Logger.getLogger(frmSearchProducts.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRefresh;

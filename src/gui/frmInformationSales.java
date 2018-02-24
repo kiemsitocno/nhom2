@@ -5,6 +5,8 @@
  */
 package gui;
 
+import interact.Login;
+
 /**
  *
  * @author kiems
@@ -38,12 +40,24 @@ public class frmInformationSales extends javax.swing.JInternalFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
+        labelName = new javax.swing.JLabel();
+        labelPhone = new javax.swing.JLabel();
+        labelAddress = new javax.swing.JLabel();
+        labelStore = new javax.swing.JLabel();
+        labelPosition = new javax.swing.JLabel();
+        labelEmail = new javax.swing.JLabel();
+        labelSalary = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
+        labelBillSold = new javax.swing.JLabel();
+        labelProductSold = new javax.swing.JLabel();
+        labelWorkDay = new javax.swing.JLabel();
+        labelBonus = new javax.swing.JLabel();
+        labelSalaryMonth = new javax.swing.JLabel();
 
         jPanel6.setBackground(new java.awt.Color(0, 255, 255));
 
@@ -94,6 +108,20 @@ public class frmInformationSales extends javax.swing.JInternalFrame {
         jLabel15.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel15.setText("Salary :");
 
+        labelName.setText("jLabel2");
+
+        labelPhone.setText("jLabel2");
+
+        labelAddress.setText("jLabel2");
+
+        labelStore.setText("jLabel2");
+
+        labelPosition.setText("jLabel2");
+
+        labelEmail.setText("jLabel2");
+
+        labelSalary.setText("jLabel2");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -106,17 +134,34 @@ public class frmInformationSales extends javax.swing.JInternalFrame {
                         .addComponent(jLabel9))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(labelName))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(labelPhone))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(labelAddress)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 189, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
                             .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING))))
-                .addGap(153, 153, 153)
-                .addComponent(jLabel15)
-                .addGap(221, 221, 221))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelPosition)
+                    .addComponent(labelEmail)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(labelStore)
+                        .addGap(113, 113, 113)
+                        .addComponent(jLabel15)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelSalary)))
+                .addGap(181, 181, 181))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -125,15 +170,22 @@ public class frmInformationSales extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel5)
-                    .addComponent(jLabel15))
+                    .addComponent(jLabel15)
+                    .addComponent(labelName)
+                    .addComponent(labelStore)
+                    .addComponent(labelSalary))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel6))
+                    .addComponent(jLabel6)
+                    .addComponent(labelPhone)
+                    .addComponent(labelPosition))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jLabel7))
+                    .addComponent(jLabel7)
+                    .addComponent(labelAddress)
+                    .addComponent(labelEmail))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel9)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -156,6 +208,16 @@ public class frmInformationSales extends javax.swing.JInternalFrame {
         jLabel14.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel14.setText("Salary of month :");
 
+        labelBillSold.setText("jLabel2");
+
+        labelProductSold.setText("jLabel2");
+
+        labelWorkDay.setText("jLabel2");
+
+        labelBonus.setText("jLabel2");
+
+        labelSalaryMonth.setText("jLabel2");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -163,26 +225,51 @@ public class frmInformationSales extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel10)
-                    .addComponent(jLabel11)
-                    .addComponent(jLabel12)
-                    .addComponent(jLabel13)
-                    .addComponent(jLabel14))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelBillSold))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(labelProductSold))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(labelWorkDay))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel13)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelBonus))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel14)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelSalaryMonth)))
+                .addContainerGap(502, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel10)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(labelBillSold))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel11)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(labelProductSold))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel12)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(labelWorkDay))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel13)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(labelBonus))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel14)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14)
+                    .addComponent(labelSalaryMonth))
                 .addContainerGap(42, Short.MAX_VALUE))
         );
 
@@ -213,6 +300,9 @@ public class frmInformationSales extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void load(){
+        String salesID = Login.getAdminID();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -232,5 +322,17 @@ public class frmInformationSales extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JLabel labelAddress;
+    private javax.swing.JLabel labelBillSold;
+    private javax.swing.JLabel labelBonus;
+    private javax.swing.JLabel labelEmail;
+    private javax.swing.JLabel labelName;
+    private javax.swing.JLabel labelPhone;
+    private javax.swing.JLabel labelPosition;
+    private javax.swing.JLabel labelProductSold;
+    private javax.swing.JLabel labelSalary;
+    private javax.swing.JLabel labelSalaryMonth;
+    private javax.swing.JLabel labelStore;
+    private javax.swing.JLabel labelWorkDay;
     // End of variables declaration//GEN-END:variables
 }
