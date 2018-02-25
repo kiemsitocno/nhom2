@@ -603,6 +603,8 @@ public class formMain extends javax.swing.JFrame {
             int i = JOptionPane.showConfirmDialog(this, "Truy cập đã bị chặn, yêu cầu đăng nhập trước.");
             if (i == JOptionPane.YES_OPTION) {
                 System.exit(1);
+            }else{
+                System.exit(1);
             }
         } else if (Login.getPermit().equals("DI")) {
             menuDirector.setVisible(true);
@@ -610,6 +612,8 @@ public class formMain extends javax.swing.JFrame {
             menuManagement.setVisible(false);
             menuSales.setVisible(false);
         } else if (Login.getPermit().equals("MN")) {
+            String id = Login.getAdminID();
+            
             menuDirector.setVisible(false);
             menuInventory.setVisible(false);
             menuManagement.setVisible(true);
@@ -620,6 +624,7 @@ public class formMain extends javax.swing.JFrame {
             menuManagement.setVisible(false);
             menuSales.setVisible(false);
         } else {
+            
             menuDirector.setVisible(false);
             menuInventory.setVisible(false);
             menuManagement.setVisible(false);

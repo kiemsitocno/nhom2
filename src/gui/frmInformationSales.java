@@ -5,7 +5,12 @@
  */
 package gui;
 
+import interact.DataInteraction;
+import interact.GUIInteraction;
 import interact.Login;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -16,8 +21,11 @@ public class frmInformationSales extends javax.swing.JInternalFrame {
     /**
      * Creates new form frmInformationSales
      */
+    String salesID = Login.getAdminID();
     public frmInformationSales() {
         initComponents();
+        loadInfo();
+        loadArchive();
     }
 
     /**
@@ -34,7 +42,6 @@ public class frmInformationSales extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -42,7 +49,6 @@ public class frmInformationSales extends javax.swing.JInternalFrame {
         jLabel15 = new javax.swing.JLabel();
         labelName = new javax.swing.JLabel();
         labelPhone = new javax.swing.JLabel();
-        labelAddress = new javax.swing.JLabel();
         labelStore = new javax.swing.JLabel();
         labelPosition = new javax.swing.JLabel();
         labelEmail = new javax.swing.JLabel();
@@ -91,9 +97,6 @@ public class frmInformationSales extends javax.swing.JInternalFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setText("Phone :");
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel4.setText("Address :");
-
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel5.setText("Store :");
 
@@ -111,8 +114,6 @@ public class frmInformationSales extends javax.swing.JInternalFrame {
         labelName.setText("jLabel2");
 
         labelPhone.setText("jLabel2");
-
-        labelAddress.setText("jLabel2");
 
         labelStore.setText("jLabel2");
 
@@ -143,10 +144,10 @@ public class frmInformationSales extends javax.swing.JInternalFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(labelPhone))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
+                                .addComponent(jLabel15)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(labelAddress)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 189, Short.MAX_VALUE)
+                                .addComponent(labelSalary)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
                             .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -155,13 +156,8 @@ public class frmInformationSales extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelPosition)
                     .addComponent(labelEmail)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(labelStore)
-                        .addGap(113, 113, 113)
-                        .addComponent(jLabel15)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(labelSalary)))
-                .addGap(181, 181, 181))
+                    .addComponent(labelStore))
+                .addGap(373, 373, 373))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -170,10 +166,8 @@ public class frmInformationSales extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel5)
-                    .addComponent(jLabel15)
                     .addComponent(labelName)
-                    .addComponent(labelStore)
-                    .addComponent(labelSalary))
+                    .addComponent(labelStore))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -182,10 +176,11 @@ public class frmInformationSales extends javax.swing.JInternalFrame {
                     .addComponent(labelPosition))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
                     .addComponent(jLabel7)
-                    .addComponent(labelAddress)
-                    .addComponent(labelEmail))
+                    .addComponent(labelEmail)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel15)
+                        .addComponent(labelSalary)))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel9)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -300,8 +295,35 @@ public class frmInformationSales extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void load(){
-        String salesID = Login.getAdminID();
+    private void loadInfo(){
+        labelName.setText(DataInteraction.getLines("Users", "UserID", salesID, "Name"));
+        labelPhone.setText(DataInteraction.getLines("Users", "UserID", salesID, "Phone"));
+        labelStore.setText(DataInteraction.getLines("Users", "UserID", salesID, "StoreID"));
+        labelPosition.setText(DataInteraction.getLines("Users", "UserID", salesID, "RoleID"));
+        labelEmail.setText(DataInteraction.getLines("Users", "UserID", salesID, "Email"));
+        labelSalary.setText(DataInteraction.getLines("Users", "UserID", salesID, "Salary"));
+    }
+    
+    private void loadArchive(){
+        try {
+            int countBillSold = GUIInteraction.countRecord("select * from Bills where SalesID='"+salesID+"'");
+            labelBillSold.setText(String.valueOf(countBillSold));
+            int countProductSold = GUIInteraction.countQuantity("select sum(Quantity) as Total from View_Bills where SalesID='"+salesID+"'");
+            labelProductSold.setText(String.valueOf(countProductSold));
+            
+            int bonus;
+            if(countProductSold<50){
+                bonus=0;
+            }else if(countProductSold<100){
+                bonus=100000;
+            }else{
+                bonus=500000;
+            }
+            labelBonus.setText(String.valueOf(bonus));
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(frmInformationSales.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -313,7 +335,6 @@ public class frmInformationSales extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -322,7 +343,6 @@ public class frmInformationSales extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JLabel labelAddress;
     private javax.swing.JLabel labelBillSold;
     private javax.swing.JLabel labelBonus;
     private javax.swing.JLabel labelEmail;
