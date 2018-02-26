@@ -577,6 +577,15 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
             }
             int countCategory = GUIInteraction.indentityID("select top 1 * from Categories order by CategoryID Desc", "CategoryID") + 1;
             String CategoryID = "CA" + countCategory;
+            
+            while (true) {
+                if (!GUIInteraction.checkDuplicateID(String.valueOf(CategoryID), "select * from Categories", "CategoryID")) {
+                    countCategory = countCategory + 1;
+                    CategoryID = "CA" + countCategory;
+                } else {
+                    break;
+                }
+            }
 
             Category category = new Category(CategoryID, txtCategoryName.getText());
             interact.Categories.insertCategory(category);
@@ -605,6 +614,16 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
             String categoryID = DataInteraction.getCode("Categories", "CategoryName", condition, "CategoryID");
             int countProduct = GUIInteraction.indentityID("select top 1 * from Products where CategoryID='"+categoryID+"' order by ProductID Desc", "ProductID") + 1;
             String productID = categoryID + "PD" +countProduct;
+            
+            while (true) {
+                if (!GUIInteraction.checkDuplicateID(String.valueOf(productID), "select * from Products", "ProductID")) {
+                    countProduct = countProduct + 1;
+                    productID = categoryID + "PD" +countProduct;
+                } else {
+                    break;
+                }
+            }
+            
             entity.Product product = new Product(
                     productID, 
                     txtProductName.getText(),

@@ -5,6 +5,8 @@
  */
 package gui;
 
+import entity.DayWork;
+import interact.GUIInteraction;
 import interact.Login;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -612,8 +614,6 @@ public class formMain extends javax.swing.JFrame {
             menuManagement.setVisible(false);
             menuSales.setVisible(false);
         } else if (Login.getPermit().equals("MN")) {
-            String id = Login.getAdminID();
-            
             menuDirector.setVisible(false);
             menuInventory.setVisible(false);
             menuManagement.setVisible(true);
@@ -624,7 +624,15 @@ public class formMain extends javax.swing.JFrame {
             menuManagement.setVisible(false);
             menuSales.setVisible(false);
         } else {
-            
+            String id = Login.getAdminID();
+            String date = entity.DateUtils.now("MM/dd/yy");
+            if (GUIInteraction.checkDuplicateID(String.valueOf(date), "select * from DayWork", "WorkID")) {
+                DayWork dayWork = new DayWork();
+                dayWork.setWorkID(date);
+                dayWork.setUserID(id);
+                dayWork.setDayWork(true);
+                interact.DayWork.insertDayWork(dayWork);
+            }
             menuDirector.setVisible(false);
             menuInventory.setVisible(false);
             menuManagement.setVisible(false);

@@ -803,6 +803,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
             }
             int countUser = GUIInteraction.indentityID("select top 1 * from Users Where RoleID='IV' order by UserID Desc", "UserID") + 1;
             String userID = "IV" + countUser;
+            
             User user = new User(
                     userID,
                     txtInventoryUsername.getText(),

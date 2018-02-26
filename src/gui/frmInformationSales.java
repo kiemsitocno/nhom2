@@ -175,12 +175,13 @@ public class frmInformationSales extends javax.swing.JInternalFrame {
                     .addComponent(labelPhone)
                     .addComponent(labelPosition))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(labelEmail)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel15)
-                        .addComponent(labelSalary)))
+                        .addComponent(labelSalary))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel7)
+                        .addComponent(labelEmail)))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel9)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -310,6 +311,8 @@ public class frmInformationSales extends javax.swing.JInternalFrame {
             labelBillSold.setText(String.valueOf(countBillSold));
             int countProductSold = GUIInteraction.countQuantity("select sum(Quantity) as Total from View_Bills where SalesID='"+salesID+"'");
             labelProductSold.setText(String.valueOf(countProductSold));
+            int countDay = GUIInteraction.countRecord("select * from DayWork where UserID='"+salesID+"'");
+            labelWorkDay.setText(String.valueOf(countDay));
             
             int bonus;
             if(countProductSold<50){
@@ -320,7 +323,9 @@ public class frmInformationSales extends javax.swing.JInternalFrame {
                 bonus=500000;
             }
             labelBonus.setText(String.valueOf(bonus));
-            
+            int salary = Integer.valueOf(DataInteraction.getLines("Users", "UserID", salesID, "Salary"));
+            int salaryMonth = salary/30*countDay+bonus;
+            labelSalaryMonth.setText(String.valueOf(salaryMonth));
         } catch (SQLException ex) {
             Logger.getLogger(frmInformationSales.class.getName()).log(Level.SEVERE, null, ex);
         }
