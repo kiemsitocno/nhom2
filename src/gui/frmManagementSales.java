@@ -17,8 +17,9 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
+ * GIAO DIỆN QUẢN LÝ SALES
  *
- * @author kiems
+ * @author NHÓM 2
  */
 public class frmManagementSales extends javax.swing.JInternalFrame {
 
@@ -607,7 +608,7 @@ public class frmManagementSales extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        // TODO add your handling code here:
+        // TẠO MỚI SALES
         enableTXT();
         if(btnAdd.getText().equals("Add")){
             resetTXT();
@@ -617,10 +618,13 @@ public class frmManagementSales extends javax.swing.JInternalFrame {
                 return;
             }
             
+            // TĂNG ID
             String condition = cbbStore.getSelectedItem().toString();
             String getCode = DataInteraction.getCode("Stores", "StoreName", condition, "StoreID");
             int countUser = GUIInteraction.indentityID("select top 1 * from Users Where RoleID='SL' and StoreID='"+getCode+"' order by UserID Desc", "UserID") + 1;
             String userID = getCode + "SL" + countUser;
+            
+            // INSERT
             User user = new User(
                     userID,
                     txtUsername.getText(),
@@ -640,14 +644,14 @@ public class frmManagementSales extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-        // TODO add your handling code here:
+        // CANCEL TẤT CẢ THAO TÁC
         disableTXT();
         resetTXT();
         resetButton();
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        // TODO add your handling code here:
+        // EDIT THÔNG TIN SALES
         if(txtIDEdit.getText().trim().length()==0){
             JOptionPane.showMessageDialog(this, "Please chose one row from table");
             return;
@@ -672,24 +676,24 @@ public class frmManagementSales extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void tableSaleEditMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableSaleEditMouseClicked
-        // TODO add your handling code here:
+        // LOAD DỮ LIỆU TỪ BẢNG RA TEXTFIELD
         int i = tableSaleEdit.getSelectedRow();
         txtIDEdit.setText(String.valueOf(tableSaleEdit.getValueAt(i, 0)));
-        txtNameEdit.setText(String.valueOf(tableSaleEdit.getValueAt(i, 3)));
-        txtPhoneEdit.setText(String.valueOf(tableSaleEdit.getValueAt(i, 4)));
-        txtEmailEdit.setText(String.valueOf(tableSaleEdit.getValueAt(i, 5)));
-        txtSalaryEdit.setText(String.valueOf(tableSaleEdit.getValueAt(i, 8)));
+        txtNameEdit.setText(String.valueOf(tableSaleEdit.getValueAt(i, 1)));
+        txtPhoneEdit.setText(String.valueOf(tableSaleEdit.getValueAt(i, 2)));
+        txtEmailEdit.setText(String.valueOf(tableSaleEdit.getValueAt(i, 3)));
+        txtSalaryEdit.setText(String.valueOf(tableSaleEdit.getValueAt(i, 5)));
     }//GEN-LAST:event_tableSaleEditMouseClicked
 
     private void btnCancelEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelEditActionPerformed
-        // TODO add your handling code here:
+        // CANCEL TẤT CẢ THAO TÁC
         disableTXT();
         resetTXT();
         resetButton();
     }//GEN-LAST:event_btnCancelEditActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        // TODO add your handling code here:
+        // XÓA NHÂN VIÊN NẾU NHÂN VIÊN NÀY KHÔNG CÓ BILL
         if(txtIDEdit.getText().trim().length()==0){
             JOptionPane.showMessageDialog(this, "Please chose one row from table");
             return;
@@ -713,30 +717,30 @@ public class frmManagementSales extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        // TODO add your handling code here:
+        // TÌM KIẾM NHÂN VIÊN THEO TÊN
         String searchName = txtSearch.getText().trim();
         String condition = cbbStore.getSelectedItem().toString();
-        String storeID = DataInteraction.getCode("Stores", "StoreName", condition, "StoreID");
         try {
-            GUIInteraction.readToTable("select * from Users where Name like N'%" + searchName + "%' and RoleID='SL' and StoreID='"+storeID+"'" , tableSaleEdit);
+            GUIInteraction.readToTable("select * from View_Sales where Name like N'%" + searchName + "%' and Position='Sales' and StoreName='"+condition+"'" , tableSaleEdit);
         } catch (SQLException ex) {
             Logger.getLogger(frmManagementSales.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void tabMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabMouseClicked
-        // TODO add your handling code here:
+        // RESET TẤT CẢ KHI CHUYỂN TAB
         disableTXT();
         resetTXT();
         resetButton();
     }//GEN-LAST:event_tabMouseClicked
 
     private void refresh() {
+        // LOAD DỮ LIỆU TỪ SQL RA CÁC BẢNG VÀ COMBOBOX
         try {
             String managerID = Login.getAdminID();
             String storeID = DataInteraction.getLines("Users", "UserID", managerID, "StoreID");
-            interact.GUIInteraction.readToTable("select * from Users where RoleID='SL'", tableSaleEdit);
-            interact.GUIInteraction.readToTable("select * from Users where RoleID='SL'", tableSales);
+            interact.GUIInteraction.readToTable("select * from View_Sales where Position='Sales'", tableSaleEdit);
+            interact.GUIInteraction.readToTable("select * from View_Sales where Position='Sales'", tableSales);
             interact.GUIInteraction.readToCombo("select StoreName from Stores where StoreID='"+storeID+"'", cbbStore, "StoreName");
             interact.GUIInteraction.readToCombo("select StoreName from Stores where StoreID='"+storeID+"'", cbbStoreEdit, "StoreName");
         } catch (SQLException ex) {
@@ -745,6 +749,7 @@ public class frmManagementSales extends javax.swing.JInternalFrame {
     }
 
     private void enableTXT(){
+        // ENABALE TẤT CẢ TEXTFIELD CÁC Ô CẦN ADD SALES
         txtName.setEnabled(true);
         txtUsername.setEnabled(true);
         txtPassword.setEnabled(true);
@@ -764,6 +769,7 @@ public class frmManagementSales extends javax.swing.JInternalFrame {
     }
     
     private void disableTXT(){
+        // DISABLE CÁC TEXTFIELD
         txtName.setEnabled(false);
         txtPhone.setEnabled(false);
         txtEmail.setEnabled(false);
@@ -777,6 +783,7 @@ public class frmManagementSales extends javax.swing.JInternalFrame {
     }
     
     private void resetTXT(){
+        // RESET TẤT CẢ TEXTFIELD
         txtID.setText(null);
         txtName.setText(null);
         txtPhone.setText(null);
@@ -794,6 +801,7 @@ public class frmManagementSales extends javax.swing.JInternalFrame {
     }
     
     private void resetButton(){
+        // RESET LABEL BUTTON
         btnAdd.setText("Add");
         btnEdit.setText("Edit");
     }

@@ -2,12 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
- /*
- * frmCustomerBrower.java
- *
- * Created on May 27, 2009, 10:28:04 AM
- */
 package gui;
 
 import interact.GUIInteraction;
@@ -17,8 +11,9 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
+ * GIAO DIỆN SELECT CUSTOMER
  *
- * @author Bach Ngoc Toan
+ * @author NHÓM 2
  */
 public class frmCustomerBrower_search extends javax.swing.JFrame {
 
@@ -203,7 +198,7 @@ public class frmCustomerBrower_search extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSearchRefresh;

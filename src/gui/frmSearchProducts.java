@@ -11,8 +11,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * GIAO DIỆN TÌM KIẾM SẢN PHẨM
  *
- * @author kiems
+ * @author NHÓM 2
  */
 public class frmSearchProducts extends javax.swing.JInternalFrame {
 
@@ -202,13 +203,13 @@ public class frmSearchProducts extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
-        // TODO add your handling code here:
+        // REFRESH TEXTFIELD VÀ TABLE
         txtProductID.setText("");
         txtProductName.setText("");
         txtPrice.setText("");
         cboCategory.setSelectedIndex(0);
         try {
-            interact.GUIInteraction.readToTable("select * from Products", tableProduct);
+            interact.GUIInteraction.readToTable("select * from View_ProductSales", tableProduct);
         } catch (SQLException ex) {
             Logger.getLogger(frmSearchProducts.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -216,7 +217,7 @@ public class frmSearchProducts extends javax.swing.JInternalFrame {
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         try {
-            // TODO add your handling code here:
+            // TÌM KIẾM SẢN PHẨM
             String id = txtProductID.getText().trim();
             String name = txtProductName.getText().trim();
             String price = txtPrice.getText().trim();
@@ -226,10 +227,10 @@ public class frmSearchProducts extends javax.swing.JInternalFrame {
             }else{
                 category = cboCategory.getSelectedItem().toString();
             }
-            String sql = "select * from Products where ProductID like N'%" + id + "%' AND "
+            String sql = "select * from View_ProductSales where ProductID like N'%" + id + "%' AND "
                                                     + "ProductName like N'%" + name + "%' AND "
                                                     + "Price like N'%" + price + "%' AND "
-                                                    + "CategoryID like N'%" + category + "%'";
+                                                    + "CategoryName like N'%" + category + "%'";
             GUIInteraction.readToTable(sql, tableProduct);
         } catch (SQLException ex) {
             Logger.getLogger(frmSearchProducts.class.getName()).log(Level.SEVERE, null, ex);
@@ -237,19 +238,20 @@ public class frmSearchProducts extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void txtProductIDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtProductIDMouseClicked
-        // TODO add your handling code here:
+        // NẾU SEARCH BẰNG ID THÌ Ô NAME SẼ RESET TRỐNG
         txtProductName.setText("");
     }//GEN-LAST:event_txtProductIDMouseClicked
 
     private void txtProductNameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtProductNameMouseClicked
-        // TODO add your handling code here:
+        // NẾU SEARCH BẰNG NAME THÌ Ô ID SẼ RESET TRỐNG
         txtProductID.setText("");
     }//GEN-LAST:event_txtProductNameMouseClicked
 
     private void refresh() {
+        // LOAD DỮ LIỆU TỪ SQL RA BẢNG
         try {
-            interact.GUIInteraction.readToTable("select * from Products", tableProduct);
-            interact.GUIInteraction.readToCombo("select * from Categories", cboCategory,"CategoryID");
+            interact.GUIInteraction.readToTable("select * from View_ProductSales", tableProduct);
+            interact.GUIInteraction.readToCombo("select * from Categories", cboCategory,"CategoryName");
         } catch (SQLException ex) {
             Logger.getLogger(frmSearchProducts.class.getName()).log(Level.SEVERE, null, ex);
         }

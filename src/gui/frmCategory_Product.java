@@ -575,9 +575,10 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
             if (!validateCategory()) {
                 return;
             }
+            
+            // TĂNG ID
             int countCategory = GUIInteraction.indentityID("select top 1 * from Categories order by CategoryID Desc", "CategoryID") + 1;
             String CategoryID = "CA" + countCategory;
-            
             while (true) {
                 if (!GUIInteraction.checkDuplicateID(String.valueOf(CategoryID), "select * from Categories", "CategoryID")) {
                     countCategory = countCategory + 1;
@@ -586,7 +587,8 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
                     break;
                 }
             }
-
+            
+            // INSERT
             Category category = new Category(CategoryID, txtCategoryName.getText());
             interact.Categories.insertCategory(category);
             refresh();
@@ -610,11 +612,11 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
                 return;
             }
             
+            // TĂNG ID
             String condition = cbbCategory.getSelectedItem().toString();
             String categoryID = DataInteraction.getCode("Categories", "CategoryName", condition, "CategoryID");
             int countProduct = GUIInteraction.indentityID("select top 1 * from Products where CategoryID='"+categoryID+"' order by ProductID Desc", "ProductID") + 1;
             String productID = categoryID + "PD" +countProduct;
-            
             while (true) {
                 if (!GUIInteraction.checkDuplicateID(String.valueOf(productID), "select * from Products", "ProductID")) {
                     countProduct = countProduct + 1;
@@ -624,6 +626,7 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
                 }
             }
             
+            // INSERT
             entity.Product product = new Product(
                     productID, 
                     txtProductName.getText(),
@@ -634,7 +637,6 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
                     txtDescription.getText(),
                     categoryID,
                     Integer.valueOf(txtVolume.getText()));
-            
             interact.Product.insertProduct(product);
             refresh();
             resetTXT();
@@ -678,9 +680,9 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
         int i = JOptionPane.showConfirmDialog(this, "Do you want to delete this Category.?");
         if (i == JOptionPane.YES_OPTION) {
             try {
-                // TODO add your handling code here:
-                int countUser = GUIInteraction.countRecord("select * from Products where CategoryID='" + txtCategoryID.getText() + "'");
-                if (countUser > 0) {
+                // KIỂM TRA CATEGORY CÓ SẢN PHẨM NÀO KHÔNG 
+                int countProduct = GUIInteraction.countRecord("select * from Products where CategoryID='" + txtCategoryID.getText() + "'");
+                if (countProduct > 0) {
                     JOptionPane.showMessageDialog(this, "This category have some product, can't delete it");
                 } else {
                     interact.Categories.deleteCategory(txtCategoryID.getText());

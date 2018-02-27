@@ -81,11 +81,13 @@ public class Bill {
     }
     
     public static void deleteBill(String ID) {
-        // PHƯƠNG THỨC DESTROY CỦA ĐỐI TƯỢNG BILL
-        String sql = "delete from Bills where BillID='" + ID + "'";
+        // PHƯƠNG THỨC DELETE CỦA ĐỐI TƯỢNG BILL
+        String sqlo = "delete from OrderDetails where BillID='"+ID+"'";
+        String sql = "delete from Bills where BillID='"+ID+"'";
         java.sql.Statement st;
         try {
             st = interact.DataInteraction.getConnect().createStatement();
+            st.executeUpdate(sqlo);
             st.executeUpdate(sql);
             JOptionPane.showMessageDialog(null, "Destroy Bill Successfully", "Successfully", JOptionPane.INFORMATION_MESSAGE);
         } catch (SQLException ex) {

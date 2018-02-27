@@ -7,6 +7,7 @@ package gui;
 import interact.GUIInteraction;
 import interact.CheckForm;
 import entity.Product;
+import interact.DataInteraction;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -235,6 +236,11 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
 
             }
         ));
+        tableInventory.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableInventoryMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tableInventory);
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Input Items", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
@@ -347,7 +353,7 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
     private void btnExpireDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExpireDateActionPerformed
         // ĐẾM SỐ LƯỢNG SẢN PHẨM HẾT HẠN
         try {
-            GUIInteraction.readToTable("select * from Products where datediff(dd,ExpireDate,getdate())<7", tableInventory);
+            GUIInteraction.readToTable("select * from View_ProductExpire where datediff(dd,ExpireDate,getdate())>7", tableInventory);
         } catch (SQLException ex) {
             Logger.getLogger(frmInventoryManagement.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -356,7 +362,7 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
     private void btnProductNAvailableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductNAvailableActionPerformed
         // ĐẾM SỐ LƯỢNG SẢN PHẨM HẾT HÀNG
         try {
-            GUIInteraction.readToTable("select * from Products where QuantityAvailable=0", tableInventory);
+            GUIInteraction.readToTable("select * from View_ProductEmpty where QuantityAvailable=0", tableInventory);
         } catch (SQLException ex) {
             Logger.getLogger(frmInventoryManagement.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -364,34 +370,34 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
 
     private void btnQuantityUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuantityUpdateActionPerformed
         // UPDATE SỐ LƯỢNG CHO SẢN PHẨM
-        txtQuantityUpdate.setEnabled(true);
-        if(txtProductNAvailable.getText().trim().length()==0){
+        if(txtQuantityUpdate.getText().trim().length()==0){
             JOptionPane.showMessageDialog(this, "Please chose one row from table");
             return;
         }
+        txtQuantityUpdate.setEnabled(true);
         if (btnQuantityUpdate.getText().equals("Update")) {
             btnQuantityUpdate.setText("Save");
         } else if (btnQuantityUpdate.getText().equals("Save")) {
             if (!validateProduct()) {
                 return;
             }
-            int i = tableInventory.getSelectedRow();
-            Product product = new Product(
-                String.valueOf(tableInventory.getValueAt(i, 0)),
-                String.valueOf(tableInventory.getValueAt(i, 1)),
-                Integer.parseInt(txtQuantityUpdate.getText()),
-                Integer.valueOf((String) tableInventory.getValueAt(i, 3)),
-                String.valueOf(tableInventory.getValueAt(i, 4)),
-                String.valueOf(tableInventory.getValueAt(i, 5)),
-                String.valueOf(tableInventory.getValueAt(i, 6)),
-                String.valueOf(tableInventory.getValueAt(i, 7)),
-                Integer.valueOf((String) tableInventory.getValueAt(i, 8)));
-            interact.Product.editProducts(product);
+            
+            String id= String.valueOf(tableInventory.getValueAt(0, 0));
+            String quantity = txtQuantityUpdate.getText();
+            String sql = "update Products set QuantityAvailable='"+quantity+"' where ProductID='"+id+"'";
+            DataInteraction.exec(sql);
             getStatus();
             btnQuantityUpdate.setText("Update");
             txtQuantityUpdate.setEnabled(false);
+            txtQuantityUpdate.setText(null);
         }
     }//GEN-LAST:event_btnQuantityUpdateActionPerformed
+
+    private void tableInventoryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableInventoryMouseClicked
+        // LOAD DỮ LIỆU TỪ BẢNG RA TEXTFIELD
+        int i = tableInventory.getSelectedRow();
+        txtQuantityUpdate.setText(String.valueOf(tableInventory.getValueAt(i, 5)));
+    }//GEN-LAST:event_tableInventoryMouseClicked
     
     private void getStatus(){
         // BỘ ĐẾM
@@ -407,7 +413,7 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
         txtProductTranstract.setText(String.valueOf(productTranstract));
         int productSold=GUIInteraction.countQuantity("select sum(Sold) as Total from View_ProductSold where datediff(dd,Date,getdate())=1");
         txtSoldQuantity.setText(String.valueOf(productSold));
-        int productExpire=GUIInteraction.countQuantity("select count(*) from Products where datediff(dd,ExpireDate,getdate())<7");
+        int productExpire=GUIInteraction.countQuantity("select count(*) from Products where datediff(dd,ExpireDate,getdate())>7");
         txtExpireDate.setText(String.valueOf(productExpire));
     }
     
@@ -440,7 +446,7 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
         if(productNotAvaliable!=0){
             JOptionPane.showMessageDialog(null, "CẢNH BÁO! CÓ " + productNotAvaliable + " SẢN PHẨM HẾT HÀNG, HÃY NHẬP VỀ NGAY");
         }
-        int productExpire=GUIInteraction.countQuantity("select count(*) from Products where datediff(dd,ExpireDate,getdate())<7");
+        int productExpire=GUIInteraction.countQuantity("select count(*) from Products where datediff(dd,ExpireDate,getdate())>7");
         if(productExpire!=0){
             JOptionPane.showMessageDialog(null, "CẢNH BÁO! CÓ " + productExpire + " SẢN PHẨM SẮP HẾT HẠN SỬ DỤNG");
         }

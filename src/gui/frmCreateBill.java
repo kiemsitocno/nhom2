@@ -12,12 +12,9 @@ import interact.GUIInteraction;
 import interact.Login;
 import java.awt.Color;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -368,7 +365,6 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel10.setText("Customer ID :");
 
-        txtCustomerIDSearch.setEnabled(false);
         txtCustomerIDSearch.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtCustomerIDSearchKeyReleased(evt);
@@ -430,6 +426,11 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
         btnRefresh.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconRefresh.png"))); // NOI18N
         btnRefresh.setText("Refresh");
+        btnRefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefreshActionPerformed(evt);
+            }
+        });
 
         txtReason.setColumns(20);
         txtReason.setRows(5);
@@ -477,7 +478,7 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(230, 230, 230)
                         .addComponent(btnRefresh)))
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -541,7 +542,7 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addComponent(jScrollPane2)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
         jPanel7Layout.setVerticalGroup(
@@ -567,9 +568,7 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 539, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -611,9 +610,9 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(0, 0, 0)
-                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -676,7 +675,7 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
             }
         }
 
-        // GÁN ID
+        // TĂNG ID
         String salesID = Login.getAdminID();
         int countBill = GUIInteraction.indentityID("select top 1 * from Bills Where SalesID='" + salesID + "' order by BillID Desc", "BillID") + 1;
         String billID = salesID + "B" + countBill;
@@ -719,22 +718,22 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnOrderActionPerformed
 
     private void btnBrowerProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBrowerProductActionPerformed
-        // TODO add your handling code here:
+        // Brower Product
         frmProductBrower product = new frmProductBrower();
         product.code = this;
         product.show();
     }//GEN-LAST:event_btnBrowerProductActionPerformed
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
-        // TODO add your handling code here:
+        // TẠO BILL
         if (!validateBill()) {
             return;
         }
 
+        // TĂNG ID
         String salesID = Login.getAdminID();
         int countBill = GUIInteraction.indentityID("select top 1 * from Bills Where SalesID='" + salesID + "' order by BillID Desc", "BillID") + 1;
         String billID = salesID + "B" + countBill;
-
         while (true) {
             if (!GUIInteraction.checkDuplicateID(String.valueOf(billID), "select * from Bills", "BillID")) {
                 countBill = countBill + 1;
@@ -744,6 +743,7 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
             }
         }
 
+        // INSERT BILL VÀ ARRAYLIST ORDER
         entity.Bill bill = new Bill();
         bill.setBillID(billID);
         bill.setSalesID(interact.Login.getAdminID());
@@ -770,14 +770,14 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCreateActionPerformed
 
     private void btnBrowerCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBrowerCustomerActionPerformed
-        // TODO add your handling code here:
+        // Brower Customer
         frmCustomerBrower customer = new frmCustomerBrower();
         customer.code = this;
         customer.show();
     }//GEN-LAST:event_btnBrowerCustomerActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        // TODO add your handling code here:
+        // XÓA ORDER
         int iSelected = tableOrder.getSelectedRow();
         if (iSelected < 0) {
             JOptionPane.showMessageDialog(this, "Please choose one.");
@@ -788,7 +788,7 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-        // TODO add your handling code here:
+        // HỦY TẤT CẢ ORDER
         int count = tableOrder.getRowCount();
         tableOrder.clearSelection();
         for (int i = count - 1; i > -1; i--) {
@@ -798,7 +798,7 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void tableBillMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableBillMouseClicked
-        // TODO add your handling code here:
+        // LOAD DỮ LIỆU TỪ BẢNG BILL RA TEXTFIELD VÀ BẢNG ORDER
         int row = tableBill.getSelectedRow();
         String billId = tableBill.getValueAt(row, 0).toString();
         try {
@@ -809,38 +809,38 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tableBillMouseClicked
 
     private void btnBrowerCustomer1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBrowerCustomer1ActionPerformed
-        // TODO add your handling code here:
+        // Brower customer
         frmCustomerBrower_search item = new frmCustomerBrower_search();
         item.code = this;
         item.show();
     }//GEN-LAST:event_btnBrowerCustomer1ActionPerformed
 
     private void cboOrderItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboOrderItemStateChanged
-        // TODO add your handling code here:
+        // SẮP XẾP BILLS THEO THỨ TỰ
         String sql = null;
+        String salesID = Login.getAdminID();
         switch (cboOrder.getSelectedIndex()) {
             case 0:
-                sql = "select * from Bills where Status=1 order by BillID desc";
+                sql = "select * from View_BillSales where Status=1 and SalesID='"+salesID+"' order by BillID desc";
                 break;
             case 1:
-                sql = "select * from Bills where Status=1 order by Total desc";
+                sql = "select * from View_BillSales where Status=1 and SalesID='"+salesID+"' order by Total desc";
                 break;
             case 2:
-                sql = "select * from Bills where Status=1 order by Date desc";
+                sql = "select * from View_BillSales where Status=1 and SalesID='"+salesID+"' order by Date desc";
                 break;
             default:
                 break;
         }
         try {
             GUIInteraction.readToTable(sql, tableBill);
-            System.out.println(sql);
         } catch (SQLException ex) {
             Logger.getLogger(frmCreateBill.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_cboOrderItemStateChanged
 
     private void txtTotalKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTotalKeyReleased
-        // TODO add your handling code here:
+        // SEARCH BILL THEO TOTAL
         int total = 1;
         try {
             total = Integer.valueOf(txtTotal.getText());
@@ -848,7 +848,8 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Invalid fomat.");
             return;
         }
-        String sql = "select * from Bills where Status=1 and Total=" + total;
+        String salesID = Login.getAdminID();
+        String sql = "select * from View_BillSales where Status=1 and SalesID='"+salesID+"' and Total=" + total;
         try {
             GUIInteraction.readToTable(sql, tableBill);
         } catch (SQLException ex) {
@@ -856,20 +857,8 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_txtTotalKeyReleased
 
-    private void txtCustomerIDSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCustomerIDSearchKeyReleased
-        // TODO add your handling code here:
-        String cusID = null;
-        cusID = txtCustomerIDSearch.getText();
-        String sql = "select * from Bills where Status=1 and CustomerID=" + cusID;
-        try {
-            GUIInteraction.readToTable(sql, tableBill);
-        } catch (SQLException ex) {
-            Logger.getLogger(frmCreateBill.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_txtCustomerIDSearchKeyReleased
-
     private void txtDateToPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_txtDateToPropertyChange
-        // TODO add your handling code here:
+        // SEARCH BILL THEO KHOẢNG NGÀY
         try {
             String fromTest = txtDateForm.getDate().toString();
             String toTest = txtDateTo.getDate().toString();
@@ -882,7 +871,8 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
         LocalDateTime timeTo = LocalDateTime.parse(dateTo, DateTimeFormatter.ofPattern("E MMM dd HH:mm:ss z yyyy"));
         String from = timeFrom.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         String to = timeTo.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        String sql = "select * from Bills where Status=1 and Date>='" + from + "' and Date<='" + to + "'";
+        String salesID = Login.getAdminID();
+        String sql = "select * from View_BillSales where Status=1 and Date>='" + from + "' and Date<='" + to + "' and SalesID='"+salesID+"'";
         try {
             GUIInteraction.readToTable(sql, tableBill);
         } catch (SQLException ex) {
@@ -891,7 +881,7 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtDateToPropertyChange
 
     private void btnDetroyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetroyActionPerformed
-        // TODO add your handling code here:
+        // GỬI YÊU CẦU XÓA BILL TỚI MANAGER
         int row = tableBill.getSelectedRow();
         if (row < 0) {
             JOptionPane.showMessageDialog(this, "You must choose a bill.");
@@ -922,9 +912,29 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnDetroyActionPerformed
 
-    private void refreshBills() {
+    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
+        // REFRESH
+        refreshBills();
+    }//GEN-LAST:event_btnRefreshActionPerformed
+
+    private void txtCustomerIDSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCustomerIDSearchKeyReleased
+        // SEARCH BILL THEO CUSTOMERID
+        String cusID = txtCustomerIDSearch.getText();
+        String cusName = DataInteraction.getCode("Customers", "CustomerID", cusID, "CustomerName");
+        String salesID = Login.getAdminID();
+        String sql = "select * from View_BillSales where Status=1 and salesID='"+salesID+"' and CustomerName='"+cusName+"'";
         try {
-            GUIInteraction.readToTable("select * from Bills where Status=1", tableBill);
+            GUIInteraction.readToTable(sql, tableBill);
+        } catch (SQLException ex) {
+            Logger.getLogger(frmCreateBill.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_txtCustomerIDSearchKeyReleased
+
+    private void refreshBills() {
+        // LOAD DỮ LIỆU SQL RA BẢNG
+        try {
+            String salesID = Login.getAdminID();
+            GUIInteraction.readToTable("select * from View_BillSales where Status=1 and salesID='"+salesID+"'", tableBill);
         } catch (SQLException ex) {
             Logger.getLogger(frmCreateBill.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -936,6 +946,7 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
     }
 
     private int calcTotal() {
+        // ĐẾM TỔNG SỐ TIỀN ĐÃ ORDER
         int dTotal = 0;
         for (entity.Order detail : alDetails) {
             dTotal += detail.getPrice() * detail.getQuantity();
@@ -956,6 +967,7 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
     }
 
     private boolean validateOrder() {
+        // VALIDATE THÔNG TIN NHẬP VÀO KHI ORDER
         boolean flag = true;
         if (!interact.CheckForm.isEmpty(txtProductID.getText())) {
             JOptionPane.showMessageDialog(this, "Please choice one product.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -977,6 +989,7 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
     }
 
     private boolean validateBill() {
+        //VALIDATE THÔNG TIN NHẬP VÀO KHI TẠO BILL
         boolean flag = true;
         String discount = txtDiscount.getText();
         int i = calcTotal();

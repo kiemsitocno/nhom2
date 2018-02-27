@@ -6,8 +6,8 @@
 package entity;
 
 /**
- *
- * @author kiems
+ * ĐỐI TƯỢNG DAYWORK
+ * @author NHÓM 2
  */
 public class DayWork {
     private String workID;

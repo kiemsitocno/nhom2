@@ -13,8 +13,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * GIAO DIỆN XEM THÔNG TIN CÁ NHÂN CỦA SALES
  *
- * @author kiems
+ * @author NHÓM 2
  */
 public class frmInformationSales extends javax.swing.JInternalFrame {
 
@@ -297,6 +298,7 @@ public class frmInformationSales extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loadInfo(){
+        // LOAD DỮ LIỆU SQL VÀO TEXTFIELD
         labelName.setText(DataInteraction.getLines("Users", "UserID", salesID, "Name"));
         labelPhone.setText(DataInteraction.getLines("Users", "UserID", salesID, "Phone"));
         labelStore.setText(DataInteraction.getLines("Users", "UserID", salesID, "StoreID"));
@@ -306,6 +308,7 @@ public class frmInformationSales extends javax.swing.JInternalFrame {
     }
     
     private void loadArchive(){
+        // LOAD PERSONAL
         try {
             int countBillSold = GUIInteraction.countRecord("select * from Bills where SalesID='"+salesID+"'");
             labelBillSold.setText(String.valueOf(countBillSold));

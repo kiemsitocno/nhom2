@@ -10,8 +10,8 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author kiems
+ * CÁC PHƯƠNG THỨC CỦA ĐỐI TƯỢNG DAYWORK
+ * @author NHÓM 2
  */
 public class DayWork {
     public static boolean insertDayWork(entity.DayWork dayWork) {

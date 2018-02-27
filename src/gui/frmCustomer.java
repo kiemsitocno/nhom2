@@ -15,8 +15,8 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author kiems
+ * GIAO DIỆN QUẢN LÝ CUSTOMER
+ * @author NHÓM 2
  */
 public class frmCustomer extends javax.swing.JInternalFrame {
 
@@ -615,7 +615,7 @@ public class frmCustomer extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        // TODO add your handling code here:
+        // TẠO MỚI KHÁCH HÀNG.
         enableTXT();
         if(btnAdd.getText().equals("Add")){
             resetTXT();
@@ -624,6 +624,8 @@ public class frmCustomer extends javax.swing.JInternalFrame {
             if (!validateInsert()) {
                 return;
             }
+            
+            //TĂNG ID
             int countCustomer = GUIInteraction.indentityID("select top 1 * from Customers order by CustomerID Desc", "CustomerID") + 1;
             String customerID = "CU" + countCustomer;
             while (true) {
@@ -642,6 +644,7 @@ public class frmCustomer extends javax.swing.JInternalFrame {
                 gender = "Male";
             }
             
+            // INSERT
             Customer customer = new Customer(
                     customerID,
                     txtCustomerName.getText(),
@@ -659,19 +662,19 @@ public class frmCustomer extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-        // TODO add your handling code here:
+        // CANCEL TẤT CẢ CÁC THAO TÁC ĐANG THỰC HIỆN
         resetTXT();
         disableTXT();
         btnAdd.setText("Add");
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
-        // TODO add your handling code here:
+        // REFRESH TEXTFIELD
         resetTXT();
     }//GEN-LAST:event_btnRefreshActionPerformed
 
     private void tableCustomerSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableCustomerSearchMouseClicked
-        // TODO add your handling code here:
+        // LOAD DỮ LIỆU TỪ BẢNG RA TEXTFIELD
         int i = tableCustomerSearch.getSelectedRow();
         txtCustomerIDEdit.setText(String.valueOf(tableCustomerSearch.getValueAt(i, 0)));
         txtCustomerNameEdit.setText(String.valueOf(tableCustomerSearch.getValueAt(i, 1)));
@@ -687,7 +690,7 @@ public class frmCustomer extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tableCustomerSearchMouseClicked
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        // TODO add your handling code here:
+        // SEARCH THEO TÊN HOẶC ID
         try {
             String searchName = txtSearchName.getText().trim();
             String searchID = txtSearhCustomerID.getText().trim();
@@ -703,7 +706,7 @@ public class frmCustomer extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        // TODO add your handling code here:
+        // EDIT CUSTOMER
         if(txtCustomerIDEdit.getText().trim().length()==0){
             JOptionPane.showMessageDialog(this, "Please chose one row from table");
             return;
@@ -738,14 +741,14 @@ public class frmCustomer extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnCancel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancel1ActionPerformed
-        // TODO add your handling code here:
+        // CANCEL TẤT CẢ THAO TÁC
         resetTXT();
         disableTXT();
         btnEdit.setText("Edit");
     }//GEN-LAST:event_btnCancel1ActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        // TODO add your handling code here:
+        // DELETE CUSTOMER
         if(txtCustomerIDEdit.getText().trim().length()==0){
             JOptionPane.showMessageDialog(this, "Please chose one row from table");
             return;
@@ -778,6 +781,7 @@ public class frmCustomer extends javax.swing.JInternalFrame {
     }
     
     private void enableTXT(){
+        // ENABLE TẤT CẢ TEXTFIELD ĐỂ INSERT
         txtCustomerName.setEnabled(true);
         txtPhone.setEnabled(true);
         txtAddress.setEnabled(true);
@@ -787,6 +791,7 @@ public class frmCustomer extends javax.swing.JInternalFrame {
     }
     
     private void enableTXTEdit(){
+        // ENABLE TẤT CẢ TEXTFIELD ĐỂ EDIT
         txtPhoneEdit.setEnabled(true);
         txtAddressEdit.setEnabled(true);
         txtEmailEdit.setEnabled(true);
@@ -795,6 +800,7 @@ public class frmCustomer extends javax.swing.JInternalFrame {
     }
     
     private void disableTXT(){
+        // DISABLE TẤT CẢ TEXTFIELD
         txtCustomerName.setEnabled(false);
         txtPhone.setEnabled(false);
         txtAddress.setEnabled(false);
@@ -811,6 +817,7 @@ public class frmCustomer extends javax.swing.JInternalFrame {
     }
     
     private void resetTXT(){
+        // RESET TẤT CẢ TEXTFIELD
         txtCustomerID.setText(null);
         txtCustomerName.setText(null);
         txtPhone.setText(null);
@@ -827,6 +834,7 @@ public class frmCustomer extends javax.swing.JInternalFrame {
     }
     
     private boolean validateInsert(){
+        // VALIDATE THÔNG TIN NHẬP VÀO KHI TẠO MỚI CUSTOMER
         boolean flag = true;
         if(!CheckForm.isEmpty(txtCustomerName.getText())){
             JOptionPane.showMessageDialog(this, "Name is not blank", "Error", JOptionPane.ERROR_MESSAGE);
@@ -871,6 +879,7 @@ public class frmCustomer extends javax.swing.JInternalFrame {
     }
     
     private boolean validateEdit(){
+        // VALIDATE THÔNG TIN NHẬP VÀO KHI EDIT CUSTOMER
         boolean flag = true;
         if (!CheckForm.checkPhoneNumber(txtPhoneEdit.getText())) {
             JOptionPane.showMessageDialog(this, "Phone is not phone format", "Error", JOptionPane.ERROR_MESSAGE);

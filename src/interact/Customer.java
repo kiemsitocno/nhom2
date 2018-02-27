@@ -14,8 +14,8 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author kiems
+ * CÁC PHƯƠNG THỨC CỦA ĐỐI TƯỢNG CATEGORY
+ * @author NHÓM 2
  */
 public class Customer {
     public static boolean insertCustomer(entity.Customer customer) {

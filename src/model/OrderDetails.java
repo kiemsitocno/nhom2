@@ -7,9 +7,10 @@ package model;
 import entity.Order;
 import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
+
 /**
- *
- * @author Bach Ngoc  Toan
+ * MODEL TABLE ORDERDETAILS
+ * @author NHÓM 2
  */
 public class OrderDetails extends AbstractTableModel {
 private ArrayList<entity.Order> details;

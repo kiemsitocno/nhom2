@@ -45,6 +45,7 @@ public class formLogin extends javax.swing.JFrame {
 
         GUIInteraction.readToCombo("select * from Roles", cbbRole, "RoleName");
         try {
+            // REMEMBER LOGIN
             ObjectInputStream fis = new ObjectInputStream(new FileInputStream("info.dat"));
             entity.Remember re = (Remember) fis.readObject();
             ResultSet rsper = DataInteraction.queryResultSet("select RoleName from Roles where RoleID='" + re.getPermit() + "'");
@@ -58,11 +59,7 @@ public class formLogin extends javax.swing.JFrame {
             chkRemember.setSelected(re.isCheck());
         } catch (FileNotFoundException ex) {
             Logger.getLogger(formLogin.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(formLogin.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(formLogin.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
+        } catch (IOException | ClassNotFoundException | SQLException ex) {
             Logger.getLogger(formLogin.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -270,10 +267,11 @@ public class formLogin extends javax.swing.JFrame {
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
         // THOÁT CHƯƠNG TRÌNH
-        this.dispose();
+        System.exit(1);
     }//GEN-LAST:event_btnExitActionPerformed
 
     private boolean check() {
+        // CHECK LOGIN
         if (!CheckForm.isPwdUsername(txtUsername.getText())) {
             lblStatus.setText("Username invalid.");
             txtUsername.requestFocus();

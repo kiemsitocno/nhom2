@@ -800,6 +800,8 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
             if (!validateInsertInventory()) {
                 return;
             }
+            
+            //TĂNG ID
             int countUser = GUIInteraction.indentityID("select top 1 * from Users Where RoleID='IV' order by UserID Desc", "UserID") + 1;
             String userID = "IV" + countUser;
             
@@ -993,7 +995,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
     
     private boolean validateInsertManager(){
         // VALIDATE THÔNG TIN NHẬP VÀO KHI INSERT MANAGER
-        boolean flag = true;
+        boolean flag;
         String username = txtManagerUsername.getText();
         String password = txtManagerPassword.getText();
         if (!CheckForm.isEmpty(txtManagerName.getText())) {
@@ -1049,7 +1051,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
     
     private boolean validateEditManager(){
         // VALIDATE THÔNH TIN NHẬP VÀO KHI UPDATE MANAGER
-        boolean flag = true;
+        boolean flag;
         if (!CheckForm.checkPhoneNumber(txtManagerPhone.getText())) {
             JOptionPane.showMessageDialog(this, "Phone is not phone format", "Error", JOptionPane.ERROR_MESSAGE);
             txtManagerName.setBackground(Color.white);
@@ -1081,7 +1083,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
     
     private boolean validateInsertInventory(){
         // VALIDATE THÔNG TIN NHẬP VÀO KHI INSERT INVENTORY
-        boolean flag = true;
+        boolean flag;
         String username = txtInventoryUsername.getText();
         String password = txtInventoryPassword.getText();
         if (!CheckForm.isEmpty(txtInventoryName.getText())) {
@@ -1126,7 +1128,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
     
     private boolean validateEditInventory(){
         // VALIDATE THÔNG TIN NHẬP VÀO KHI UPDATE INVENTORY
-        boolean flag = true;
+        boolean flag;
         String username = txtInventoryUsername.getText();
         String password = txtInventoryPassword.getText();
         if (!CheckForm.checkPhoneNumber(txtInventoryPhone.getText())) {

@@ -8,16 +8,12 @@ package gui;
 import entity.DayWork;
 import interact.GUIInteraction;
 import interact.Login;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.awt.Window;
 import java.beans.PropertyVetoException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
-import javax.swing.border.Border;
 
 /**
  * GIAO DIỆN CHÍNH
@@ -28,8 +24,6 @@ public class formMain extends javax.swing.JFrame {
     /**
      * Creates new form formMain
      */
-    private JScrollPane scrollPane = new JScrollPane();
-
     public formMain() {
         initComponents();
         this.setLocationRelativeTo(this);
@@ -597,7 +591,7 @@ public class formMain extends javax.swing.JFrame {
 
     private void menuItemExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemExitActionPerformed
         // THOÁT CHƯƠNG TRÌNH
-        this.dispose();
+        System.exit(1);
     }//GEN-LAST:event_menuItemExitActionPerformed
     public void permissing() {
         // PHƯƠNG THỨC PHÂN QUYỀN
