@@ -696,8 +696,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
             }
             String condition = cboStore.getSelectedItem().toString();
             String getCode = DataInteraction.getCode("Stores", "StoreName", condition, "StoreID");
-            String ID = getCode.substring(0,3);
-            String userID = ID + "MN";
+            String userID = getCode + "MN";
             User user = new User(
                     userID,
                     txtManagerUsername.getText(),
@@ -1051,8 +1050,6 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
     private boolean validateEditManager(){
         // VALIDATE THÔNH TIN NHẬP VÀO KHI UPDATE MANAGER
         boolean flag = true;
-        String username = txtManagerUsername.getText();
-        String password = txtManagerPassword.getText();
         if (!CheckForm.checkPhoneNumber(txtManagerPhone.getText())) {
             JOptionPane.showMessageDialog(this, "Phone is not phone format", "Error", JOptionPane.ERROR_MESSAGE);
             txtManagerName.setBackground(Color.white);
