@@ -13,7 +13,7 @@ import javax.swing.table.AbstractTableModel;
  * @author NHÓM 2
  */
 public class OrderDetails extends AbstractTableModel {
-private ArrayList<entity.Order> details;
+    private ArrayList<entity.Order> details;
     private final String columnsName[] = {"ItemID", "Price", "Quantity","Total"};
     private final Class columnsClass[] = {String.class, Integer.class, Integer.class, Integer.class};
 

@@ -353,7 +353,7 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
     private void btnExpireDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExpireDateActionPerformed
         // ĐẾM SỐ LƯỢNG SẢN PHẨM HẾT HẠN
         try {
-            GUIInteraction.readToTable("select * from View_ProductExpire where datediff(dd,ExpireDate,getdate())>7", tableInventory);
+            GUIInteraction.readToTable("select * from View_ProductExpire where datediff(dd,ExpireDate,getdate())<30", tableInventory);
         } catch (SQLException ex) {
             Logger.getLogger(frmInventoryManagement.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -413,7 +413,7 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
         txtProductTranstract.setText(String.valueOf(productTranstract));
         int productSold=GUIInteraction.countQuantity("select sum(Sold) as Total from View_ProductSold where datediff(dd,Date,getdate())=1");
         txtSoldQuantity.setText(String.valueOf(productSold));
-        int productExpire=GUIInteraction.countQuantity("select count(*) from Products where datediff(dd,ExpireDate,getdate())>7");
+        int productExpire=GUIInteraction.countQuantity("select count(*) from Products where datediff(dd,ExpireDate,getdate())<30");
         txtExpireDate.setText(String.valueOf(productExpire));
     }
     

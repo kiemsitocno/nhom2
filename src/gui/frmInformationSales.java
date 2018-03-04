@@ -23,6 +23,7 @@ public class frmInformationSales extends javax.swing.JInternalFrame {
      * Creates new form frmInformationSales
      */
     String salesID = Login.getAdminID();
+    String salesName = DataInteraction.getCode("Users", "UserID", salesID, "Name");
     public frmInformationSales() {
         initComponents();
         loadInfo();
@@ -312,7 +313,7 @@ public class frmInformationSales extends javax.swing.JInternalFrame {
         try {
             int countBillSold = GUIInteraction.countRecord("select * from Bills where SalesID='"+salesID+"'");
             labelBillSold.setText(String.valueOf(countBillSold));
-            int countProductSold = GUIInteraction.countQuantity("select sum(Quantity) as Total from View_Bills where SalesID='"+salesID+"'");
+            int countProductSold = GUIInteraction.countQuantity("select sum(Quantity) as Total from View_Bills where Sales=N'"+salesName+"'");
             labelProductSold.setText(String.valueOf(countProductSold));
             int countDay = GUIInteraction.countRecord("select * from DayWork where UserID='"+salesID+"'");
             labelWorkDay.setText(String.valueOf(countDay));

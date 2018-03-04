@@ -50,7 +50,7 @@ public class CheckForm {
         // KIỂM TRA THÔNG TIN NHẬP VÀO CÓ PHẢI LÀ SỐ HAY KHÔNG 
         Pattern pattern = Pattern.compile("\\d+$");
         Matcher matcher = pattern.matcher(value);
-        if (!matcher.find()) {
+        if (!matcher.find()||Integer.valueOf(value)<=0) {
             return false;
         } else {
             return true;

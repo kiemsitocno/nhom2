@@ -14,6 +14,7 @@ import interact.DataInteraction;
 import entity.User;
 import java.awt.Color;
 import javax.swing.*;
+import model.OrderDetails;
 
 /**
  * GIAO DIỆN QUẢN LÝ MANAGER VÀ INVENTORY
@@ -207,7 +208,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
         txtManagerUsername.setEnabled(false);
 
         jLabel16.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel16.setText("Search Manager ID :");
+        jLabel16.setText("Search Manager Name :");
 
         btnManagerSearch.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnManagerSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconBrower.png"))); // NOI18N
@@ -417,25 +418,21 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
         jLabel31.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel31.setText("Name :");
 
-        txtInventoryName.setBackground(new java.awt.Color(255, 255, 255));
         txtInventoryName.setEnabled(false);
 
         jLabel32.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel32.setText("Phone :");
 
-        txtInventoryPhone.setBackground(new java.awt.Color(255, 255, 255));
         txtInventoryPhone.setEnabled(false);
 
         jLabel33.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel33.setText("Email :");
 
-        txtInventoryEmail.setBackground(new java.awt.Color(255, 255, 255));
         txtInventoryEmail.setEnabled(false);
 
         jLabel36.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel36.setText("Salary :");
 
-        txtInventorySalary.setBackground(new java.awt.Color(255, 255, 255));
         txtInventorySalary.setEnabled(false);
 
         btnInventoryCreate.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -480,11 +477,10 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
         jLabel41.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel41.setText("UserName :");
 
-        txtInventoryUsername.setBackground(new java.awt.Color(255, 255, 255));
         txtInventoryUsername.setEnabled(false);
 
         jLabel42.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel42.setText("Search Inventory ID :");
+        jLabel42.setText("Search Inventory Name :");
 
         btnInventorySearch.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnInventorySearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconBrower.png"))); // NOI18N
@@ -500,47 +496,44 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
         jPanel15Layout.setHorizontalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel15Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel15Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel15Layout.createSequentialGroup()
-                                .addComponent(jLabel42)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtInventorySearch, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnInventorySearch))
-                            .addGroup(jPanel15Layout.createSequentialGroup()
-                                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addGroup(jPanel15Layout.createSequentialGroup()
-                                            .addComponent(jLabel31)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(txtInventoryName, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(jPanel15Layout.createSequentialGroup()
-                                            .addComponent(jLabel30)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(txtInventoryID, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(jPanel15Layout.createSequentialGroup()
-                                            .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                .addComponent(jLabel32)
-                                                .addComponent(jLabel33))
-                                            .addGap(18, 18, 18)
-                                            .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(txtInventoryEmail)
-                                                .addComponent(txtInventoryPhone, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))))
-                                    .addComponent(jLabel29))
-                                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel15Layout.createSequentialGroup()
-                                        .addGap(370, 370, 370)
-                                        .addComponent(jLabel36))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel15Layout.createSequentialGroup()
-                                        .addGap(346, 346, 346)
-                                        .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel40, javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jLabel41, javax.swing.GroupLayout.Alignment.TRAILING)))))))
+                        .addComponent(jLabel42)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtInventorySearch, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnInventorySearch))
                     .addGroup(jPanel15Layout.createSequentialGroup()
-                        .addGap(64, 64, 64)
+                        .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(jPanel15Layout.createSequentialGroup()
+                                    .addComponent(jLabel31)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(txtInventoryName, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel15Layout.createSequentialGroup()
+                                    .addComponent(jLabel30)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(txtInventoryID, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel15Layout.createSequentialGroup()
+                                    .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jLabel32)
+                                        .addComponent(jLabel33))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(txtInventoryEmail)
+                                        .addComponent(txtInventoryPhone, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))))
+                            .addComponent(jLabel29))
+                        .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel15Layout.createSequentialGroup()
+                                .addGap(370, 370, 370)
+                                .addComponent(jLabel36))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel15Layout.createSequentialGroup()
+                                .addGap(346, 346, 346)
+                                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel40, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel41, javax.swing.GroupLayout.Alignment.TRAILING)))))
+                    .addGroup(jPanel15Layout.createSequentialGroup()
                         .addComponent(btnInventoryCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnInventoryEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -877,8 +870,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
         txtInventoryName.setText(String.valueOf(tableInventory.getValueAt(i, 1)));
         txtInventoryPhone.setText(String.valueOf(tableInventory.getValueAt(i, 2)));
         txtInventoryEmail.setText(String.valueOf(tableInventory.getValueAt(i, 3)));
-        cboStore.setSelectedItem(String.valueOf(tableInventory.getValueAt(i, 4)));
-        txtInventorySalary.setText(String.valueOf(tableInventory.getValueAt(i, 5)));
+        txtInventorySalary.setText(String.valueOf(tableInventory.getValueAt(i, 4)));
     }//GEN-LAST:event_tableInventoryMouseClicked
 
     private void btnInventoryDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventoryDeleteActionPerformed
@@ -906,10 +898,11 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
     
     private void refresh() {
         // LOAD DỮ LIỆU VÀO BẢNG VÀ COMBOBOX
+        cboStore.removeAllItems();
         try {
             interact.GUIInteraction.readToTable("select * from View_Manager where RoleName='Manager'", tableManager);
-            interact.GUIInteraction.readToTable("select * from View_Manager where RoleName='Inventory'", tableInventory);
-            interact.GUIInteraction.readToCombo("select StoreName from Stores", cboStore, "StoreName");
+            interact.GUIInteraction.readToTable("select * from View_Inventory where RoleName='Inventory'", tableInventory);
+            interact.GUIInteraction.readToCombo("select * from Stores", cboStore, "StoreName");
         } catch (SQLException ex) {
             Logger.getLogger(frmCreateNewManager.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -972,6 +965,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
     
     private void resetTXT(){
         // RESET TẤT CẢ TEXTFIELD VỀ MẶC ĐỊNH
+        txtManagerID.setText(null);
         txtManagerName.setText(null);
         txtManagerPhone.setText(null);
         txtManagerEmail.setText(null);
@@ -980,6 +974,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
         txtManagerSalary.setText(null);
         cboStore.setSelectedIndex(-1);
         
+        txtInventoryID.setText(null);
         txtInventoryName.setText(null);
         txtInventoryPhone.setText(null);
         txtInventoryEmail.setText(null);

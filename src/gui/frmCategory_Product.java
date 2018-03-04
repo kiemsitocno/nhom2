@@ -835,6 +835,7 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
     
     private void refresh() {
         // PHƯƠNG THỨC LOAD DỮ LIỆU RA BẢNG VÀ COMBOBOX
+        cbbCategory.removeAllItems();
         try {
             interact.GUIInteraction.readToTable("select * from Categories", tableCategory);
             interact.GUIInteraction.readToCombo("select * from Categories", cbbCategory, "CategoryName");

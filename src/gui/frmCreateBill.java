@@ -12,6 +12,7 @@ import interact.GUIInteraction;
 import interact.Login;
 import java.awt.Color;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -865,14 +866,9 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
         } catch (Exception ex) {
             return;
         }
-        String dateFrom = txtDateForm.getDate().toString();
-        String dateTo = txtDateTo.getDate().toString();
-        LocalDateTime timeFrom = LocalDateTime.parse(dateFrom, DateTimeFormatter.ofPattern("E MMM dd HH:mm:ss z yyyy"));
-        LocalDateTime timeTo = LocalDateTime.parse(dateTo, DateTimeFormatter.ofPattern("E MMM dd HH:mm:ss z yyyy"));
-        String from = timeFrom.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        String to = timeTo.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
         String salesID = Login.getAdminID();
-        String sql = "select * from View_BillSales where Status=1 and Date>='" + from + "' and Date<='" + to + "' and SalesID='"+salesID+"'";
+        String sql = "select * from View_BillSales where Status=1 and SalesID='"+salesID+"' and Date Between '"+sf.format(txtDateForm.getDate())+" 00:00:00' and '"+sf.format(txtDateTo.getDate())+" 00:00:00'";
         try {
             GUIInteraction.readToTable(sql, tableBill);
         } catch (SQLException ex) {

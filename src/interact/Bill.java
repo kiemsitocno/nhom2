@@ -24,7 +24,7 @@ public class Bill {
         try {
             Connection con = null;
             con = DataInteraction.getConnect();
-            String sql = "insert into Bills values(?,?,?,?,?,?,?,?,?)";
+            String sql = "insert into Bills values(?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, bill.getBillID());
             pst.setString(2, bill.getSalesID());
@@ -115,7 +115,6 @@ public class Bill {
                 bill.setStatus(rs.getBoolean("Status"));
                 bill.setDescript(rs.getString("Descript"));
                 bills.add(bill);
-
             }
             return bills;
         } catch (Exception ex) {
