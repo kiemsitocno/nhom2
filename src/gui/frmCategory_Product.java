@@ -5,6 +5,7 @@
  */
 package gui;
 
+import com.toedter.calendar.JTextFieldDateEditor;
 import entity.Category;
 import entity.Product;
 import interact.CheckForm;
@@ -12,6 +13,9 @@ import interact.DataInteraction;
 import interact.GUIInteraction;
 import java.awt.Color;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -25,9 +29,12 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
     /**
      * Creates new form frmCategory_Product
      */
+    SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
     public frmCategory_Product() {
         initComponents();
         refresh();
+        JTextFieldDateEditor editor = (JTextFieldDateEditor) txtExpireDate.getDateEditor();
+        editor.setEditable(false);
     }
 
     /**
@@ -77,7 +84,6 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
         jLabel10 = new javax.swing.JLabel();
         txtPrice = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        txtExpireDate = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         txtQuantity = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
@@ -93,6 +99,7 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
             }
         };
         tableCategory.getTableHeader().setReorderingAllowed(false);
+        txtExpireDate = new com.toedter.calendar.JDateChooser();
 
         tabCategoryProducts.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         tabCategoryProducts.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -363,8 +370,6 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
 
         jLabel11.setText("Exprired date :");
 
-        txtExpireDate.setEnabled(false);
-
         jLabel12.setText("Quantity :");
 
         txtQuantity.setEnabled(false);
@@ -410,13 +415,16 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 611, Short.MAX_VALUE)
             .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel7Layout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 305, Short.MAX_VALUE)
                     .addContainerGap()))
         );
+
+        txtExpireDate.setDateFormatString("yyyy-MM-dd");
+        txtExpireDate.setEnabled(false);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -448,25 +456,24 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
                                             .addComponent(jLabel8)
                                             .addGap(18, 18, 18)
                                             .addComponent(txtProductName, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                        .addGap(45, 45, 45)
+                        .addGap(25, 25, 25)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel6Layout.createSequentialGroup()
-                                    .addComponent(jLabel11)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(txtExpireDate, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                                    .addComponent(jLabel12)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(jLabel12)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel6Layout.createSequentialGroup()
                                 .addComponent(jLabel13)
                                 .addGap(18, 18, 18)
-                                .addComponent(cbbCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(cbbCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(jLabel11)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtExpireDate, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(46, 46, 46)
                         .addComponent(jLabel14)
                         .addGap(60, 60, 60)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 502, Short.MAX_VALUE))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGap(153, 153, 153)
                         .addComponent(btnAddProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -483,16 +490,18 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtProductID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7)
-                            .addComponent(txtExpireDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel11)
-                            .addComponent(jLabel14))
+                        .addContainerGap()
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(txtProductID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel7)
+                                .addComponent(jLabel11)
+                                .addComponent(jLabel14))
+                            .addComponent(txtExpireDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtProductName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8)
@@ -549,14 +558,14 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tabCategoryProducts, javax.swing.GroupLayout.DEFAULT_SIZE, 1392, Short.MAX_VALUE)
+                .addComponent(tabCategoryProducts)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addComponent(tabCategoryProducts, javax.swing.GroupLayout.DEFAULT_SIZE, 924, Short.MAX_VALUE)
+                .addComponent(tabCategoryProducts)
                 .addGap(0, 0, 0))
         );
 
@@ -568,6 +577,7 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
         // THÊM 1 CATEGORY MỚI
         enableTXT();
         btnEditCategory.setEnabled(false);
+        btnDeleteCategory.setEnabled(false);
         if (btnAddCategory.getText().equals("Add")) {
             resetTXT();
             btnAddCategory.setText("Save");
@@ -597,6 +607,7 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
             resetTXT();
             disableTXT();
             btnEditCategory.setEnabled(true);
+            btnDeleteCategory.setEnabled(true);
         }
     }//GEN-LAST:event_btnAddCategoryActionPerformed
 
@@ -604,6 +615,7 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
         // THÊM 1 SẢN PHẨM MỚI
         enableTXT();
         btnEditProduct.setEnabled(false);
+        btnDeleteProduct.setEnabled(false);
         if (btnAddProduct.getText().equals("Add")) {
             resetTXT();
             btnAddProduct.setText("Save");
@@ -633,7 +645,7 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
                     Integer.valueOf(txtQuantity.getText()),
                     Integer.valueOf(txtPrice.getText()),
                     entity.DateUtils.now("MM/dd/yy"),
-                    txtExpireDate.getText(),
+                    sf.format(txtExpireDate.getDate()),
                     txtDescription.getText(),
                     categoryID,
                     Integer.valueOf(txtVolume.getText()));
@@ -644,6 +656,7 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
             resetTXT();
             disableTXT();
             btnEditProduct.setEnabled(true);
+            btnDeleteProduct.setEnabled(true);
         }
     }//GEN-LAST:event_btnAddProductActionPerformed
 
@@ -697,6 +710,7 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
     private void btnEditCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditCategoryActionPerformed
         // SỬA THÔNG TIN 1 CATEGORY
         btnAddCategory.setEnabled(false);
+        btnDeleteCategory.setEnabled(false);
         if(txtCategoryID.getText().trim().length()==0){
             JOptionPane.showMessageDialog(this, "Please chose one row from table");
             return;
@@ -714,6 +728,7 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
             btnEditCategory.setText("Edit");
             disableTXT();
             btnAddCategory.setEnabled(true);
+            btnDeleteCategory.setEnabled(true);
         }
 
     }//GEN-LAST:event_btnEditCategoryActionPerformed
@@ -732,7 +747,13 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
         txtProductName.setText(String.valueOf(tableProduct.getValueAt(i, 1)));
         txtQuantity.setText(String.valueOf(tableProduct.getValueAt(i, 2)));
         txtPrice.setText(String.valueOf(tableProduct.getValueAt(i, 3)));
-        txtExpireDate.setText(String.valueOf(tableProduct.getValueAt(i, 5)).substring(0,10));
+        try {
+            // tableProduct.getValueAt(i, 5)
+            java.util.Date dutyDay = (java.util.Date) sf.parse((String) tableProduct.getValueAt(i, 5));
+            txtExpireDate.setDate(dutyDay);
+        } catch (ParseException ex) {
+            Logger.getLogger(frmCategory_Product.class.getName()).log(Level.SEVERE, null, ex);
+        }
         txtDescription.setText(String.valueOf(tableProduct.getValueAt(i, 6)));
         cbbCategory.setSelectedItem(String.valueOf(tableProduct.getValueAt(i, 7)));
         txtVolume.setText(String.valueOf(tableProduct.getValueAt(i, 8)));
@@ -773,6 +794,7 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
     private void btnEditProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditProductActionPerformed
         // SỬA THÔNG TIN 1 SẢN PHẨM
         btnAddProduct.setEnabled(false);
+        btnDeleteProduct.setEnabled(false);
         if(txtProductName.getText().trim().length()==0){
             JOptionPane.showMessageDialog(this, "Please chose one row from table");
             return;
@@ -790,7 +812,7 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
                     Integer.valueOf(txtQuantity.getText()),
                     Integer.valueOf(txtPrice.getText()),
                     entity.DateUtils.now("MM/dd/yy"),
-                    txtExpireDate.getText(),
+                    sf.format(txtExpireDate.getDate()),
                     txtDescription.getText(),
                     DataInteraction.getCode("Categories", "CategoryName", cbbCategory.getSelectedItem().toString(), "CategoryID"),
                     Integer.valueOf(txtVolume.getText()));
@@ -798,7 +820,8 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
             refresh();
             btnEditProduct.setText("Edit");
             disableTXT();
-            btnAddProduct.setEnabled(false);
+            btnAddProduct.setEnabled(true);
+            btnDeleteProduct.setEnabled(true);
         }
     }//GEN-LAST:event_btnEditProductActionPerformed
 
@@ -855,6 +878,8 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
         btnAddProduct.setEnabled(true);
         btnEditProduct.setText("Edit");
         btnEditProduct.setEnabled(true);
+        btnDeleteCategory.setText("Delete");
+        btnDeleteCategory.setEnabled(true);
     }
     
     private void enableTXT() {
@@ -868,6 +893,19 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
     
     private void enabletxtProduct() {
         // ENABLE NHỮNG TEXTFIELD CẦN CHỈNH SỬA THÔNG TIN PRODUCT
+        try {
+            String productID = txtProductID.getText();
+            int count = GUIInteraction.countRecord("select * from OrderDetails where ProductID='"+productID+"'");
+            System.out.println(count);
+            if(count>0){
+                txtProductName.setEnabled(false);
+            }else{
+                txtProductName.setEnabled(true);
+            }
+        } catch (SQLException ex) {
+
+        }
+        
         txtVolume.setEnabled(true);
         txtPrice.setEnabled(true);
         txtExpireDate.setEnabled(true);
@@ -896,7 +934,7 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
         txtProductName.setText(null);
         txtVolume.setText(null);
         txtPrice.setText(null);
-        txtExpireDate.setText(null);
+        txtExpireDate.setDate(null);
         txtQuantity.setText(null);
         cbbCategory.setSelectedIndex(-1);
         txtDescription.setText(null);
@@ -905,12 +943,13 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
     private boolean validateCategory() {
         // VALIDATE DỮ LIỆU NHẬP VÀO KHI INSERT HOẶC UPDATE CATEGORY
         boolean flag = true;
+        String nameCategory = DataInteraction.getCode("Categories", "CategoryID", txtCategoryID.getText(), "CategoryName");
         if (!interact.CheckForm.isEmpty(txtCategoryName.getText())) {
             JOptionPane.showMessageDialog(this, "Name is not blank", "Required", JOptionPane.ERROR_MESSAGE);
             txtCategoryName.requestFocus();
             txtCategoryName.setBackground(Color.red);
             flag = false;
-        } else if (!interact.GUIInteraction.checkDuplicateName(txtCategoryName.getText().trim(), "select * from Categories", "CategoryName")) {
+        } else if (!interact.GUIInteraction.checkDuplicateName(txtCategoryName.getText().trim(), "select * from Categories", "CategoryName")&&!txtCategoryName.getText().trim().equals(nameCategory)) {
             JOptionPane.showMessageDialog(this, "Category name is duplicated", "Error", JOptionPane.ERROR_MESSAGE);
             txtCategoryName.requestFocus();
             txtCategoryName.setBackground(Color.red);
@@ -972,7 +1011,13 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
     public boolean validateEditProduct(){
         // VALIDATE DỮ LIỆU NHẬP VÀO KHI UPDATE PRODUCT 
         boolean flag = true;
-        if (!CheckForm.isNumberic(txtVolume.getText())) {
+        String name = DataInteraction.getCode("Products", "ProductID", txtProductID.getText(), "ProductName");
+        if(!GUIInteraction.checkDuplicateName(txtProductName.getText(), "select * from Products", "ProductName")&&!txtProductName.getText().trim().equals(name)){
+            JOptionPane.showMessageDialog(this, "Name is not duplicate");
+            txtProductName.setBackground(Color.red);
+            txtProductName.requestFocus();
+            flag= false;
+        }else if (!CheckForm.isNumberic(txtVolume.getText())) {
             JOptionPane.showMessageDialog(this, "Volume must numberic", "Error", JOptionPane.ERROR_MESSAGE);
             txtVolume.requestFocus();
             txtProductName.setBackground(Color.white);
@@ -984,14 +1029,6 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
             txtProductName.setBackground(Color.white);
             txtVolume.setBackground(Color.white);
             txtPrice.setBackground(Color.red);
-            flag = false;
-        }else if (!CheckForm.validateDate(txtExpireDate.getText())) {
-            JOptionPane.showMessageDialog(this, "Expire Date must is date format (MM-DD-YYYY)", "Error", JOptionPane.ERROR_MESSAGE);
-            txtExpireDate.requestFocus();
-            txtProductName.setBackground(Color.white);
-            txtVolume.setBackground(Color.white);
-            txtPrice.setBackground(Color.white);
-            txtExpireDate.setBackground(Color.red);
             flag = false;
         }else{
             flag = true;
@@ -1037,7 +1074,7 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtCategoryID;
     private javax.swing.JTextField txtCategoryName;
     private javax.swing.JTextArea txtDescription;
-    private javax.swing.JTextField txtExpireDate;
+    private com.toedter.calendar.JDateChooser txtExpireDate;
     private javax.swing.JTextField txtPrice;
     private javax.swing.JTextField txtProductID;
     private javax.swing.JTextField txtProductName;

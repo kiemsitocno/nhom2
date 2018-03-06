@@ -60,11 +60,11 @@ public class frmManagementSales extends javax.swing.JInternalFrame {
         jLabel10 = new javax.swing.JLabel();
         txtUsername = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        txtPassword = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         txtSalary = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         cbbStore = new javax.swing.JComboBox();
+        txtPassword = new javax.swing.JPasswordField();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tableSales = new javax.swing.JTable();
@@ -176,8 +176,6 @@ public class frmManagementSales extends javax.swing.JInternalFrame {
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel11.setText("Password :");
 
-        txtPassword.setEnabled(false);
-
         jLabel12.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel12.setText("Salary :");
 
@@ -216,22 +214,27 @@ public class frmManagementSales extends javax.swing.JInternalFrame {
                         .addComponent(jLabel7)
                         .addGap(18, 18, 18)
                         .addComponent(txtEmail)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel11)
-                            .addComponent(jLabel12)
-                            .addComponent(jLabel13)))
-                    .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(txtSalary)
-                        .addComponent(txtPassword)
-                        .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(cbbStore, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(112, 112, 112)
+                        .addComponent(jLabel12)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtSalary))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                                .addComponent(jLabel13)
+                                .addGap(18, 18, 18)
+                                .addComponent(cbbStore, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtUsername, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+                                    .addComponent(txtPassword))))))
                 .addGap(286, 286, 286))
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(348, 348, 348)
@@ -266,10 +269,11 @@ public class frmManagementSales extends javax.swing.JInternalFrame {
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel10)
                             .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel11)
-                            .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, 0)
+                            .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel11))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel12)
                             .addComponent(txtSalary, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -277,7 +281,7 @@ public class frmManagementSales extends javax.swing.JInternalFrame {
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel13)
                             .addComponent(cbbStore, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCancel)))
@@ -324,7 +328,7 @@ public class frmManagementSales extends javax.swing.JInternalFrame {
                 .addGap(0, 0, 0)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -375,25 +379,19 @@ public class frmManagementSales extends javax.swing.JInternalFrame {
         jLabel21.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel21.setText("Total of Sold Bill :");
 
-        txtNameEdit.setBackground(new java.awt.Color(255, 255, 255));
         txtNameEdit.setEnabled(false);
 
-        txtPhoneEdit.setBackground(new java.awt.Color(255, 255, 255));
         txtPhoneEdit.setEnabled(false);
 
-        txtEmailEdit.setBackground(new java.awt.Color(255, 255, 255));
         txtEmailEdit.setEnabled(false);
 
-        txtSalaryEdit.setBackground(new java.awt.Color(255, 255, 255));
         txtSalaryEdit.setEnabled(false);
 
-        txtTotalSold.setBackground(new java.awt.Color(255, 255, 255));
         txtTotalSold.setEnabled(false);
 
         jLabel22.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel22.setText("Sales ID:");
 
-        txtIDEdit.setBackground(new java.awt.Color(255, 255, 255));
         txtIDEdit.setEnabled(false);
 
         cbbStoreEdit.setEditable(true);
@@ -843,14 +841,14 @@ public class frmManagementSales extends javax.swing.JInternalFrame {
             txtUsername.setBackground(Color.white);
             txtPassword.setBackground(Color.red);
             flag = false;
-        }else if (!CheckForm.checkPhoneNumber(txtPhone.getText())) {
-            JOptionPane.showMessageDialog(this, "Phone is not phone format", "Error", JOptionPane.ERROR_MESSAGE);
+        }else if (!CheckForm.checkPhoneNumber(txtPhone.getText())||!GUIInteraction.checkDuplicateName(txtPhone.getText().trim(), "select * from Users", "Phone")) {
+            JOptionPane.showMessageDialog(this, "Phone is not phone format and not duplicate", "Error", JOptionPane.ERROR_MESSAGE);
             txtName.setBackground(Color.white);
             txtPhone.setBackground(Color.red);
             txtPhone.requestFocus();
             flag = false;
-        }else if (!CheckForm.checkEmail(txtEmail.getText())) {
-            JOptionPane.showMessageDialog(this, "Email is not email format", "Error", JOptionPane.ERROR_MESSAGE);
+        }else if (!CheckForm.checkEmail(txtEmail.getText())||!GUIInteraction.checkDuplicateName(txtEmail.getText().trim(), "select * from Users", "Email")) {
+            JOptionPane.showMessageDialog(this, "Email is not email format and not duplicate", "Error", JOptionPane.ERROR_MESSAGE);
             txtEmail.requestFocus();
             txtName.setBackground(Color.white);
             txtPhone.setBackground(Color.white);
@@ -875,13 +873,13 @@ public class frmManagementSales extends javax.swing.JInternalFrame {
     private boolean validateEditSales(){
         // VALIDATE THÔNH TIN NHẬP VÀO KHI UPDATE MANAGER
         boolean flag = true;
-        if (!CheckForm.checkPhoneNumber(txtPhoneEdit.getText())) {
-            JOptionPane.showMessageDialog(this, "Phone is not phone format", "Error", JOptionPane.ERROR_MESSAGE);
+        if (!CheckForm.checkPhoneNumber(txtPhoneEdit.getText())||!GUIInteraction.checkDuplicateName(txtPhoneEdit.getText().trim(), "select * from Users", "Phone")) {
+            JOptionPane.showMessageDialog(this, "Phone is not phone format and not duplicate", "Error", JOptionPane.ERROR_MESSAGE);
             txtPhoneEdit.setBackground(Color.red);
             txtPhoneEdit.requestFocus();
             flag = false;
-        }else if (!CheckForm.checkEmail(txtEmailEdit.getText())) {
-            JOptionPane.showMessageDialog(this, "Email is not email format", "Error", JOptionPane.ERROR_MESSAGE);
+        }else if (!CheckForm.checkEmail(txtEmailEdit.getText())||!GUIInteraction.checkDuplicateName(txtEmailEdit.getText().trim(), "select * from Users", "Email")) {
+            JOptionPane.showMessageDialog(this, "Email is not email format and not duplicate", "Error", JOptionPane.ERROR_MESSAGE);
             txtEmailEdit.requestFocus();
             txtPhoneEdit.setBackground(Color.white);
             txtEmailEdit.setBackground(Color.red);
@@ -947,7 +945,7 @@ public class frmManagementSales extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtIDEdit;
     private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtNameEdit;
-    private javax.swing.JTextField txtPassword;
+    private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtPhone;
     private javax.swing.JTextField txtPhoneEdit;
     private javax.swing.JTextField txtSalary;

@@ -5,6 +5,7 @@
  */
 package gui;
 
+import com.toedter.calendar.JTextFieldDateEditor;
 import interact.DataInteraction;
 import interact.GUIInteraction;
 import interact.Login;
@@ -32,6 +33,10 @@ public class frmManagementBill extends javax.swing.JInternalFrame {
         initComponents();
         count();
         refresh();
+        JTextFieldDateEditor editor = (JTextFieldDateEditor) txtDateTo.getDateEditor();
+        JTextFieldDateEditor editorF = (JTextFieldDateEditor) txtDateFrom.getDateEditor();
+        editor.setEditable(false);
+        editor.setEditable(false);
     }
 
     /**

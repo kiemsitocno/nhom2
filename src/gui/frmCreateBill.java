@@ -5,6 +5,7 @@
  */
 package gui;
 
+import com.toedter.calendar.JTextFieldDateEditor;
 import entity.Bill;
 import interact.CheckForm;
 import interact.DataInteraction;
@@ -37,6 +38,10 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
         initComponents();
         alDetails = new ArrayList<entity.Order>();
         refreshBills();
+        JTextFieldDateEditor editor = (JTextFieldDateEditor) txtDateTo.getDateEditor();
+        JTextFieldDateEditor editorF = (JTextFieldDateEditor) txtDateForm.getDateEditor();
+        editor.setEditable(false);
+        editor.setEditable(false);
     }
 
     /**
@@ -933,6 +938,7 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
             GUIInteraction.readToTable("select * from View_BillSales where Status=1 and salesID='"+salesID+"'", tableBill);
         } catch (SQLException ex) {
             Logger.getLogger(frmCreateBill.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("HERE");
         }
     }
 
@@ -951,6 +957,7 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
         try {
             dDiscount = Integer.valueOf(txtDiscount.getText());
         } catch (Exception ex) {
+            System.out.println(ex);
         }
         dDiscount = Math.min(Math.max(dDiscount, 0), 100);
         dTotal *= (100 - dDiscount) / 100;
@@ -994,7 +1001,7 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "You must choice one customer.");
             btnBrowerCustomer.setBackground(Color.red);
             flag = false;
-        } else if (!CheckForm.isNumberic(discount) || Integer.valueOf(discount) >= 100 || Integer.valueOf(discount) < 0) {
+        } else if (Integer.valueOf(discount) >= 100 || Integer.valueOf(discount) < 0) {
             JOptionPane.showMessageDialog(this, "Discount belong [0,100]");
             btnBrowerCustomer.setBackground(Color.white);
             txtDiscount.setBackground(Color.red);

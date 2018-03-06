@@ -8,6 +8,7 @@ package gui;
 import interact.CheckForm;
 import interact.GUIInteraction;
 import entity.Customer;
+import interact.DataInteraction;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -792,6 +793,18 @@ public class frmCustomer extends javax.swing.JInternalFrame {
     
     private void enableTXTEdit(){
         // ENABLE TẤT CẢ TEXTFIELD ĐỂ EDIT
+        try {
+            String customerID = txtCustomerIDEdit.getText();
+            int countUser = GUIInteraction.countRecord("select * from Bills where CustomerID='"+customerID+"'");
+            System.out.println(countUser);
+            if(countUser>0){
+                txtCustomerNameEdit.setEnabled(false);
+            }else{
+                txtCustomerNameEdit.setEnabled(true);
+            }
+        } catch (SQLException ex) {
+
+        }
         txtPhoneEdit.setEnabled(true);
         txtAddressEdit.setEnabled(true);
         txtEmailEdit.setEnabled(true);
@@ -846,14 +859,14 @@ public class frmCustomer extends javax.swing.JInternalFrame {
             txtCustomerName.setBackground(Color.red);
             txtCustomerName.requestFocus();
             flag = false;
-        }else if (!CheckForm.checkPhoneNumber(txtPhone.getText())) {
-            JOptionPane.showMessageDialog(this, "Phone is not phone format", "Error", JOptionPane.ERROR_MESSAGE);
+        }else if (!CheckForm.checkPhoneNumber(txtPhone.getText())||!GUIInteraction.checkDuplicateName(txtPhone.getText().trim(), "select * from Customers", "Phone")) {
+            JOptionPane.showMessageDialog(this, "Phone is not phone format and not duplicate", "Error", JOptionPane.ERROR_MESSAGE);
             txtCustomerName.setBackground(Color.white);
             txtPhone.setBackground(Color.red);
             txtPhone.requestFocus();
             flag = false;
-        }else if (!CheckForm.checkEmail(txtEmail.getText())) {
-            JOptionPane.showMessageDialog(this, "Email is not email format", "Error", JOptionPane.ERROR_MESSAGE);
+        }else if (!CheckForm.checkEmail(txtEmail.getText())||!GUIInteraction.checkDuplicateName(txtEmailEdit.getText().trim(), "select * from Customers", "Email")) {
+            JOptionPane.showMessageDialog(this, "Email is not email format and not duplicate", "Error", JOptionPane.ERROR_MESSAGE);
             txtEmail.requestFocus();
             txtCustomerName.setBackground(Color.white);
             txtPhone.setBackground(Color.white);
@@ -881,13 +894,21 @@ public class frmCustomer extends javax.swing.JInternalFrame {
     private boolean validateEdit(){
         // VALIDATE THÔNG TIN NHẬP VÀO KHI EDIT CUSTOMER
         boolean flag = true;
-        if (!CheckForm.checkPhoneNumber(txtPhoneEdit.getText())) {
-            JOptionPane.showMessageDialog(this, "Phone is not phone format", "Error", JOptionPane.ERROR_MESSAGE);
+        String nameCustomer = DataInteraction.getCode("Customers", "CustomerID", txtCustomerIDEdit.getText(), "CustomerName");
+        String phoneCustomer = DataInteraction.getCode("Customers", "CustomerID", txtCustomerIDEdit.getText(), "Phone");
+        String emailCustomer = DataInteraction.getCode("Customers", "CustomerID", txtCustomerIDEdit.getText(), "Email");
+        if(!GUIInteraction.checkDuplicateName(txtCustomerNameEdit.getText(), "select * from Customers", "CustomerName")&&!txtCustomerNameEdit.getText().trim().equals(nameCustomer)){
+            JOptionPane.showMessageDialog(this, "Name is not duplicate");
+            txtCustomerNameEdit.setBackground(Color.red);
+            txtCustomerNameEdit.requestFocus();
+            flag= false;
+        }else if (!CheckForm.checkPhoneNumber(txtPhoneEdit.getText())||!GUIInteraction.checkDuplicateName(txtPhoneEdit.getText().trim(), "select * from Customers", "Phone")&&!txtPhoneEdit.getText().trim().equals(phoneCustomer)) {
+            JOptionPane.showMessageDialog(this, "Phone is not phone format and not duplicate", "Error", JOptionPane.ERROR_MESSAGE);
             txtPhoneEdit.setBackground(Color.red);
             txtPhoneEdit.requestFocus();
             flag = false;
-        }else if (!CheckForm.checkEmail(txtEmailEdit.getText())) {
-            JOptionPane.showMessageDialog(this, "Email is not email format", "Error", JOptionPane.ERROR_MESSAGE);
+        }else if (!CheckForm.checkEmail(txtEmailEdit.getText())||!GUIInteraction.checkDuplicateName(txtEmailEdit.getText().trim(), "select * from Customers", "Email")&&!txtEmailEdit.getText().trim().equals(emailCustomer)) {
+            JOptionPane.showMessageDialog(this, "Email is not email format and not duplicate", "Error", JOptionPane.ERROR_MESSAGE);
             txtEmailEdit.requestFocus();
             txtPhoneEdit.setBackground(Color.white);
             txtEmailEdit.setBackground(Color.red);

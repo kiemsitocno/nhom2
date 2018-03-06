@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 import entity.Store;
 import interact.GUIInteraction;
 import interact.CheckForm;
+import interact.DataInteraction;
 import java.awt.Color;
 import javax.swing.*;
 
@@ -312,6 +313,7 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
         // TẠO MỚI 1 CỬA HÀNG
         btnEdit.setEnabled(false);
+        btnDelete.setEnabled(false);
         enableTXT();
         if (btnCreate.getText().equals("Create")) {
             resetTXT();
@@ -334,12 +336,14 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
             resetTXT();
             disableTXT();
             btnEdit.setEnabled(true);
+            btnDelete.setEnabled(true);
         }
     }//GEN-LAST:event_btnCreateActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         // CHỈNH SỬA THÔNG TIN 1 CỬA HÀNG
-        btnCreate.setEnabled(true);
+        btnCreate.setEnabled(false);
+        btnDelete.setEnabled(false);
         if(txtName.getText().trim().length()==0){
             JOptionPane.showMessageDialog(this, "Please chose one row from table");
             return;
@@ -356,7 +360,8 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
             refresh();
             btnEdit.setText("Edit");
             disableTXT();
-            btnCreate.setEnabled(false);
+            btnCreate.setEnabled(true);
+            btnDelete.setEnabled(true);
         }
     }//GEN-LAST:event_btnEditActionPerformed
 
@@ -373,6 +378,8 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
                 int countUser = GUIInteraction.countRecord("select * from Users where StoreID='" + txtID.getText() + "'");
                 if (countUser > 0) {
                     JOptionPane.showMessageDialog(this, "This store have users, can't delete it");
+                } else if(txtID.getText().equals("ST1")){
+                    JOptionPane.showMessageDialog(this, "This is head office, can't delete it");
                 } else {
                     interact.Store.deleteStore(txtID.getText());
                     refresh();
@@ -425,12 +432,15 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
     private boolean validateStore() {
         // VALIDATE THÔNG TIN NHẬP VÀO KHI INSERT VÀ UPDATE STORE
         boolean flag = true;
+        String name = DataInteraction.getCode("Stores", "StoreID", txtID.getText(), "StoreName");
+        String phone = DataInteraction.getCode("Stores", "StoreID", txtID.getText(), "StorePhone");
+        String address = DataInteraction.getCode("Stores", "StoreID", txtID.getText(), "StoreAddress");
         if (!CheckForm.isEmpty(txtName.getText())) {
             JOptionPane.showMessageDialog(this, "Name is not blank", "Error", JOptionPane.ERROR_MESSAGE);
             txtName.requestFocus();
             txtName.setBackground(Color.red);
             flag = false;
-        } else if (!GUIInteraction.checkDuplicateName(txtName.getText().trim(), "select * from Stores", "StoreName")) {
+        } else if (!GUIInteraction.checkDuplicateName(txtName.getText().trim(), "select * from Stores", "StoreName")&&!txtName.getText().trim().equals(name)) {
             JOptionPane.showMessageDialog(this, "Name is not duplicatated", "Error", JOptionPane.ERROR_MESSAGE);
             txtName.requestFocus();
             txtName.setBackground(Color.red);
@@ -440,8 +450,8 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
             txtName.requestFocus();
             txtName.setBackground(Color.red);
             flag = false;
-        } else if (!CheckForm.checkPhoneNumber(txtPhone.getText())) {
-            JOptionPane.showMessageDialog(this, "Phone is not phone format", "Error", JOptionPane.ERROR_MESSAGE);
+        } else if (!CheckForm.checkPhoneNumber(txtPhone.getText())||!GUIInteraction.checkDuplicateName(txtPhone.getText().trim(), "select * from Stores", "StorePhone")&&!txtPhone.getText().trim().equals(phone)) {
+            JOptionPane.showMessageDialog(this, "Phone is not phone format and not duplicate", "Error", JOptionPane.ERROR_MESSAGE);
             txtPhone.requestFocus();
             txtPhone.setBackground(Color.red);
             txtName.setBackground(Color.white);
@@ -473,7 +483,19 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
 
     private void enableTXT() {
         // ENABLE TẤT CẢ TEXTFIELD
-        txtName.setEnabled(true);
+        try {
+            String storeID = txtID.getText();
+            int countUser = GUIInteraction.countRecord("select * from Users where StoreID='"+storeID+"'");
+            System.out.println(countUser);
+            if(countUser>0){
+                txtName.setEnabled(false);
+            }else{
+                txtName.setEnabled(true);
+            }
+        } catch (SQLException ex) {
+
+        }
+        
         txtPhone.setEnabled(true);
         txtAddress.setEnabled(true);
         txtRent.setEnabled(true);

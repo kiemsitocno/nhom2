@@ -4,12 +4,14 @@
  * and open the template in the editor.
  */
 package gui;
+import com.toedter.calendar.JTextFieldDateEditor;
 import interact.GUIInteraction;
 import interact.CheckForm;
 import entity.Product;
 import interact.DataInteraction;
 import java.awt.Color;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -23,11 +25,14 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
     /**
      * Creates new form frmInventoryManagement
      */
+    SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
     public frmInventoryManagement() {
         initComponents();
         getStatus();
         valid();
         warning();
+        JTextFieldDateEditor editor = (JTextFieldDateEditor) txtExpireDateUpdate.getDateEditor();
+        editor.setEditable(false);
     }
 
     /**
@@ -67,6 +72,8 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         txtProductNAvailable = new javax.swing.JTextField();
         btnProductNAvailable = new javax.swing.JButton();
+        jLabel12 = new javax.swing.JLabel();
+        txtExpireDateUpdate = new com.toedter.calendar.JDateChooser();
 
         jPanel6.setBackground(new java.awt.Color(0, 255, 255));
 
@@ -274,6 +281,11 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel12.setText("        Expire date :");
+
+        txtExpireDateUpdate.setDateFormatString("yyyy-MM-dd");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -282,25 +294,35 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
                 .addGap(63, 63, 63)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel10)
-                    .addComponent(jLabel5))
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel12))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtProductNAvailable, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
-                    .addComponent(txtQuantityUpdate))
-                .addGap(18, 18, 18)
+                    .addComponent(txtQuantityUpdate)
+                    .addComponent(txtExpireDateUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(38, 38, 38)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnQuantityUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnProductNAvailable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 40, Short.MAX_VALUE))
+                .addGap(213, 213, 213))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtQuantityUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10)
-                    .addComponent(btnQuantityUpdate))
-                .addGap(0, 0, 0)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(btnQuantityUpdate)
+                        .addGap(16, 16, 16))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtQuantityUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel10))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel12)
+                            .addComponent(txtExpireDateUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(txtProductNAvailable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -318,8 +340,10 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
                     .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1)
-                    .addComponent(jLabel7)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -384,7 +408,11 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
             
             String id= String.valueOf(tableInventory.getValueAt(0, 0));
             String quantity = txtQuantityUpdate.getText();
-            String sql = "update Products set QuantityAvailable='"+quantity+"' where ProductID='"+id+"'";
+            String expireDateUpdate = sf.format(txtExpireDateUpdate.getDate());
+            String sql = "update Products set "
+                    + "QuantityAvailable='"+quantity+"', "
+                    + "ExpireDate='"+expireDateUpdate+"', "
+                    + "DateImport='"+entity.DateUtils.now("MM/dd/yy")+"' where ProductID='"+id+"'";
             DataInteraction.exec(sql);
             getStatus();
             btnQuantityUpdate.setText("Update");
@@ -459,6 +487,7 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnSoldQuantity;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -474,6 +503,7 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
     private javax.swing.JLabel labelValid;
     private javax.swing.JTable tableInventory;
     private javax.swing.JTextField txtExpireDate;
+    private com.toedter.calendar.JDateChooser txtExpireDateUpdate;
     private javax.swing.JTextField txtProductAvailable;
     private javax.swing.JTextField txtProductNAvailable;
     private javax.swing.JTextField txtProductTranstract;

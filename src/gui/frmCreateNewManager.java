@@ -680,6 +680,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
         // TẠO MỚI TÀI KHOẢN MANAGER
         enableTXT();
         btnManagerEdit.setEnabled(false);
+        btnManagerDelete.setEnabled(false);
         if(btnManagerCreate.getText().equals("Create")){
             resetTXT();
             btnManagerCreate.setText("Save");
@@ -706,6 +707,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
             resetTXT();
             disableTXT();
             btnManagerEdit.setEnabled(true);
+            btnManagerDelete.setEnabled(true);
         }
     }//GEN-LAST:event_btnManagerCreateActionPerformed
 
@@ -713,11 +715,12 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
         // LOAD DỮ LIỆU BẢNG MANAGER VÀO CÁC Ô TEXTFIELD:
         int i = tableManager.getSelectedRow();
         txtManagerID.setText(String.valueOf(tableManager.getValueAt(i, 0)));
+        txtManagerUsername.setText(String.valueOf(tableManager.getValueAt(i, 2)));
         txtManagerName.setText(String.valueOf(tableManager.getValueAt(i, 1)));
-        txtManagerPhone.setText(String.valueOf(tableManager.getValueAt(i, 2)));
-        txtManagerEmail.setText(String.valueOf(tableManager.getValueAt(i, 3)));
-        cboStore.setSelectedItem(String.valueOf(tableManager.getValueAt(i, 4)));
-        txtManagerSalary.setText(String.valueOf(tableManager.getValueAt(i, 5)));
+        txtManagerPhone.setText(String.valueOf(tableManager.getValueAt(i, 3)));
+        txtManagerEmail.setText(String.valueOf(tableManager.getValueAt(i, 4)));
+        cboStore.setSelectedItem(String.valueOf(tableManager.getValueAt(i, 5)));
+        txtManagerSalary.setText(String.valueOf(tableManager.getValueAt(i, 6)));
     }//GEN-LAST:event_tableManagerMouseClicked
 
     private void btnManagerDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManagerDeleteActionPerformed
@@ -736,6 +739,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
     private void btnManagerEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManagerEditActionPerformed
         // CHỈNH SỬA 1 TÀI KHOẢN MANAGER
         btnManagerCreate.setEnabled(false);
+        btnManagerDelete.setEnabled(false);
         if(txtManagerName.getText().trim().length()==0){
             JOptionPane.showMessageDialog(this, "Please chose one row from table");
             return;
@@ -762,6 +766,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
             btnManagerEdit.setText("Edit");
             disableTXT();
             btnManagerCreate.setEnabled(true);
+            btnManagerDelete.setEnabled(true);
         }
     }//GEN-LAST:event_btnManagerEditActionPerformed
 
@@ -786,6 +791,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
         // TẠO MỚI TÀI KHOẢN 1 INVENTORY
         enableTXT();
         btnInventoryEdit.setEnabled(false);
+        btnInventoryDelete.setEnabled(false);
         if(btnInventoryCreate.getText().equals("Create")){
             resetTXT();
             btnInventoryCreate.setText("Save");
@@ -814,6 +820,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
             resetTXT();
             disableTXT();
             btnInventoryEdit.setEnabled(true);
+            btnInventoryDelete.setEnabled(true);
         }
     }//GEN-LAST:event_btnInventoryCreateActionPerformed
 
@@ -834,6 +841,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
     private void btnInventoryEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventoryEditActionPerformed
         // CHÍNH SỬA TÀI KHOẢN 1 INVENTORY
         btnInventoryCreate.setEnabled(false);
+        btnInventoryDelete.setEnabled(false);
         if(txtInventoryName.getText().trim().length()==0){
             JOptionPane.showMessageDialog(this, "Please chose one row from table");
             return;
@@ -853,13 +861,14 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
                     txtInventoryPhone.getText(), 
                     txtInventoryEmail.getText(),
                     "IV",
-                    cboStore.getSelectedItem().toString(),
+                    "ST1",
                     Integer.valueOf(txtInventorySalary.getText()));
             interact.User.editUser(user);
             refresh();
             btnInventoryEdit.setText("Edit");
             disableTXT();
             btnInventoryCreate.setEnabled(true);
+            btnInventoryDelete.setEnabled(true);
         }
     }//GEN-LAST:event_btnInventoryEditActionPerformed
 
@@ -868,9 +877,10 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
         int i = tableInventory.getSelectedRow();
         txtInventoryID.setText(String.valueOf(tableInventory.getValueAt(i, 0)));
         txtInventoryName.setText(String.valueOf(tableInventory.getValueAt(i, 1)));
-        txtInventoryPhone.setText(String.valueOf(tableInventory.getValueAt(i, 2)));
-        txtInventoryEmail.setText(String.valueOf(tableInventory.getValueAt(i, 3)));
-        txtInventorySalary.setText(String.valueOf(tableInventory.getValueAt(i, 4)));
+        txtInventoryUsername.setText(String.valueOf(tableInventory.getValueAt(i, 2)));
+        txtInventoryPhone.setText(String.valueOf(tableInventory.getValueAt(i, 3)));
+        txtInventoryEmail.setText(String.valueOf(tableInventory.getValueAt(i, 4)));
+        txtInventorySalary.setText(String.valueOf(tableInventory.getValueAt(i, 5)));
     }//GEN-LAST:event_tableInventoryMouseClicked
 
     private void btnInventoryDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventoryDeleteActionPerformed
@@ -918,6 +928,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
         btnInventoryCreate.setEnabled(true);
         btnInventoryEdit.setText("Edit");
         btnInventoryEdit.setEnabled(true);
+        btnManagerDelete.setEnabled(true);
     }
     
     private void enableTXT() {
@@ -954,9 +965,30 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
     
     private void enableTXTEdit(){
         // ENABALE TẤT CẢ TEXTFIELD CÁC Ô CẦN EDIT THÔNG TIN
+        try {
+            String storeID;
+            if(txtManagerID.getText().trim().length()!=0){
+                storeID = txtManagerID.getText().substring(0,3);
+            }else{
+                storeID = "";
+            }
+            int countUser = GUIInteraction.countRecord("select * from Users where StoreID='"+storeID+"' and RoleID='SL'");
+            System.out.println(countUser);
+            if(countUser>0){
+                txtManagerName.setEnabled(false);
+                txtInventoryName.setEnabled(false);
+            }else{
+                txtManagerName.setEnabled(true);
+                txtInventoryName.setEnabled(true);
+            }
+        } catch (SQLException ex) {
+
+        }
+        
         txtManagerPhone.setEnabled(true);
         txtManagerEmail.setEnabled(true);
         txtManagerSalary.setEnabled(true);
+        
         
         txtInventoryPhone.setEnabled(true);
         txtInventoryEmail.setEnabled(true);
@@ -1047,21 +1079,29 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
     private boolean validateEditManager(){
         // VALIDATE THÔNH TIN NHẬP VÀO KHI UPDATE MANAGER
         boolean flag;
-        if (!CheckForm.checkPhoneNumber(txtManagerPhone.getText())) {
-            JOptionPane.showMessageDialog(this, "Phone is not phone format", "Error", JOptionPane.ERROR_MESSAGE);
+        String nameManager = DataInteraction.getCode("Users", "UserID", txtManagerID.getText(), "Name");
+        String phoneManager = DataInteraction.getCode("Users", "UserID", txtManagerID.getText(), "Phone");
+        String emailManager = DataInteraction.getCode("Users", "UserID", txtManagerID.getText(), "Email");
+        if(!GUIInteraction.checkDuplicateName(txtManagerName.getText(), "select * from Users", "Name")&&!txtManagerName.getText().trim().equals(nameManager)){
+            JOptionPane.showMessageDialog(this, "Name is not duplicate");
+            txtManagerName.setBackground(Color.red);
+            txtManagerName.requestFocus();
+            flag= false;
+        }else if (!CheckForm.checkPhoneNumber(txtManagerPhone.getText())||!GUIInteraction.checkDuplicateName(txtManagerPhone.getText().trim(), "select * from Users", "Phone")&&!txtManagerPhone.getText().trim().equals(phoneManager)) {
+            JOptionPane.showMessageDialog(this, "Phone is not phone format and not duplicate", "Error", JOptionPane.ERROR_MESSAGE);
             txtManagerName.setBackground(Color.white);
             txtManagerPhone.setBackground(Color.red);
             txtManagerPhone.requestFocus();
             flag = false;
-        }else if (!CheckForm.checkEmail(txtManagerEmail.getText())) {
-            JOptionPane.showMessageDialog(this, "Email is not email format", "Error", JOptionPane.ERROR_MESSAGE);
+        }else if (!CheckForm.checkEmail(txtManagerEmail.getText()) || !GUIInteraction.checkDuplicateName(txtManagerEmail.getText().trim(),"select * from Users", "Email")&&!txtManagerEmail.getText().trim().equals(emailManager)) {
+            JOptionPane.showMessageDialog(this, "Email is not email format and not duplicate", "Error", JOptionPane.ERROR_MESSAGE);
             txtManagerEmail.requestFocus();
             txtManagerName.setBackground(Color.white);
             txtManagerPhone.setBackground(Color.white);
             txtManagerEmail.setBackground(Color.red);
             flag = false;
         }else if (!CheckForm.isNumberic(txtManagerSalary.getText())) {
-            JOptionPane.showMessageDialog(this, "Salary must numberic", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Salary must numberic and not duplicate", "Error", JOptionPane.ERROR_MESSAGE);
             txtManagerSalary.requestFocus();
             txtManagerName.setBackground(Color.white);
             txtManagerPhone.setBackground(Color.white);
@@ -1124,16 +1164,22 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
     private boolean validateEditInventory(){
         // VALIDATE THÔNG TIN NHẬP VÀO KHI UPDATE INVENTORY
         boolean flag;
-        String username = txtInventoryUsername.getText();
-        String password = txtInventoryPassword.getText();
-        if (!CheckForm.checkPhoneNumber(txtInventoryPhone.getText())) {
-            JOptionPane.showMessageDialog(this, "Phone is not phone format", "Error", JOptionPane.ERROR_MESSAGE);
+        String nameInventory = DataInteraction.getCode("Users", "UserID", txtInventoryID.getText(), "Name");
+        String phoneInventory = DataInteraction.getCode("Users", "UserID", txtInventoryID.getText(), "Phone");
+        String emailInventory = DataInteraction.getCode("Users", "UserID", txtInventoryID.getText(), "Email");
+        if(!GUIInteraction.checkDuplicateName(txtInventoryName.getText(), "select * from Users", "Name")&&!txtInventoryName.getText().trim().equals(nameInventory)){
+            JOptionPane.showMessageDialog(this, "Name is not duplicate");
+            txtInventoryName.setBackground(Color.red);
+            txtInventoryName.requestFocus();
+            flag= false;
+        }else if (!CheckForm.checkPhoneNumber(txtInventoryPhone.getText())||!GUIInteraction.checkDuplicateName(txtInventoryPhone.getText().trim(), "select * from Users", "Phone")&&!txtInventoryPhone.getText().trim().equals(phoneInventory)) {
+            JOptionPane.showMessageDialog(this, "Phone is not phone format and not duplicate", "Error", JOptionPane.ERROR_MESSAGE);
             txtInventoryName.setBackground(Color.white);
             txtInventoryPhone.setBackground(Color.red);
             txtInventoryPhone.requestFocus();
             flag = false;
-        }else if (!CheckForm.checkEmail(txtInventoryEmail.getText())) {
-            JOptionPane.showMessageDialog(this, "Email is not email format", "Error", JOptionPane.ERROR_MESSAGE);
+        }else if (!CheckForm.checkEmail(txtInventoryEmail.getText())||!GUIInteraction.checkDuplicateName(txtInventoryEmail.getText().trim(), "select * from Users", "Email")&&!txtInventoryEmail.getText().trim().equals(emailInventory)) {
+            JOptionPane.showMessageDialog(this, "Email is not email format and not duplicate", "Error", JOptionPane.ERROR_MESSAGE);
             txtInventoryEmail.requestFocus();
             txtInventoryName.setBackground(Color.white);
             txtInventoryPhone.setBackground(Color.white);
