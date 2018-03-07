@@ -727,9 +727,10 @@ public class frmCustomer extends javax.swing.JInternalFrame {
                 gender = "Male";
             }
             
+            String customerName = CheckForm.strFormat(txtCustomerNameEdit.getText());
             Customer customer = new Customer(
                     txtCustomerIDEdit.getText(),
-                    txtCustomerNameEdit.getText(),
+                    customerName,
                     txtAddressEdit.getText(),
                     txtPhoneEdit.getText(),
                     txtEmailEdit.getText(),

@@ -623,11 +623,12 @@ public class frmManagementSales extends javax.swing.JInternalFrame {
             String userID = getCode + "SL" + countUser;
             
             // INSERT
+            String salesName = CheckForm.strFormat(txtName.getText());
             User user = new User(
                     userID,
                     txtUsername.getText(),
                     txtPassword.getText(),
-                    txtName.getText(),
+                    salesName,
                     txtPhone.getText(),
                     txtEmail.getText(),
                     "SL",
@@ -661,11 +662,12 @@ public class frmManagementSales extends javax.swing.JInternalFrame {
             if (!validateEditSales()) {
                 return;
             }
+            String name = CheckForm.strFormat(txtNameEdit.getText());
             String id = txtIDEdit.getText();
             String phone = txtPhoneEdit.getText();
             String email = txtEmailEdit.getText();
             String salary = txtSalaryEdit.getText();
-            String sql = "update Users set Phone='"+phone+"', Email='"+email+"', Salary='"+salary+"' where UserID='"+id+"'";
+            String sql = "update Users set Name='"+name+"', Phone='"+phone+"', Email='"+email+"', Salary='"+salary+"' where UserID='"+id+"'";
             DataInteraction.exec(sql);
             refresh();
             btnEdit.setText("Edit");
@@ -757,6 +759,18 @@ public class frmManagementSales extends javax.swing.JInternalFrame {
     
     private void enableTXTEdit(){
         // ENABALE TẤT CẢ TEXTFIELD CÁC Ô CẦN EDIT THÔNG TIN
+        try {
+            String id = txtIDEdit.getText();
+            int countUser = GUIInteraction.countRecord("select * from Bills where SalesID='"+id+"'");
+            System.out.println(countUser);
+            if(countUser>0){
+                txtNameEdit.setEnabled(false);
+            }else{
+                txtNameEdit.setEnabled(true);
+            }
+        } catch (SQLException ex) {
+
+        }
         txtPhone.setEnabled(true);
         txtEmail.setEnabled(true);
         txtSalary.setEnabled(true);
@@ -873,12 +887,20 @@ public class frmManagementSales extends javax.swing.JInternalFrame {
     private boolean validateEditSales(){
         // VALIDATE THÔNH TIN NHẬP VÀO KHI UPDATE MANAGER
         boolean flag = true;
-        if (!CheckForm.checkPhoneNumber(txtPhoneEdit.getText())||!GUIInteraction.checkDuplicateName(txtPhoneEdit.getText().trim(), "select * from Users", "Phone")) {
+        String name = DataInteraction.getCode("Users", "UserID", txtIDEdit.getText(), "Name");
+        String phone = DataInteraction.getCode("Users", "UserID", txtIDEdit.getText(), "Phone");
+        String email = DataInteraction.getCode("Users", "UserID", txtIDEdit.getText(), "Email");
+        if(!GUIInteraction.checkDuplicateName(txtNameEdit.getText(), "select * from Users", "Name")&&!txtNameEdit.getText().trim().equals(name)){
+            JOptionPane.showMessageDialog(this, "Name is not duplicate");
+            txtNameEdit.setBackground(Color.red);
+            txtNameEdit.requestFocus();
+            flag= false;
+        }else if (!CheckForm.checkPhoneNumber(txtPhoneEdit.getText())||!GUIInteraction.checkDuplicateName(txtPhoneEdit.getText().trim(), "select * from Users", "Phone")&&!txtPhoneEdit.getText().trim().equals(phone)) {
             JOptionPane.showMessageDialog(this, "Phone is not phone format and not duplicate", "Error", JOptionPane.ERROR_MESSAGE);
             txtPhoneEdit.setBackground(Color.red);
             txtPhoneEdit.requestFocus();
             flag = false;
-        }else if (!CheckForm.checkEmail(txtEmailEdit.getText())||!GUIInteraction.checkDuplicateName(txtEmailEdit.getText().trim(), "select * from Users", "Email")) {
+        }else if (!CheckForm.checkEmail(txtEmailEdit.getText())||!GUIInteraction.checkDuplicateName(txtEmailEdit.getText().trim(), "select * from Users", "Email")&&!txtEmailEdit.getText().trim().equals(email)) {
             JOptionPane.showMessageDialog(this, "Email is not email format and not duplicate", "Error", JOptionPane.ERROR_MESSAGE);
             txtEmailEdit.requestFocus();
             txtPhoneEdit.setBackground(Color.white);
