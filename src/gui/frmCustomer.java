@@ -646,9 +646,10 @@ public class frmCustomer extends javax.swing.JInternalFrame {
             }
             
             // INSERT
+            String customerName = CheckForm.strFormat(txtCustomerName.getText());
             Customer customer = new Customer(
                     customerID,
-                    txtCustomerName.getText(),
+                    customerName,
                     txtAddress.getText(),
                     txtPhone.getText(),
                     txtEmail.getText(),

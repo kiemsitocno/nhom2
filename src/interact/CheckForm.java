@@ -45,6 +45,17 @@ public class CheckForm {
             return true;
         }
     }
+    
+    public static boolean isFindSpace(String Value) {
+        // KIỂM TRA THÔNG TIN NHẬP VÀO CÓ KHOẢNG TRẮNG HAY KHÔNG
+        Pattern pattern = Pattern.compile("[\\w\\s]+");
+        Matcher matcher = pattern.matcher(Value);
+        if (!matcher.find() || Value.indexOf(" ") != -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 
     public static boolean isNumberic(String value) {
         // KIỂM TRA THÔNG TIN NHẬP VÀO CÓ PHẢI LÀ SỐ HAY KHÔNG 
@@ -108,5 +119,17 @@ public class CheckForm {
             return false;
         }
         return true;
+    }
+    
+    public static String strFormat(String value){
+        String name = value.replaceAll("\\s+"," ");
+        for (int i = 0; i<name.length()-1;i++){
+            if(name.indexOf(" ")==i){
+                name = name.substring(1);
+                break;
+            }
+        }
+        
+        return name; 
     }
 }

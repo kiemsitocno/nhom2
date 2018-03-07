@@ -599,7 +599,8 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
             }
             
             // INSERT
-            Category category = new Category(CategoryID, txtCategoryName.getText());
+            String categoryName = CheckForm.strFormat(txtCategoryName.getText());
+            Category category = new Category(CategoryID, categoryName);
             interact.Categories.insertCategory(category);
             refresh();
             resetTXT();
@@ -639,9 +640,10 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
             }
             
             // INSERT
+            String productName = CheckForm.strFormat(txtProductName.getText());
             entity.Product product = new Product(
                     productID, 
-                    txtProductName.getText(),
+                    productName,
                     Integer.valueOf(txtQuantity.getText()),
                     Integer.valueOf(txtPrice.getText()),
                     entity.DateUtils.now("MM/dd/yy"),
@@ -722,7 +724,8 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
             if (!validateCategory()) {
                 return;
             }
-            entity.Category ct = new Category(txtCategoryID.getText(), txtCategoryName.getText());
+            String categoryName = CheckForm.strFormat(txtCategoryName.getText());
+            entity.Category ct = new Category(txtCategoryID.getText(), categoryName);
             interact.Categories.editCategory(ct);
             refresh();
             btnEditCategory.setText("Edit");
@@ -806,9 +809,10 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
             if (!validateEditProduct()) {
                 return;
             }
+            String productName = CheckForm.strFormat(txtProductName.getText());
             Product product = new Product(
                     txtProductID.getText(), 
-                    txtProductName.getText(),
+                    productName,
                     Integer.valueOf(txtQuantity.getText()),
                     Integer.valueOf(txtPrice.getText()),
                     entity.DateUtils.now("MM/dd/yy"),

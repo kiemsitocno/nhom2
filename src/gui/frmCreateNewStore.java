@@ -324,9 +324,11 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
             }
             int countStore = GUIInteraction.indentityID("select top 1 * from Stores order by StoreID Desc", "StoreID") + 1;
             String storeID = "ST" + countStore;
+            
+            String storeName = CheckForm.strFormat(txtName.getText());
             Store store = new Store(
                     storeID,
-                    txtName.getText(),
+                    storeName,
                     txtPhone.getText(),
                     txtAddress.getText(),
                     Integer.parseInt(txtRent.getText()));
@@ -355,7 +357,9 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
             if (!validateStore()) {
                 return;
             }
-            Store store = new Store(txtID.getText(), txtName.getText(), txtPhone.getText(), txtAddress.getText(), Integer.parseInt(txtRent.getText()));
+            
+            String storeName = CheckForm.strFormat(txtName.getText());
+            Store store = new Store(txtID.getText(), storeName, txtPhone.getText(), txtAddress.getText(), Integer.parseInt(txtRent.getText()));
             interact.Store.editStore(store);
             refresh();
             btnEdit.setText("Edit");
