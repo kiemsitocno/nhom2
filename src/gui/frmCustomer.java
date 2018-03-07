@@ -8,7 +8,10 @@ package gui;
 import interact.CheckForm;
 import interact.GUIInteraction;
 import entity.Customer;
+<<<<<<< HEAD
 import interact.DataInteraction;
+=======
+>>>>>>> origin/Sales
 import java.awt.Color;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -341,6 +344,20 @@ public class frmCustomer extends javax.swing.JInternalFrame {
             }
         });
 
+<<<<<<< HEAD
+=======
+        txtSearhCustomerID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSearhCustomerIDActionPerformed(evt);
+            }
+        });
+        txtSearhCustomerID.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtSearhCustomerIDKeyReleased(evt);
+            }
+        });
+
+>>>>>>> origin/Sales
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel1.setText("Customer ID :");
 
@@ -403,6 +420,14 @@ public class frmCustomer extends javax.swing.JInternalFrame {
         lblName1.setText("Name :");
 
         txtCustomerNameEdit.setEnabled(false);
+<<<<<<< HEAD
+=======
+        txtCustomerNameEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCustomerNameEditActionPerformed(evt);
+            }
+        });
+>>>>>>> origin/Sales
 
         lblPhone1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblPhone1.setText("Phone :");
@@ -646,10 +671,16 @@ public class frmCustomer extends javax.swing.JInternalFrame {
             }
             
             // INSERT
+<<<<<<< HEAD
             String customerName = CheckForm.strFormat(txtCustomerName.getText());
             Customer customer = new Customer(
                     customerID,
                     customerName,
+=======
+            Customer customer = new Customer(
+                    customerID,
+                    txtCustomerName.getText(),
+>>>>>>> origin/Sales
                     txtAddress.getText(),
                     txtPhone.getText(),
                     txtEmail.getText(),
@@ -669,6 +700,32 @@ public class frmCustomer extends javax.swing.JInternalFrame {
         disableTXT();
         btnAdd.setText("Add");
     }//GEN-LAST:event_btnCancelActionPerformed
+<<<<<<< HEAD
+
+    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
+        // REFRESH TEXTFIELD
+        resetTXT();
+    }//GEN-LAST:event_btnRefreshActionPerformed
+
+    private void tableCustomerSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableCustomerSearchMouseClicked
+        // LOAD DỮ LIỆU TỪ BẢNG RA TEXTFIELD
+        int i = tableCustomerSearch.getSelectedRow();
+        txtCustomerIDEdit.setText(String.valueOf(tableCustomerSearch.getValueAt(i, 0)));
+        txtCustomerNameEdit.setText(String.valueOf(tableCustomerSearch.getValueAt(i, 1)));
+        txtAddressEdit.setText(String.valueOf(tableCustomerSearch.getValueAt(i, 2)));
+        txtPhoneEdit.setText(String.valueOf(tableCustomerSearch.getValueAt(i, 3)));
+        txtEmailEdit.setText(String.valueOf(tableCustomerSearch.getValueAt(i, 4)));
+        String gender = String.valueOf(tableCustomerSearch.getValueAt(i, 5)).trim();
+        if(gender.equals("Male")){
+            chkGenderMSearch.setSelected(true);
+        }else if(gender.equals("Female")){
+            chkGenderFSearch.setSelected(true);
+        }
+    }//GEN-LAST:event_tableCustomerSearchMouseClicked
+
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        // SEARCH THEO TÊN HOẶC ID
+=======
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
         // REFRESH TEXTFIELD
@@ -705,6 +762,110 @@ public class frmCustomer extends javax.swing.JInternalFrame {
         } catch (SQLException ex) {
             Logger.getLogger(frmCustomer.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        // EDIT CUSTOMER
+        if(txtCustomerIDEdit.getText().trim().length()==0){
+            JOptionPane.showMessageDialog(this, "Please chose one row from table");
+            return;
+        }
+        enableTXTEdit();
+        if (btnEdit.getText().equals("Edit")) {
+            btnEdit.setText("Save");
+        }else if (btnEdit.getText().equals("Save")) {
+            if (!validateEdit()) {
+                return;
+            }
+            String gender;
+            if(chkGenderFSearch.isSelected()){
+                gender = "Female";
+            }else{
+                gender = "Male";
+            }
+            
+            Customer customer = new Customer(
+                    txtCustomerIDEdit.getText(),
+                    txtCustomerNameEdit.getText(),
+                    txtAddressEdit.getText(),
+                    txtPhoneEdit.getText(),
+                    txtEmailEdit.getText(),
+                    gender
+            );
+            interact.Customer.editCustomer(customer);
+            refresh();
+            btnEdit.setText("Edit");
+            disableTXT();
+        }
+    }//GEN-LAST:event_btnEditActionPerformed
+
+    private void btnCancel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancel1ActionPerformed
+        // CANCEL TẤT CẢ THAO TÁC
+        resetTXT();
+        disableTXT();
+        btnEdit.setText("Edit");
+    }//GEN-LAST:event_btnCancel1ActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        // DELETE CUSTOMER
+        if(txtCustomerIDEdit.getText().trim().length()==0){
+            JOptionPane.showMessageDialog(this, "Please chose one row from table");
+            return;
+        }
+        int i = JOptionPane.showConfirmDialog(this, "Do you want to delete this Customer.?");
+        if (i == JOptionPane.YES_OPTION) {
+            try {
+                // TODO add your handling code here:
+                int countBill = GUIInteraction.countRecord("select * from Bills where CustomerID='" + txtCustomerIDEdit.getText() + "'");
+                if (countBill > 0) {
+                    JOptionPane.showMessageDialog(this, "This customer have bills, can't delete it");
+                } else {
+                    interact.Customer.deleteCustomer(txtCustomerIDEdit.getText());
+                    refresh();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(frmCreateNewStore.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void txtSearhCustomerIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearhCustomerIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSearhCustomerIDActionPerformed
+
+    private void txtSearhCustomerIDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearhCustomerIDKeyReleased
+        // TODO add your handling code here:
+        // TÌM KIẾM SẢN PHẨM
+        try {
+            String searchName = txtSearchName.getText().trim();
+            String searchID = txtSearhCustomerID.getText().trim();
+            if(searchName.length()==0 && searchID.length()>0){
+                GUIInteraction.readToTable("select * from Customers where CustomerID like N'%" + searchID + "%'", tableCustomerSearch);
+            }else{
+                txtSearhCustomerID.setText(null);
+                GUIInteraction.readToTable("select * from Customers where CustomerName like N'%" + searchName + "%'", tableCustomerSearch);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(frmCustomer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_txtSearhCustomerIDKeyReleased
+
+    private void txtSearchNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchNameKeyReleased
+        // TODO add your handling code here:
+>>>>>>> origin/Sales
+        try {
+            String searchName = txtSearchName.getText().trim();
+            String searchID = txtSearhCustomerID.getText().trim();
+            if(searchName.length()==0 && searchID.length()>0){
+                GUIInteraction.readToTable("select * from Customers where CustomerID like N'%" + searchID + "%'", tableCustomerSearch);
+            }else{
+                txtSearhCustomerID.setText(null);
+                GUIInteraction.readToTable("select * from Customers where CustomerName like N'%" + searchName + "%'", tableCustomerSearch);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(frmCustomer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+<<<<<<< HEAD
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
@@ -772,6 +933,13 @@ public class frmCustomer extends javax.swing.JInternalFrame {
             }
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
+=======
+    }//GEN-LAST:event_txtSearchNameKeyReleased
+
+    private void txtCustomerNameEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCustomerNameEditActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCustomerNameEditActionPerformed
+>>>>>>> origin/Sales
 
     private void refresh() {
         try {
@@ -795,6 +963,7 @@ public class frmCustomer extends javax.swing.JInternalFrame {
     
     private void enableTXTEdit(){
         // ENABLE TẤT CẢ TEXTFIELD ĐỂ EDIT
+<<<<<<< HEAD
         try {
             String customerID = txtCustomerIDEdit.getText();
             int countUser = GUIInteraction.countRecord("select * from Bills where CustomerID='"+customerID+"'");
@@ -807,6 +976,8 @@ public class frmCustomer extends javax.swing.JInternalFrame {
         } catch (SQLException ex) {
 
         }
+=======
+>>>>>>> origin/Sales
         txtPhoneEdit.setEnabled(true);
         txtAddressEdit.setEnabled(true);
         txtEmailEdit.setEnabled(true);
@@ -861,14 +1032,24 @@ public class frmCustomer extends javax.swing.JInternalFrame {
             txtCustomerName.setBackground(Color.red);
             txtCustomerName.requestFocus();
             flag = false;
+<<<<<<< HEAD
         }else if (!CheckForm.checkPhoneNumber(txtPhone.getText())||!GUIInteraction.checkDuplicateName(txtPhone.getText().trim(), "select * from Customers", "Phone")) {
             JOptionPane.showMessageDialog(this, "Phone is not phone format and not duplicate", "Error", JOptionPane.ERROR_MESSAGE);
+=======
+        }else if (!CheckForm.checkPhoneNumber(txtPhone.getText())) {
+            JOptionPane.showMessageDialog(this, "Phone is not phone format", "Error", JOptionPane.ERROR_MESSAGE);
+>>>>>>> origin/Sales
             txtCustomerName.setBackground(Color.white);
             txtPhone.setBackground(Color.red);
             txtPhone.requestFocus();
             flag = false;
+<<<<<<< HEAD
         }else if (!CheckForm.checkEmail(txtEmail.getText())||!GUIInteraction.checkDuplicateName(txtEmailEdit.getText().trim(), "select * from Customers", "Email")) {
             JOptionPane.showMessageDialog(this, "Email is not email format and not duplicate", "Error", JOptionPane.ERROR_MESSAGE);
+=======
+        }else if (!CheckForm.checkEmail(txtEmail.getText())) {
+            JOptionPane.showMessageDialog(this, "Email is not email format", "Error", JOptionPane.ERROR_MESSAGE);
+>>>>>>> origin/Sales
             txtEmail.requestFocus();
             txtCustomerName.setBackground(Color.white);
             txtPhone.setBackground(Color.white);
@@ -896,6 +1077,7 @@ public class frmCustomer extends javax.swing.JInternalFrame {
     private boolean validateEdit(){
         // VALIDATE THÔNG TIN NHẬP VÀO KHI EDIT CUSTOMER
         boolean flag = true;
+<<<<<<< HEAD
         String nameCustomer = DataInteraction.getCode("Customers", "CustomerID", txtCustomerIDEdit.getText(), "CustomerName");
         String phoneCustomer = DataInteraction.getCode("Customers", "CustomerID", txtCustomerIDEdit.getText(), "Phone");
         String emailCustomer = DataInteraction.getCode("Customers", "CustomerID", txtCustomerIDEdit.getText(), "Email");
@@ -911,6 +1093,15 @@ public class frmCustomer extends javax.swing.JInternalFrame {
             flag = false;
         }else if (!CheckForm.checkEmail(txtEmailEdit.getText())||!GUIInteraction.checkDuplicateName(txtEmailEdit.getText().trim(), "select * from Customers", "Email")&&!txtEmailEdit.getText().trim().equals(emailCustomer)) {
             JOptionPane.showMessageDialog(this, "Email is not email format and not duplicate", "Error", JOptionPane.ERROR_MESSAGE);
+=======
+        if (!CheckForm.checkPhoneNumber(txtPhoneEdit.getText())) {
+            JOptionPane.showMessageDialog(this, "Phone is not phone format", "Error", JOptionPane.ERROR_MESSAGE);
+            txtPhoneEdit.setBackground(Color.red);
+            txtPhoneEdit.requestFocus();
+            flag = false;
+        }else if (!CheckForm.checkEmail(txtEmailEdit.getText())) {
+            JOptionPane.showMessageDialog(this, "Email is not email format", "Error", JOptionPane.ERROR_MESSAGE);
+>>>>>>> origin/Sales
             txtEmailEdit.requestFocus();
             txtPhoneEdit.setBackground(Color.white);
             txtEmailEdit.setBackground(Color.red);

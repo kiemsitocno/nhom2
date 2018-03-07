@@ -64,12 +64,33 @@ public class frmCustomerBrower_search extends javax.swing.JFrame {
 
         jLabel2.setText("Customer Name:");
 
+<<<<<<< HEAD
+=======
+        txtSearchName.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtSearchNameMouseClicked(evt);
+            }
+        });
+>>>>>>> origin/Sales
         txtSearchName.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtSearchNameKeyReleased(evt);
             }
         });
 
+<<<<<<< HEAD
+=======
+        txtSearhCustomerID.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtSearhCustomerIDMouseClicked(evt);
+            }
+        });
+        txtSearhCustomerID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSearhCustomerIDActionPerformed(evt);
+            }
+        });
+>>>>>>> origin/Sales
         txtSearhCustomerID.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtSearhCustomerIDKeyReleased(evt);
@@ -160,11 +181,16 @@ public class frmCustomerBrower_search extends javax.swing.JFrame {
         if (str.equals("")) {
             sql = "select * from Customers";
         }
+<<<<<<< HEAD
         if (!interact.CheckForm.isNumberic(str)) {
             JOptionPane.showMessageDialog(this, "Invalid fomat", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         } else {
             sql = ("select * from Customers where CustomerID=" + Integer.valueOf(str));
+=======
+        else {
+            sql = ("select * from Customers where CustomerID like '%" + str + "%'");
+>>>>>>> origin/Sales
         }
         try {
             interact.GUIInteraction.readToTable(sql, tblCustomer);
@@ -188,6 +214,23 @@ public class frmCustomerBrower_search extends javax.swing.JFrame {
             this.dispose();
         }
     }//GEN-LAST:event_btnSelectActionPerformed
+<<<<<<< HEAD
+=======
+
+    private void txtSearhCustomerIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearhCustomerIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSearhCustomerIDActionPerformed
+
+    private void txtSearhCustomerIDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtSearhCustomerIDMouseClicked
+        // NẾU SEARCH BẰNG ID THÌ Ô NAME SẼ RESET TRỐNG
+        txtSearchName.setText("");
+    }//GEN-LAST:event_txtSearhCustomerIDMouseClicked
+
+    private void txtSearchNameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtSearchNameMouseClicked
+        // NẾU SEARCH BẰNG Name THÌ Ô ID SẼ RESET TRỐNG
+        txtSearhCustomerID.setText("");
+    }//GEN-LAST:event_txtSearchNameMouseClicked
+>>>>>>> origin/Sales
     private void refresh() {
         try {
             GUIInteraction.readToTable("select * from Customers order by CustomerName asc", tblCustomer);

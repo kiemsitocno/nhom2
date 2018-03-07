@@ -81,7 +81,11 @@ public class Bill {
     }
     
     public static void deleteBill(String ID) {
+<<<<<<< HEAD
         // PHƯƠNG THỨC DELETE CỦA ĐỐI TƯỢNG BILL
+=======
+        // PHƯƠNG THỨC DESTROY CỦA ĐỐI TƯỢNG BILL
+>>>>>>> origin/Sales
         String sqlo = "delete from OrderDetails where BillID='"+ID+"'";
         String sql = "delete from Bills where BillID='"+ID+"'";
         java.sql.Statement st;
@@ -115,6 +119,10 @@ public class Bill {
                 bill.setStatus(rs.getBoolean("Status"));
                 bill.setDescript(rs.getString("Descript"));
                 bills.add(bill);
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/Sales
             }
             return bills;
         } catch (Exception ex) {

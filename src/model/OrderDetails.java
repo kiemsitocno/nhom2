@@ -7,6 +7,7 @@ package model;
 import entity.Order;
 import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
+<<<<<<< HEAD
 
 /**
  * MODEL TABLE ORDERDETAILS
@@ -14,6 +15,14 @@ import javax.swing.table.AbstractTableModel;
  */
 public class OrderDetails extends AbstractTableModel {
     private ArrayList<entity.Order> details;
+=======
+/**
+ *
+ * @author Bach Ngoc  Toan
+ */
+public class OrderDetails extends AbstractTableModel {
+private ArrayList<entity.Order> details;
+>>>>>>> origin/Sales
     private final String columnsName[] = {"ItemID", "Price", "Quantity","Total"};
     private final Class columnsClass[] = {String.class, Integer.class, Integer.class, Integer.class};
 

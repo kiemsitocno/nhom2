@@ -313,12 +313,19 @@ public class frmInformationSales extends javax.swing.JInternalFrame {
         try {
             int countBillSold = GUIInteraction.countRecord("select * from Bills where SalesID='"+salesID+"'");
             labelBillSold.setText(String.valueOf(countBillSold));
+<<<<<<< HEAD
             int countProductSold = GUIInteraction.countQuantity("select sum(Quantity) as Total from View_Bills where Sales=N'"+salesName+"'");
             labelProductSold.setText(String.valueOf(countProductSold));
+=======
+            // sua lai sau
+//            int countProductSold = GUIInteraction.countQuantity("select sum(Quantity) as Total from Bills where SalesID='"+salesID+"'");
+//            labelProductSold.setText(String.valueOf(countProductSold));
+>>>>>>> origin/Sales
             int countDay = GUIInteraction.countRecord("select * from DayWork where UserID='"+salesID+"'");
             labelWorkDay.setText(String.valueOf(countDay));
             
             int bonus;
+<<<<<<< HEAD
             if(countProductSold<50){
                 bonus=0;
             }else if(countProductSold<100){
@@ -330,6 +337,19 @@ public class frmInformationSales extends javax.swing.JInternalFrame {
             int salary = Integer.valueOf(DataInteraction.getLines("Users", "UserID", salesID, "Salary"));
             int salaryMonth = salary/30*countDay+bonus;
             labelSalaryMonth.setText(String.valueOf(salaryMonth));
+=======
+//            if(countProductSold<50){
+//                bonus=0;
+//            }else if(countProductSold<100){
+//                bonus=100000;
+//            }else{
+//                bonus=500000;
+//            }
+//            labelBonus.setText(String.valueOf(bonus));
+            int salary = Integer.valueOf(DataInteraction.getLines("Users", "UserID", salesID, "Salary"));
+//            int salaryMonth = salary/30*countDay+bonus;
+//            labelSalaryMonth.setText(String.valueOf(salaryMonth));
+>>>>>>> origin/Sales
         } catch (SQLException ex) {
             Logger.getLogger(frmInformationSales.class.getName()).log(Level.SEVERE, null, ex);
         }

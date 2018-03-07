@@ -145,6 +145,11 @@
     <Component class="javax.swing.JTextField" name="txtProductID">
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="txtProductIDMouseClicked"/>
+<<<<<<< HEAD
+=======
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtProductIDActionPerformed"/>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtProductIDKeyReleased"/>
+>>>>>>> origin/Sales
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
@@ -153,6 +158,13 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtPrice">
+<<<<<<< HEAD
+=======
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtPriceActionPerformed"/>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtPriceKeyReleased"/>
+      </Events>
+>>>>>>> origin/Sales
     </Component>
     <Component class="javax.swing.JComboBox" name="cboCategory">
       <Properties>
@@ -171,6 +183,10 @@
     <Component class="javax.swing.JTextField" name="txtProductName">
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="txtProductNameMouseClicked"/>
+<<<<<<< HEAD
+=======
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtProductNameKeyReleased"/>
+>>>>>>> origin/Sales
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">

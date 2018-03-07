@@ -11,7 +11,10 @@ import java.util.logging.Logger;
 import entity.Store;
 import interact.GUIInteraction;
 import interact.CheckForm;
+<<<<<<< HEAD
 import interact.DataInteraction;
+=======
+>>>>>>> origin/Sales
 import java.awt.Color;
 import javax.swing.*;
 
@@ -166,6 +169,11 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel5.setText("Store Rent:");
 
+        txtRent.setEnabled(false);
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel5.setText("Store Rent:");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -239,13 +247,22 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
                             .addComponent(jLabel6)
                             .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
+<<<<<<< HEAD
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtRent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel5))))
+=======
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, 0)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtRent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5)))))
+>>>>>>> origin/Sales
         );
 
         tablePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Table Information", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
         tablePanel.setPreferredSize(new java.awt.Dimension(765, 259));
+<<<<<<< HEAD
 
         tableStores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -262,6 +279,24 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(tableStores);
 
+=======
+
+        tableStores.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        tableStores.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableStoresMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tableStores);
+
+>>>>>>> origin/Sales
         javax.swing.GroupLayout tablePanelLayout = new javax.swing.GroupLayout(tablePanel);
         tablePanel.setLayout(tablePanelLayout);
         tablePanelLayout.setHorizontalGroup(
@@ -313,7 +348,10 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
         // TẠO MỚI 1 CỬA HÀNG
         btnEdit.setEnabled(false);
+<<<<<<< HEAD
         btnDelete.setEnabled(false);
+=======
+>>>>>>> origin/Sales
         enableTXT();
         if (btnCreate.getText().equals("Create")) {
             resetTXT();
@@ -324,11 +362,17 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
             }
             int countStore = GUIInteraction.indentityID("select top 1 * from Stores order by StoreID Desc", "StoreID") + 1;
             String storeID = "ST" + countStore;
+<<<<<<< HEAD
             
             String storeName = CheckForm.strFormat(txtName.getText());
             Store store = new Store(
                     storeID,
                     storeName,
+=======
+            Store store = new Store(
+                    storeID,
+                    txtName.getText(),
+>>>>>>> origin/Sales
                     txtPhone.getText(),
                     txtAddress.getText(),
                     Integer.parseInt(txtRent.getText()));
@@ -338,14 +382,21 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
             resetTXT();
             disableTXT();
             btnEdit.setEnabled(true);
+<<<<<<< HEAD
             btnDelete.setEnabled(true);
+=======
+>>>>>>> origin/Sales
         }
     }//GEN-LAST:event_btnCreateActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         // CHỈNH SỬA THÔNG TIN 1 CỬA HÀNG
+<<<<<<< HEAD
         btnCreate.setEnabled(false);
         btnDelete.setEnabled(false);
+=======
+        btnCreate.setEnabled(true);
+>>>>>>> origin/Sales
         if(txtName.getText().trim().length()==0){
             JOptionPane.showMessageDialog(this, "Please chose one row from table");
             return;
@@ -357,15 +408,23 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
             if (!validateStore()) {
                 return;
             }
+<<<<<<< HEAD
             
             String storeName = CheckForm.strFormat(txtName.getText());
             Store store = new Store(txtID.getText(), storeName, txtPhone.getText(), txtAddress.getText(), Integer.parseInt(txtRent.getText()));
+=======
+            Store store = new Store(txtID.getText(), txtName.getText(), txtPhone.getText(), txtAddress.getText(), Integer.parseInt(txtRent.getText()));
+>>>>>>> origin/Sales
             interact.Store.editStore(store);
             refresh();
             btnEdit.setText("Edit");
             disableTXT();
+<<<<<<< HEAD
             btnCreate.setEnabled(true);
             btnDelete.setEnabled(true);
+=======
+            btnCreate.setEnabled(false);
+>>>>>>> origin/Sales
         }
     }//GEN-LAST:event_btnEditActionPerformed
 
@@ -382,8 +441,11 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
                 int countUser = GUIInteraction.countRecord("select * from Users where StoreID='" + txtID.getText() + "'");
                 if (countUser > 0) {
                     JOptionPane.showMessageDialog(this, "This store have users, can't delete it");
+<<<<<<< HEAD
                 } else if(txtID.getText().equals("ST1")){
                     JOptionPane.showMessageDialog(this, "This is head office, can't delete it");
+=======
+>>>>>>> origin/Sales
                 } else {
                     interact.Store.deleteStore(txtID.getText());
                     refresh();
@@ -436,15 +498,22 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
     private boolean validateStore() {
         // VALIDATE THÔNG TIN NHẬP VÀO KHI INSERT VÀ UPDATE STORE
         boolean flag = true;
+<<<<<<< HEAD
         String name = DataInteraction.getCode("Stores", "StoreID", txtID.getText(), "StoreName");
         String phone = DataInteraction.getCode("Stores", "StoreID", txtID.getText(), "StorePhone");
         String address = DataInteraction.getCode("Stores", "StoreID", txtID.getText(), "StoreAddress");
+=======
+>>>>>>> origin/Sales
         if (!CheckForm.isEmpty(txtName.getText())) {
             JOptionPane.showMessageDialog(this, "Name is not blank", "Error", JOptionPane.ERROR_MESSAGE);
             txtName.requestFocus();
             txtName.setBackground(Color.red);
             flag = false;
+<<<<<<< HEAD
         } else if (!GUIInteraction.checkDuplicateName(txtName.getText().trim(), "select * from Stores", "StoreName")&&!txtName.getText().trim().equals(name)) {
+=======
+        } else if (!GUIInteraction.checkDuplicateName(txtName.getText().trim(), "select * from Stores", "StoreName")) {
+>>>>>>> origin/Sales
             JOptionPane.showMessageDialog(this, "Name is not duplicatated", "Error", JOptionPane.ERROR_MESSAGE);
             txtName.requestFocus();
             txtName.setBackground(Color.red);
@@ -454,8 +523,13 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
             txtName.requestFocus();
             txtName.setBackground(Color.red);
             flag = false;
+<<<<<<< HEAD
         } else if (!CheckForm.checkPhoneNumber(txtPhone.getText())||!GUIInteraction.checkDuplicateName(txtPhone.getText().trim(), "select * from Stores", "StorePhone")&&!txtPhone.getText().trim().equals(phone)) {
             JOptionPane.showMessageDialog(this, "Phone is not phone format and not duplicate", "Error", JOptionPane.ERROR_MESSAGE);
+=======
+        } else if (!CheckForm.checkPhoneNumber(txtPhone.getText())) {
+            JOptionPane.showMessageDialog(this, "Phone is not phone format", "Error", JOptionPane.ERROR_MESSAGE);
+>>>>>>> origin/Sales
             txtPhone.requestFocus();
             txtPhone.setBackground(Color.red);
             txtName.setBackground(Color.white);
@@ -487,6 +561,7 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
 
     private void enableTXT() {
         // ENABLE TẤT CẢ TEXTFIELD
+<<<<<<< HEAD
         try {
             String storeID = txtID.getText();
             int countUser = GUIInteraction.countRecord("select * from Users where StoreID='"+storeID+"'");
@@ -513,6 +588,22 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
         txtRent.setEnabled(false);
     }
 
+=======
+        txtName.setEnabled(true);
+        txtPhone.setEnabled(true);
+        txtAddress.setEnabled(true);
+        txtRent.setEnabled(true);
+    }
+
+    private void disableTXT() {
+        // DISABLE TẤT CẢ TEXTFIELD
+        txtName.setEnabled(false);
+        txtPhone.setEnabled(false);
+        txtAddress.setEnabled(false);
+        txtRent.setEnabled(false);
+    }
+
+>>>>>>> origin/Sales
     private void resetTXT() {
         // RESET TẤT CẢ TEXTFIELD VỀ MẶC ĐỊNH.
         txtName.setText(null);

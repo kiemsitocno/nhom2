@@ -40,6 +40,7 @@ public class CheckForm {
         Pattern pattern = Pattern.compile("[\\w\\s]+");
         Matcher matcher = pattern.matcher(Value);
         if (!matcher.find() || Value.indexOf(" ") != -1) {
+<<<<<<< HEAD
             return false;
         } else {
             return true;
@@ -51,6 +52,8 @@ public class CheckForm {
         Pattern pattern = Pattern.compile("[\\w\\s]+");
         Matcher matcher = pattern.matcher(Value);
         if (!matcher.find() || Value.indexOf(" ") != -1) {
+=======
+>>>>>>> origin/Sales
             return false;
         } else {
             return true;

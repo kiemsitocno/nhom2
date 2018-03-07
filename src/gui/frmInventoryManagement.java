@@ -4,14 +4,20 @@
  * and open the template in the editor.
  */
 package gui;
+<<<<<<< HEAD
 import com.toedter.calendar.JTextFieldDateEditor;
+=======
+>>>>>>> origin/Sales
 import interact.GUIInteraction;
 import interact.CheckForm;
 import entity.Product;
 import interact.DataInteraction;
 import java.awt.Color;
 import java.sql.SQLException;
+<<<<<<< HEAD
 import java.text.SimpleDateFormat;
+=======
+>>>>>>> origin/Sales
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -31,8 +37,11 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
         getStatus();
         valid();
         warning();
+<<<<<<< HEAD
         JTextFieldDateEditor editor = (JTextFieldDateEditor) txtExpireDateUpdate.getDateEditor();
         editor.setEditable(false);
+=======
+>>>>>>> origin/Sales
     }
 
     /**
@@ -340,10 +349,15 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
                     .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1)
+<<<<<<< HEAD
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+=======
+                    .addComponent(jLabel7)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+>>>>>>> origin/Sales
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -377,7 +391,11 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
     private void btnExpireDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExpireDateActionPerformed
         // ĐẾM SỐ LƯỢNG SẢN PHẨM HẾT HẠN
         try {
+<<<<<<< HEAD
             GUIInteraction.readToTable("select * from View_ProductExpire where datediff(dd,ExpireDate,getdate())<30", tableInventory);
+=======
+            GUIInteraction.readToTable("select * from View_ProductExpire where datediff(dd,ExpireDate,getdate())>7", tableInventory);
+>>>>>>> origin/Sales
         } catch (SQLException ex) {
             Logger.getLogger(frmInventoryManagement.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -408,11 +426,15 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
             
             String id= String.valueOf(tableInventory.getValueAt(0, 0));
             String quantity = txtQuantityUpdate.getText();
+<<<<<<< HEAD
             String expireDateUpdate = sf.format(txtExpireDateUpdate.getDate());
             String sql = "update Products set "
                     + "QuantityAvailable='"+quantity+"', "
                     + "ExpireDate='"+expireDateUpdate+"', "
                     + "DateImport='"+entity.DateUtils.now("MM/dd/yy")+"' where ProductID='"+id+"'";
+=======
+            String sql = "update Products set QuantityAvailable='"+quantity+"' where ProductID='"+id+"'";
+>>>>>>> origin/Sales
             DataInteraction.exec(sql);
             getStatus();
             btnQuantityUpdate.setText("Update");
@@ -441,7 +463,11 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
         txtProductTranstract.setText(String.valueOf(productTranstract));
         int productSold=GUIInteraction.countQuantity("select sum(Sold) as Total from View_ProductSold where datediff(dd,Date,getdate())=1");
         txtSoldQuantity.setText(String.valueOf(productSold));
+<<<<<<< HEAD
         int productExpire=GUIInteraction.countQuantity("select count(*) from Products where datediff(dd,ExpireDate,getdate())<30");
+=======
+        int productExpire=GUIInteraction.countQuantity("select count(*) from Products where datediff(dd,ExpireDate,getdate())>7");
+>>>>>>> origin/Sales
         txtExpireDate.setText(String.valueOf(productExpire));
     }
     

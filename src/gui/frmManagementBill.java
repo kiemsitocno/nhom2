@@ -5,12 +5,20 @@
  */
 package gui;
 
+<<<<<<< HEAD
 import com.toedter.calendar.JTextFieldDateEditor;
+=======
+>>>>>>> origin/Sales
 import interact.DataInteraction;
 import interact.GUIInteraction;
 import interact.Login;
 import java.sql.SQLException;
+<<<<<<< HEAD
 import java.text.SimpleDateFormat;
+=======
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+>>>>>>> origin/Sales
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -33,10 +41,13 @@ public class frmManagementBill extends javax.swing.JInternalFrame {
         initComponents();
         count();
         refresh();
+<<<<<<< HEAD
         JTextFieldDateEditor editor = (JTextFieldDateEditor) txtDateTo.getDateEditor();
         JTextFieldDateEditor editorF = (JTextFieldDateEditor) txtDateFrom.getDateEditor();
         editor.setEditable(false);
         editor.setEditable(false);
+=======
+>>>>>>> origin/Sales
     }
 
     /**
@@ -558,9 +569,19 @@ public class frmManagementBill extends javax.swing.JInternalFrame {
         } catch (Exception ex) {
             return;
         }
+<<<<<<< HEAD
         SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
         String sql = "select * from View_Bills where Status=1 and Date Between '"+sf.format(txtDateFrom.getDate())+" 00:00:00'"
                 + " and '"+sf.format(txtDateTo.getDate())+" 00:00:00'";
+=======
+        String dateFrom = txtDateFrom.getDate().toString();
+        String dateTo = txtDateTo.getDate().toString();
+        LocalDateTime timeFrom = LocalDateTime.parse(dateFrom, DateTimeFormatter.ofPattern("E MMM dd HH:mm:ss z yyyy"));
+        LocalDateTime timeTo = LocalDateTime.parse(dateTo, DateTimeFormatter.ofPattern("E MMM dd HH:mm:ss z yyyy"));
+        String from = timeFrom.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        String to = timeTo.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        String sql = "select * from View_Bills where Status=1 and Date>='" + from + "' and Date<='" + to + "' and StoreName='"+storeName+"'";
+>>>>>>> origin/Sales
         try {
             GUIInteraction.readToTable(sql, tableBills);
         } catch (SQLException ex) {

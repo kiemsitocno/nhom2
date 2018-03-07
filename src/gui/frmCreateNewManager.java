@@ -14,7 +14,10 @@ import interact.DataInteraction;
 import entity.User;
 import java.awt.Color;
 import javax.swing.*;
+<<<<<<< HEAD
 import model.OrderDetails;
+=======
+>>>>>>> origin/Sales
 
 /**
  * GIAO DIỆN QUẢN LÝ MANAGER VÀ INVENTORY
@@ -171,6 +174,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
                 btnManagerCreateActionPerformed(evt);
             }
         });
+<<<<<<< HEAD
 
         btnManagerEdit.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnManagerEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconEdit.png"))); // NOI18N
@@ -190,6 +194,27 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
             }
         });
 
+=======
+
+        btnManagerEdit.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnManagerEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconEdit.png"))); // NOI18N
+        btnManagerEdit.setText("Edit");
+        btnManagerEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnManagerEditActionPerformed(evt);
+            }
+        });
+
+        btnManagerCancel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnManagerCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconCancel.png"))); // NOI18N
+        btnManagerCancel.setText("Cancel");
+        btnManagerCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnManagerCancelActionPerformed(evt);
+            }
+        });
+
+>>>>>>> origin/Sales
         btnManagerDelete.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnManagerDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconDelete.png"))); // NOI18N
         btnManagerDelete.setText("Delete");
@@ -418,21 +443,37 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
         jLabel31.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel31.setText("Name :");
 
+<<<<<<< HEAD
+=======
+        txtInventoryName.setBackground(new java.awt.Color(255, 255, 255));
+>>>>>>> origin/Sales
         txtInventoryName.setEnabled(false);
 
         jLabel32.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel32.setText("Phone :");
 
+<<<<<<< HEAD
+=======
+        txtInventoryPhone.setBackground(new java.awt.Color(255, 255, 255));
+>>>>>>> origin/Sales
         txtInventoryPhone.setEnabled(false);
 
         jLabel33.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel33.setText("Email :");
 
+<<<<<<< HEAD
+=======
+        txtInventoryEmail.setBackground(new java.awt.Color(255, 255, 255));
+>>>>>>> origin/Sales
         txtInventoryEmail.setEnabled(false);
 
         jLabel36.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel36.setText("Salary :");
 
+<<<<<<< HEAD
+=======
+        txtInventorySalary.setBackground(new java.awt.Color(255, 255, 255));
+>>>>>>> origin/Sales
         txtInventorySalary.setEnabled(false);
 
         btnInventoryCreate.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -477,6 +518,10 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
         jLabel41.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel41.setText("UserName :");
 
+<<<<<<< HEAD
+=======
+        txtInventoryUsername.setBackground(new java.awt.Color(255, 255, 255));
+>>>>>>> origin/Sales
         txtInventoryUsername.setEnabled(false);
 
         jLabel42.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -496,9 +541,9 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
         jPanel15Layout.setHorizontalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel15Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel15Layout.createSequentialGroup()
+<<<<<<< HEAD
                         .addComponent(jLabel42)
                         .addGap(18, 18, 18)
                         .addComponent(txtInventorySearch, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -534,6 +579,47 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
                                     .addComponent(jLabel40, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel41, javax.swing.GroupLayout.Alignment.TRAILING)))))
                     .addGroup(jPanel15Layout.createSequentialGroup()
+=======
+                        .addContainerGap()
+                        .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel15Layout.createSequentialGroup()
+                                .addComponent(jLabel42)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtInventorySearch, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnInventorySearch))
+                            .addGroup(jPanel15Layout.createSequentialGroup()
+                                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(jPanel15Layout.createSequentialGroup()
+                                            .addComponent(jLabel31)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(txtInventoryName, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(jPanel15Layout.createSequentialGroup()
+                                            .addComponent(jLabel30)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(txtInventoryID, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(jPanel15Layout.createSequentialGroup()
+                                            .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addComponent(jLabel32)
+                                                .addComponent(jLabel33))
+                                            .addGap(18, 18, 18)
+                                            .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(txtInventoryEmail)
+                                                .addComponent(txtInventoryPhone, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))))
+                                    .addComponent(jLabel29))
+                                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel15Layout.createSequentialGroup()
+                                        .addGap(370, 370, 370)
+                                        .addComponent(jLabel36))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel15Layout.createSequentialGroup()
+                                        .addGap(346, 346, 346)
+                                        .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel40, javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel41, javax.swing.GroupLayout.Alignment.TRAILING)))))))
+                    .addGroup(jPanel15Layout.createSequentialGroup()
+                        .addGap(64, 64, 64)
+>>>>>>> origin/Sales
                         .addComponent(btnInventoryCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnInventoryEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -680,7 +766,10 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
         // TẠO MỚI TÀI KHOẢN MANAGER
         enableTXT();
         btnManagerEdit.setEnabled(false);
+<<<<<<< HEAD
         btnManagerDelete.setEnabled(false);
+=======
+>>>>>>> origin/Sales
         if(btnManagerCreate.getText().equals("Create")){
             resetTXT();
             btnManagerCreate.setText("Save");
@@ -707,7 +796,10 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
             resetTXT();
             disableTXT();
             btnManagerEdit.setEnabled(true);
+<<<<<<< HEAD
             btnManagerDelete.setEnabled(true);
+=======
+>>>>>>> origin/Sales
         }
     }//GEN-LAST:event_btnManagerCreateActionPerformed
 
@@ -715,12 +807,20 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
         // LOAD DỮ LIỆU BẢNG MANAGER VÀO CÁC Ô TEXTFIELD:
         int i = tableManager.getSelectedRow();
         txtManagerID.setText(String.valueOf(tableManager.getValueAt(i, 0)));
+<<<<<<< HEAD
         txtManagerUsername.setText(String.valueOf(tableManager.getValueAt(i, 2)));
         txtManagerName.setText(String.valueOf(tableManager.getValueAt(i, 1)));
         txtManagerPhone.setText(String.valueOf(tableManager.getValueAt(i, 3)));
         txtManagerEmail.setText(String.valueOf(tableManager.getValueAt(i, 4)));
         cboStore.setSelectedItem(String.valueOf(tableManager.getValueAt(i, 5)));
         txtManagerSalary.setText(String.valueOf(tableManager.getValueAt(i, 6)));
+=======
+        txtManagerName.setText(String.valueOf(tableManager.getValueAt(i, 1)));
+        txtManagerPhone.setText(String.valueOf(tableManager.getValueAt(i, 2)));
+        txtManagerEmail.setText(String.valueOf(tableManager.getValueAt(i, 3)));
+        cboStore.setSelectedItem(String.valueOf(tableManager.getValueAt(i, 4)));
+        txtManagerSalary.setText(String.valueOf(tableManager.getValueAt(i, 5)));
+>>>>>>> origin/Sales
     }//GEN-LAST:event_tableManagerMouseClicked
 
     private void btnManagerDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManagerDeleteActionPerformed
@@ -739,7 +839,10 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
     private void btnManagerEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManagerEditActionPerformed
         // CHỈNH SỬA 1 TÀI KHOẢN MANAGER
         btnManagerCreate.setEnabled(false);
+<<<<<<< HEAD
         btnManagerDelete.setEnabled(false);
+=======
+>>>>>>> origin/Sales
         if(txtManagerName.getText().trim().length()==0){
             JOptionPane.showMessageDialog(this, "Please chose one row from table");
             return;
@@ -766,7 +869,10 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
             btnManagerEdit.setText("Edit");
             disableTXT();
             btnManagerCreate.setEnabled(true);
+<<<<<<< HEAD
             btnManagerDelete.setEnabled(true);
+=======
+>>>>>>> origin/Sales
         }
     }//GEN-LAST:event_btnManagerEditActionPerformed
 
@@ -791,7 +897,10 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
         // TẠO MỚI TÀI KHOẢN 1 INVENTORY
         enableTXT();
         btnInventoryEdit.setEnabled(false);
+<<<<<<< HEAD
         btnInventoryDelete.setEnabled(false);
+=======
+>>>>>>> origin/Sales
         if(btnInventoryCreate.getText().equals("Create")){
             resetTXT();
             btnInventoryCreate.setText("Save");
@@ -820,7 +929,10 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
             resetTXT();
             disableTXT();
             btnInventoryEdit.setEnabled(true);
+<<<<<<< HEAD
             btnInventoryDelete.setEnabled(true);
+=======
+>>>>>>> origin/Sales
         }
     }//GEN-LAST:event_btnInventoryCreateActionPerformed
 
@@ -841,7 +953,10 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
     private void btnInventoryEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventoryEditActionPerformed
         // CHÍNH SỬA TÀI KHOẢN 1 INVENTORY
         btnInventoryCreate.setEnabled(false);
+<<<<<<< HEAD
         btnInventoryDelete.setEnabled(false);
+=======
+>>>>>>> origin/Sales
         if(txtInventoryName.getText().trim().length()==0){
             JOptionPane.showMessageDialog(this, "Please chose one row from table");
             return;
@@ -861,14 +976,21 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
                     txtInventoryPhone.getText(), 
                     txtInventoryEmail.getText(),
                     "IV",
+<<<<<<< HEAD
                     "ST1",
+=======
+                    cboStore.getSelectedItem().toString(),
+>>>>>>> origin/Sales
                     Integer.valueOf(txtInventorySalary.getText()));
             interact.User.editUser(user);
             refresh();
             btnInventoryEdit.setText("Edit");
             disableTXT();
             btnInventoryCreate.setEnabled(true);
+<<<<<<< HEAD
             btnInventoryDelete.setEnabled(true);
+=======
+>>>>>>> origin/Sales
         }
     }//GEN-LAST:event_btnInventoryEditActionPerformed
 
@@ -877,9 +999,15 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
         int i = tableInventory.getSelectedRow();
         txtInventoryID.setText(String.valueOf(tableInventory.getValueAt(i, 0)));
         txtInventoryName.setText(String.valueOf(tableInventory.getValueAt(i, 1)));
+<<<<<<< HEAD
         txtInventoryUsername.setText(String.valueOf(tableInventory.getValueAt(i, 2)));
         txtInventoryPhone.setText(String.valueOf(tableInventory.getValueAt(i, 3)));
         txtInventoryEmail.setText(String.valueOf(tableInventory.getValueAt(i, 4)));
+=======
+        txtInventoryPhone.setText(String.valueOf(tableInventory.getValueAt(i, 2)));
+        txtInventoryEmail.setText(String.valueOf(tableInventory.getValueAt(i, 3)));
+        cboStore.setSelectedItem(String.valueOf(tableInventory.getValueAt(i, 4)));
+>>>>>>> origin/Sales
         txtInventorySalary.setText(String.valueOf(tableInventory.getValueAt(i, 5)));
     }//GEN-LAST:event_tableInventoryMouseClicked
 
@@ -908,11 +1036,18 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
     
     private void refresh() {
         // LOAD DỮ LIỆU VÀO BẢNG VÀ COMBOBOX
+<<<<<<< HEAD
         cboStore.removeAllItems();
         try {
             interact.GUIInteraction.readToTable("select * from View_Manager where RoleName='Manager'", tableManager);
             interact.GUIInteraction.readToTable("select * from View_Inventory where RoleName='Inventory'", tableInventory);
             interact.GUIInteraction.readToCombo("select * from Stores", cboStore, "StoreName");
+=======
+        try {
+            interact.GUIInteraction.readToTable("select * from View_Manager where RoleName='Manager'", tableManager);
+            interact.GUIInteraction.readToTable("select * from View_Manager where RoleName='Inventory'", tableInventory);
+            interact.GUIInteraction.readToCombo("select StoreName from Stores", cboStore, "StoreName");
+>>>>>>> origin/Sales
         } catch (SQLException ex) {
             Logger.getLogger(frmCreateNewManager.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -928,7 +1063,10 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
         btnInventoryCreate.setEnabled(true);
         btnInventoryEdit.setText("Edit");
         btnInventoryEdit.setEnabled(true);
+<<<<<<< HEAD
         btnManagerDelete.setEnabled(true);
+=======
+>>>>>>> origin/Sales
     }
     
     private void enableTXT() {
@@ -965,6 +1103,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
     
     private void enableTXTEdit(){
         // ENABALE TẤT CẢ TEXTFIELD CÁC Ô CẦN EDIT THÔNG TIN
+<<<<<<< HEAD
         try {
             String storeID;
             if(txtManagerID.getText().trim().length()!=0){
@@ -985,11 +1124,16 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
 
         }
         
+=======
+>>>>>>> origin/Sales
         txtManagerPhone.setEnabled(true);
         txtManagerEmail.setEnabled(true);
         txtManagerSalary.setEnabled(true);
         
+<<<<<<< HEAD
         
+=======
+>>>>>>> origin/Sales
         txtInventoryPhone.setEnabled(true);
         txtInventoryEmail.setEnabled(true);
         txtInventorySalary.setEnabled(true);
@@ -997,7 +1141,10 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
     
     private void resetTXT(){
         // RESET TẤT CẢ TEXTFIELD VỀ MẶC ĐỊNH
+<<<<<<< HEAD
         txtManagerID.setText(null);
+=======
+>>>>>>> origin/Sales
         txtManagerName.setText(null);
         txtManagerPhone.setText(null);
         txtManagerEmail.setText(null);
@@ -1006,7 +1153,10 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
         txtManagerSalary.setText(null);
         cboStore.setSelectedIndex(-1);
         
+<<<<<<< HEAD
         txtInventoryID.setText(null);
+=======
+>>>>>>> origin/Sales
         txtInventoryName.setText(null);
         txtInventoryPhone.setText(null);
         txtInventoryEmail.setText(null);
@@ -1079,6 +1229,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
     private boolean validateEditManager(){
         // VALIDATE THÔNH TIN NHẬP VÀO KHI UPDATE MANAGER
         boolean flag;
+<<<<<<< HEAD
         String nameManager = DataInteraction.getCode("Users", "UserID", txtManagerID.getText(), "Name");
         String phoneManager = DataInteraction.getCode("Users", "UserID", txtManagerID.getText(), "Phone");
         String emailManager = DataInteraction.getCode("Users", "UserID", txtManagerID.getText(), "Email");
@@ -1089,19 +1240,32 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
             flag= false;
         }else if (!CheckForm.checkPhoneNumber(txtManagerPhone.getText())||!GUIInteraction.checkDuplicateName(txtManagerPhone.getText().trim(), "select * from Users", "Phone")&&!txtManagerPhone.getText().trim().equals(phoneManager)) {
             JOptionPane.showMessageDialog(this, "Phone is not phone format and not duplicate", "Error", JOptionPane.ERROR_MESSAGE);
+=======
+        if (!CheckForm.checkPhoneNumber(txtManagerPhone.getText())) {
+            JOptionPane.showMessageDialog(this, "Phone is not phone format", "Error", JOptionPane.ERROR_MESSAGE);
+>>>>>>> origin/Sales
             txtManagerName.setBackground(Color.white);
             txtManagerPhone.setBackground(Color.red);
             txtManagerPhone.requestFocus();
             flag = false;
+<<<<<<< HEAD
         }else if (!CheckForm.checkEmail(txtManagerEmail.getText()) || !GUIInteraction.checkDuplicateName(txtManagerEmail.getText().trim(),"select * from Users", "Email")&&!txtManagerEmail.getText().trim().equals(emailManager)) {
             JOptionPane.showMessageDialog(this, "Email is not email format and not duplicate", "Error", JOptionPane.ERROR_MESSAGE);
+=======
+        }else if (!CheckForm.checkEmail(txtManagerEmail.getText())) {
+            JOptionPane.showMessageDialog(this, "Email is not email format", "Error", JOptionPane.ERROR_MESSAGE);
+>>>>>>> origin/Sales
             txtManagerEmail.requestFocus();
             txtManagerName.setBackground(Color.white);
             txtManagerPhone.setBackground(Color.white);
             txtManagerEmail.setBackground(Color.red);
             flag = false;
         }else if (!CheckForm.isNumberic(txtManagerSalary.getText())) {
+<<<<<<< HEAD
             JOptionPane.showMessageDialog(this, "Salary must numberic and not duplicate", "Error", JOptionPane.ERROR_MESSAGE);
+=======
+            JOptionPane.showMessageDialog(this, "Salary must numberic", "Error", JOptionPane.ERROR_MESSAGE);
+>>>>>>> origin/Sales
             txtManagerSalary.requestFocus();
             txtManagerName.setBackground(Color.white);
             txtManagerPhone.setBackground(Color.white);
@@ -1164,6 +1328,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
     private boolean validateEditInventory(){
         // VALIDATE THÔNG TIN NHẬP VÀO KHI UPDATE INVENTORY
         boolean flag;
+<<<<<<< HEAD
         String nameInventory = DataInteraction.getCode("Users", "UserID", txtInventoryID.getText(), "Name");
         String phoneInventory = DataInteraction.getCode("Users", "UserID", txtInventoryID.getText(), "Phone");
         String emailInventory = DataInteraction.getCode("Users", "UserID", txtInventoryID.getText(), "Email");
@@ -1174,12 +1339,23 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
             flag= false;
         }else if (!CheckForm.checkPhoneNumber(txtInventoryPhone.getText())||!GUIInteraction.checkDuplicateName(txtInventoryPhone.getText().trim(), "select * from Users", "Phone")&&!txtInventoryPhone.getText().trim().equals(phoneInventory)) {
             JOptionPane.showMessageDialog(this, "Phone is not phone format and not duplicate", "Error", JOptionPane.ERROR_MESSAGE);
+=======
+        String username = txtInventoryUsername.getText();
+        String password = txtInventoryPassword.getText();
+        if (!CheckForm.checkPhoneNumber(txtInventoryPhone.getText())) {
+            JOptionPane.showMessageDialog(this, "Phone is not phone format", "Error", JOptionPane.ERROR_MESSAGE);
+>>>>>>> origin/Sales
             txtInventoryName.setBackground(Color.white);
             txtInventoryPhone.setBackground(Color.red);
             txtInventoryPhone.requestFocus();
             flag = false;
+<<<<<<< HEAD
         }else if (!CheckForm.checkEmail(txtInventoryEmail.getText())||!GUIInteraction.checkDuplicateName(txtInventoryEmail.getText().trim(), "select * from Users", "Email")&&!txtInventoryEmail.getText().trim().equals(emailInventory)) {
             JOptionPane.showMessageDialog(this, "Email is not email format and not duplicate", "Error", JOptionPane.ERROR_MESSAGE);
+=======
+        }else if (!CheckForm.checkEmail(txtInventoryEmail.getText())) {
+            JOptionPane.showMessageDialog(this, "Email is not email format", "Error", JOptionPane.ERROR_MESSAGE);
+>>>>>>> origin/Sales
             txtInventoryEmail.requestFocus();
             txtInventoryName.setBackground(Color.white);
             txtInventoryPhone.setBackground(Color.white);

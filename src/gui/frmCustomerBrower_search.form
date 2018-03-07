@@ -104,11 +104,20 @@
     </Component>
     <Component class="javax.swing.JTextField" name="txtSearchName">
       <Events>
+<<<<<<< HEAD
+=======
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="txtSearchNameMouseClicked"/>
+>>>>>>> origin/Sales
         <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtSearchNameKeyReleased"/>
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtSearhCustomerID">
       <Events>
+<<<<<<< HEAD
+=======
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="txtSearhCustomerIDMouseClicked"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtSearhCustomerIDActionPerformed"/>
+>>>>>>> origin/Sales
         <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtSearhCustomerIDKeyReleased"/>
       </Events>
     </Component>
