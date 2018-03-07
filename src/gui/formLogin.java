@@ -20,8 +20,8 @@ import java.util.logging.Logger;
 import javax.swing.*;
 
 /**
- *
- * @author KhanhLong
+ * GIAO DIỆN LOGIN
+ * @author NHÓM 2
  */
 public class formLogin extends javax.swing.JFrame {
 
@@ -40,11 +40,11 @@ public class formLogin extends javax.swing.JFrame {
 
         initComponents();
         this.setLocationRelativeTo(this);
-        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("../images/iconMain.png")));
         setTitle("Login System");
 
         GUIInteraction.readToCombo("select * from Roles", cbbRole, "RoleName");
         try {
+            // REMEMBER LOGIN
             ObjectInputStream fis = new ObjectInputStream(new FileInputStream("info.dat"));
             entity.Remember re = (Remember) fis.readObject();
             ResultSet rsper = DataInteraction.queryResultSet("select RoleName from Roles where RoleID='" + re.getPermit() + "'");
@@ -58,11 +58,7 @@ public class formLogin extends javax.swing.JFrame {
             chkRemember.setSelected(re.isCheck());
         } catch (FileNotFoundException ex) {
             Logger.getLogger(formLogin.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(formLogin.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(formLogin.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
+        } catch (IOException | ClassNotFoundException | SQLException ex) {
             Logger.getLogger(formLogin.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -120,12 +116,6 @@ public class formLogin extends javax.swing.JFrame {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconUserLogin.png"))); // NOI18N
         jLabel2.setText("Username :");
-
-        txtUsername.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtUsernameActionPerformed(evt);
-            }
-        });
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconPassword.png"))); // NOI18N
@@ -219,11 +209,8 @@ public class formLogin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtUsernameActionPerformed
-
     private void btnLogonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogonActionPerformed
+        // LOGON
         if (!check()) {
             return;
         }
@@ -278,10 +265,12 @@ public class formLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLogonActionPerformed
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
-        // TODO add your handling code here:
+        // THOÁT CHƯƠNG TRÌNH
+        System.exit(1);
     }//GEN-LAST:event_btnExitActionPerformed
 
     private boolean check() {
+        // CHECK LOGIN
         if (!CheckForm.isPwdUsername(txtUsername.getText())) {
             lblStatus.setText("Username invalid.");
             txtUsername.requestFocus();

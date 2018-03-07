@@ -5,9 +5,18 @@
  */
 package gui;
 
+import interact.CheckForm;
+import interact.GUIInteraction;
+import entity.Customer;
+import java.awt.Color;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
- *
- * @author kiems
+ * GIAO DIỆN QUẢN LÝ CUSTOMER
+ * @author NHÓM 2
  */
 public class frmCustomer extends javax.swing.JInternalFrame {
 
@@ -16,6 +25,7 @@ public class frmCustomer extends javax.swing.JInternalFrame {
      */
     public frmCustomer() {
         initComponents();
+        refresh();
     }
 
     /**
@@ -27,8 +37,8 @@ public class frmCustomer extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
-        buttonGroup2 = new javax.swing.ButtonGroup();
+        buttonGroupGender = new javax.swing.ButtonGroup();
+        buttonGroupGenderSearch = new javax.swing.ButtonGroup();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         btnAdd = new javax.swing.JButton();
@@ -64,23 +74,23 @@ public class frmCustomer extends javax.swing.JInternalFrame {
         jPanel6 = new javax.swing.JPanel();
         btnEdit = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        txtCustomerID1 = new javax.swing.JTextField();
+        txtCustomerIDEdit = new javax.swing.JTextField();
         lblName1 = new javax.swing.JLabel();
-        txtName1 = new javax.swing.JTextField();
+        txtCustomerNameEdit = new javax.swing.JTextField();
         lblPhone1 = new javax.swing.JLabel();
-        txtPhone1 = new javax.swing.JTextField();
+        txtPhoneEdit = new javax.swing.JTextField();
         lblAddress1 = new javax.swing.JLabel();
-        txtAddress1 = new javax.swing.JTextField();
+        txtAddressEdit = new javax.swing.JTextField();
         lblEmail1 = new javax.swing.JLabel();
-        txtEmail1 = new javax.swing.JTextField();
+        txtEmailEdit = new javax.swing.JTextField();
         lblGender1 = new javax.swing.JLabel();
-        chkGenderM1 = new javax.swing.JRadioButton();
-        chkGenderF1 = new javax.swing.JRadioButton();
+        chkGenderMSearch = new javax.swing.JRadioButton();
+        chkGenderFSearch = new javax.swing.JRadioButton();
         btnDelete = new javax.swing.JButton();
         btnCancel1 = new javax.swing.JButton();
         jPanel10 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        tableCustomer1 = new javax.swing.JTable();
+        tableCustomerSearch = new javax.swing.JTable();
 
         jTabbedPane1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
 
@@ -89,10 +99,20 @@ public class frmCustomer extends javax.swing.JInternalFrame {
         btnAdd.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconAdd.png"))); // NOI18N
         btnAdd.setText("Add");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
 
         btnCancel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconCancel.png"))); // NOI18N
         btnCancel.setText("Cancel");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
 
         btnRefresh.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconRefresh.png"))); // NOI18N
@@ -113,7 +133,12 @@ public class frmCustomer extends javax.swing.JInternalFrame {
         lblPhone.setText("Phone :");
 
         txtCustomerID.setEditable(false);
-        txtCustomerID.setBackground(new java.awt.Color(204, 204, 204));
+        txtCustomerID.setBackground(new java.awt.Color(255, 255, 255));
+        txtCustomerID.setEnabled(false);
+
+        txtCustomerName.setEnabled(false);
+
+        txtPhone.setEnabled(false);
 
         lblAddress.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblAddress.setText("Address :");
@@ -124,13 +149,19 @@ public class frmCustomer extends javax.swing.JInternalFrame {
         lblGender.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblGender.setText("Gender :");
 
-        buttonGroup1.add(chkGenderM);
+        txtEmail.setEnabled(false);
+
+        txtAddress.setEnabled(false);
+
+        buttonGroupGender.add(chkGenderM);
         chkGenderM.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         chkGenderM.setText("Male");
+        chkGenderM.setEnabled(false);
 
-        buttonGroup1.add(chGenderF);
+        buttonGroupGender.add(chGenderF);
         chGenderF.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         chGenderF.setText("Female");
+        chGenderF.setEnabled(false);
 
         jPanel3.setBackground(new java.awt.Color(102, 255, 255));
 
@@ -165,11 +196,6 @@ public class frmCustomer extends javax.swing.JInternalFrame {
 
             }
         ));
-        tableCustomer.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tableCustomerMouseClicked(evt);
-            }
-        });
         jScrollPane3.setViewportView(tableCustomer);
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
@@ -314,6 +340,11 @@ public class frmCustomer extends javax.swing.JInternalFrame {
             }
         });
 
+        txtSearhCustomerID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSearhCustomerIDActionPerformed(evt);
+            }
+        });
         txtSearhCustomerID.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtSearhCustomerIDKeyReleased(evt);
@@ -371,51 +402,74 @@ public class frmCustomer extends javax.swing.JInternalFrame {
         btnEdit.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconEdit.png"))); // NOI18N
         btnEdit.setText("Edit");
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel4.setText("ID :");
 
-        txtCustomerID1.setEditable(false);
-        txtCustomerID1.setBackground(new java.awt.Color(204, 204, 204));
+        txtCustomerIDEdit.setEditable(false);
+        txtCustomerIDEdit.setBackground(new java.awt.Color(255, 255, 255));
+        txtCustomerIDEdit.setEnabled(false);
 
         lblName1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblName1.setText("Name :");
 
-        txtName1.setBackground(new java.awt.Color(204, 204, 204));
+        txtCustomerNameEdit.setEnabled(false);
+        txtCustomerNameEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCustomerNameEditActionPerformed(evt);
+            }
+        });
 
         lblPhone1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblPhone1.setText("Phone :");
 
-        txtPhone1.setBackground(new java.awt.Color(204, 204, 204));
+        txtPhoneEdit.setEnabled(false);
 
         lblAddress1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblAddress1.setText("Address :");
 
-        txtAddress1.setBackground(new java.awt.Color(204, 204, 204));
+        txtAddressEdit.setEnabled(false);
 
         lblEmail1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblEmail1.setText("Email :");
 
-        txtEmail1.setBackground(new java.awt.Color(204, 204, 204));
+        txtEmailEdit.setEnabled(false);
 
         lblGender1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblGender1.setText("Gender :");
 
-        buttonGroup2.add(chkGenderM1);
-        chkGenderM1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        chkGenderM1.setText("Male");
+        buttonGroupGenderSearch.add(chkGenderMSearch);
+        chkGenderMSearch.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        chkGenderMSearch.setText("Male");
+        chkGenderMSearch.setEnabled(false);
 
-        buttonGroup2.add(chkGenderF1);
-        chkGenderF1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        chkGenderF1.setText("Female");
+        buttonGroupGenderSearch.add(chkGenderFSearch);
+        chkGenderFSearch.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        chkGenderFSearch.setText("Female");
+        chkGenderFSearch.setEnabled(false);
 
         btnDelete.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconDelete.png"))); // NOI18N
         btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         btnCancel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnCancel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconCancel.png"))); // NOI18N
         btnCancel1.setText("Cancel");
+        btnCancel1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancel1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -429,26 +483,26 @@ public class frmCustomer extends javax.swing.JInternalFrame {
                     .addComponent(lblPhone1))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(txtCustomerID1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtPhone1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtName1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCustomerIDEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtPhoneEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCustomerNameEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(lblAddress1)
                         .addGap(18, 18, 18)
-                        .addComponent(txtAddress1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtAddressEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(lblGender1)
                             .addComponent(lblEmail1))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtEmail1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtEmailEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addComponent(chkGenderM1)
+                                .addComponent(chkGenderMSearch)
                                 .addGap(18, 18, 18)
-                                .addComponent(chkGenderF1)))))
+                                .addComponent(chkGenderFSearch)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -468,27 +522,27 @@ public class frmCustomer extends javax.swing.JInternalFrame {
                         .addGroup(jPanel6Layout.createSequentialGroup()
                             .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel4)
-                                .addComponent(txtCustomerID1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtCustomerIDEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGap(0, 0, 0)
                             .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(txtName1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtCustomerNameEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(lblName1))
                             .addGap(0, 0, 0)
-                            .addComponent(txtPhone1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtPhoneEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(lblPhone1))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblAddress1)
-                            .addComponent(txtAddress1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtAddressEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, 0)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtEmail1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtEmailEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblEmail1))
                         .addGap(0, 0, 0)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblGender1)
-                            .addComponent(chkGenderM1)
-                            .addComponent(chkGenderF1))))
+                            .addComponent(chkGenderMSearch)
+                            .addComponent(chkGenderFSearch))))
                 .addGap(0, 0, 0)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -499,7 +553,7 @@ public class frmCustomer extends javax.swing.JInternalFrame {
 
         jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Table Information", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
-        tableCustomer1.setModel(new javax.swing.table.DefaultTableModel(
+        tableCustomerSearch.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -507,12 +561,12 @@ public class frmCustomer extends javax.swing.JInternalFrame {
 
             }
         ));
-        tableCustomer1.addMouseListener(new java.awt.event.MouseAdapter() {
+        tableCustomerSearch.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tableCustomer1MouseClicked(evt);
+                tableCustomerSearchMouseClicked(evt);
             }
         });
-        jScrollPane5.setViewportView(tableCustomer1);
+        jScrollPane5.setViewportView(tableCustomerSearch);
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -582,31 +636,342 @@ public class frmCustomer extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        // TẠO MỚI KHÁCH HÀNG.
+        enableTXT();
+        if(btnAdd.getText().equals("Add")){
+            resetTXT();
+            btnAdd.setText("Save");
+        }else if(btnAdd.getText().equals("Save")){
+            if (!validateInsert()) {
+                return;
+            }
+            
+            //TĂNG ID
+            int countCustomer = GUIInteraction.indentityID("select top 1 * from Customers order by CustomerID Desc", "CustomerID") + 1;
+            String customerID = "CU" + countCustomer;
+            while (true) {
+            if (!GUIInteraction.checkDuplicateID(String.valueOf(customerID), "select * from Customers", "CustomerID")) {
+                    countCustomer = countCustomer + 1;
+                    customerID = "CU" + countCustomer;
+                } else {
+                    break;
+                }
+            }
+            
+            String gender;
+            if(chGenderF.isSelected()){
+                gender = "Female";
+            }else{
+                gender = "Male";
+            }
+            
+            // INSERT
+            Customer customer = new Customer(
+                    customerID,
+                    txtCustomerName.getText(),
+                    txtAddress.getText(),
+                    txtPhone.getText(),
+                    txtEmail.getText(),
+                    gender
+            );
+            interact.Customer.insertCustomer(customer);
+            refresh();
+            btnAdd.setText("Add");
+            resetTXT();
+            disableTXT();
+        }
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        // CANCEL TẤT CẢ CÁC THAO TÁC ĐANG THỰC HIỆN
+        resetTXT();
+        disableTXT();
+        btnAdd.setText("Add");
+    }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
+        // REFRESH TEXTFIELD
+        resetTXT();
+    }//GEN-LAST:event_btnRefreshActionPerformed
+
+    private void tableCustomerSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableCustomerSearchMouseClicked
+        // LOAD DỮ LIỆU TỪ BẢNG RA TEXTFIELD
+        int i = tableCustomerSearch.getSelectedRow();
+        txtCustomerIDEdit.setText(String.valueOf(tableCustomerSearch.getValueAt(i, 0)));
+        txtCustomerNameEdit.setText(String.valueOf(tableCustomerSearch.getValueAt(i, 1)));
+        txtAddressEdit.setText(String.valueOf(tableCustomerSearch.getValueAt(i, 2)));
+        txtPhoneEdit.setText(String.valueOf(tableCustomerSearch.getValueAt(i, 3)));
+        txtEmailEdit.setText(String.valueOf(tableCustomerSearch.getValueAt(i, 4)));
+        String gender = String.valueOf(tableCustomerSearch.getValueAt(i, 5)).trim();
+        if(gender.equals("Male")){
+            chkGenderMSearch.setSelected(true);
+        }else if(gender.equals("Female")){
+            chkGenderFSearch.setSelected(true);
+        }
+    }//GEN-LAST:event_tableCustomerSearchMouseClicked
+
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        // TODO add your handling code here:
+        // SEARCH THEO TÊN HOẶC ID
+        try {
+            String searchName = txtSearchName.getText().trim();
+            String searchID = txtSearhCustomerID.getText().trim();
+            if(searchName.length()==0 && searchID.length()>0){
+                GUIInteraction.readToTable("select * from Customers where CustomerID like N'%" + searchID + "%'", tableCustomerSearch);
+            }else{
+                txtSearhCustomerID.setText(null);
+                GUIInteraction.readToTable("select * from Customers where CustomerName like N'%" + searchName + "%'", tableCustomerSearch);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(frmCustomer.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnSearchActionPerformed
 
-    private void txtSearhCustomerIDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearhCustomerIDKeyReleased
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        // EDIT CUSTOMER
+        if(txtCustomerIDEdit.getText().trim().length()==0){
+            JOptionPane.showMessageDialog(this, "Please chose one row from table");
+            return;
+        }
+        enableTXTEdit();
+        if (btnEdit.getText().equals("Edit")) {
+            btnEdit.setText("Save");
+        }else if (btnEdit.getText().equals("Save")) {
+            if (!validateEdit()) {
+                return;
+            }
+            String gender;
+            if(chkGenderFSearch.isSelected()){
+                gender = "Female";
+            }else{
+                gender = "Male";
+            }
+            
+            Customer customer = new Customer(
+                    txtCustomerIDEdit.getText(),
+                    txtCustomerNameEdit.getText(),
+                    txtAddressEdit.getText(),
+                    txtPhoneEdit.getText(),
+                    txtEmailEdit.getText(),
+                    gender
+            );
+            interact.Customer.editCustomer(customer);
+            refresh();
+            btnEdit.setText("Edit");
+            disableTXT();
+        }
+    }//GEN-LAST:event_btnEditActionPerformed
 
+    private void btnCancel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancel1ActionPerformed
+        // CANCEL TẤT CẢ THAO TÁC
+        resetTXT();
+        disableTXT();
+        btnEdit.setText("Edit");
+    }//GEN-LAST:event_btnCancel1ActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        // DELETE CUSTOMER
+        if(txtCustomerIDEdit.getText().trim().length()==0){
+            JOptionPane.showMessageDialog(this, "Please chose one row from table");
+            return;
+        }
+        int i = JOptionPane.showConfirmDialog(this, "Do you want to delete this Customer.?");
+        if (i == JOptionPane.YES_OPTION) {
+            try {
+                // TODO add your handling code here:
+                int countBill = GUIInteraction.countRecord("select * from Bills where CustomerID='" + txtCustomerIDEdit.getText() + "'");
+                if (countBill > 0) {
+                    JOptionPane.showMessageDialog(this, "This customer have bills, can't delete it");
+                } else {
+                    interact.Customer.deleteCustomer(txtCustomerIDEdit.getText());
+                    refresh();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(frmCreateNewStore.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void txtSearhCustomerIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearhCustomerIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSearhCustomerIDActionPerformed
+
+    private void txtSearhCustomerIDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearhCustomerIDKeyReleased
+        // TODO add your handling code here:
+        // TÌM KIẾM SẢN PHẨM
+        try {
+            String searchName = txtSearchName.getText().trim();
+            String searchID = txtSearhCustomerID.getText().trim();
+            if(searchName.length()==0 && searchID.length()>0){
+                GUIInteraction.readToTable("select * from Customers where CustomerID like N'%" + searchID + "%'", tableCustomerSearch);
+            }else{
+                txtSearhCustomerID.setText(null);
+                GUIInteraction.readToTable("select * from Customers where CustomerName like N'%" + searchName + "%'", tableCustomerSearch);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(frmCustomer.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_txtSearhCustomerIDKeyReleased
 
     private void txtSearchNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchNameKeyReleased
-
+        // TODO add your handling code here:
+        try {
+            String searchName = txtSearchName.getText().trim();
+            String searchID = txtSearhCustomerID.getText().trim();
+            if(searchName.length()==0 && searchID.length()>0){
+                GUIInteraction.readToTable("select * from Customers where CustomerID like N'%" + searchID + "%'", tableCustomerSearch);
+            }else{
+                txtSearhCustomerID.setText(null);
+                GUIInteraction.readToTable("select * from Customers where CustomerName like N'%" + searchName + "%'", tableCustomerSearch);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(frmCustomer.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_txtSearchNameKeyReleased
 
-    private void tableCustomer1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableCustomer1MouseClicked
+    private void txtCustomerNameEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCustomerNameEditActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_tableCustomer1MouseClicked
+    }//GEN-LAST:event_txtCustomerNameEditActionPerformed
 
-    private void tableCustomerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableCustomerMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tableCustomerMouseClicked
-
-    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnRefreshActionPerformed
-
-
+    private void refresh() {
+        try {
+            // LOAD DỮ LIỆU VÀO BẢNG VÀ COMBOBOX
+            interact.GUIInteraction.readToTable("select * from Customers", tableCustomer);
+            interact.GUIInteraction.readToTable("select * from Customers", tableCustomerSearch);
+        } catch (SQLException ex) {
+            Logger.getLogger(frmCustomer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void enableTXT(){
+        // ENABLE TẤT CẢ TEXTFIELD ĐỂ INSERT
+        txtCustomerName.setEnabled(true);
+        txtPhone.setEnabled(true);
+        txtAddress.setEnabled(true);
+        txtEmail.setEnabled(true);
+        chGenderF.setEnabled(true);
+        chkGenderM.setEnabled(true);
+    }
+    
+    private void enableTXTEdit(){
+        // ENABLE TẤT CẢ TEXTFIELD ĐỂ EDIT
+        txtPhoneEdit.setEnabled(true);
+        txtAddressEdit.setEnabled(true);
+        txtEmailEdit.setEnabled(true);
+        chkGenderFSearch.setEnabled(true);
+        chkGenderMSearch.setEnabled(true);
+    }
+    
+    private void disableTXT(){
+        // DISABLE TẤT CẢ TEXTFIELD
+        txtCustomerName.setEnabled(false);
+        txtPhone.setEnabled(false);
+        txtAddress.setEnabled(false);
+        txtEmail.setEnabled(false);
+        chGenderF.setEnabled(false);
+        chkGenderM.setEnabled(false);
+        
+        txtCustomerNameEdit.setEnabled(false);
+        txtPhoneEdit.setEnabled(false);
+        txtAddressEdit.setEnabled(false);
+        txtEmailEdit.setEnabled(false);
+        chkGenderFSearch.setEnabled(false);
+        chkGenderMSearch.setEnabled(false);
+    }
+    
+    private void resetTXT(){
+        // RESET TẤT CẢ TEXTFIELD
+        txtCustomerID.setText(null);
+        txtCustomerName.setText(null);
+        txtPhone.setText(null);
+        txtAddress.setText(null);
+        txtEmail.setText(null);
+        buttonGroupGender.clearSelection();
+        
+        txtCustomerIDEdit.setText(null);
+        txtCustomerNameEdit.setText(null);
+        txtPhoneEdit.setText(null);
+        txtAddressEdit.setText(null);
+        txtEmailEdit.setText(null);
+        buttonGroupGenderSearch.clearSelection();
+    }
+    
+    private boolean validateInsert(){
+        // VALIDATE THÔNG TIN NHẬP VÀO KHI TẠO MỚI CUSTOMER
+        boolean flag = true;
+        if(!CheckForm.isEmpty(txtCustomerName.getText())){
+            JOptionPane.showMessageDialog(this, "Name is not blank", "Error", JOptionPane.ERROR_MESSAGE);
+            txtCustomerName.setBackground(Color.red);
+            txtCustomerName.requestFocus();
+            flag = false;
+        }else if(!GUIInteraction.checkDuplicateName(txtCustomerName.getText().trim(), "select * from Customers", "CustomerName")){
+            JOptionPane.showMessageDialog(this, "Name is not duplicatated", "Error", JOptionPane.ERROR_MESSAGE);
+            txtCustomerName.setBackground(Color.red);
+            txtCustomerName.requestFocus();
+            flag = false;
+        }else if (!CheckForm.checkPhoneNumber(txtPhone.getText())) {
+            JOptionPane.showMessageDialog(this, "Phone is not phone format", "Error", JOptionPane.ERROR_MESSAGE);
+            txtCustomerName.setBackground(Color.white);
+            txtPhone.setBackground(Color.red);
+            txtPhone.requestFocus();
+            flag = false;
+        }else if (!CheckForm.checkEmail(txtEmail.getText())) {
+            JOptionPane.showMessageDialog(this, "Email is not email format", "Error", JOptionPane.ERROR_MESSAGE);
+            txtEmail.requestFocus();
+            txtCustomerName.setBackground(Color.white);
+            txtPhone.setBackground(Color.white);
+            txtEmail.setBackground(Color.red);
+            flag = false;
+        }else if (!chGenderF.isSelected()&&!chkGenderM.isSelected()) {
+            JOptionPane.showMessageDialog(this, "Gender must select one", "Error", JOptionPane.ERROR_MESSAGE);
+            txtCustomerName.setBackground(Color.white);
+            txtPhone.setBackground(Color.white);
+            txtEmail.setBackground(Color.white);
+            chGenderF.setBackground(Color.red);
+            chkGenderM.setBackground(Color.red);
+            flag = false;
+        }else{
+            txtCustomerName.setBackground(Color.white);
+            txtPhone.setBackground(Color.white);
+            txtEmail.setBackground(Color.white);
+            chGenderF.setBackground(Color.white);
+            chkGenderM.setBackground(Color.white);
+            flag = true;
+        }
+        return flag;
+    }
+    
+    private boolean validateEdit(){
+        // VALIDATE THÔNG TIN NHẬP VÀO KHI EDIT CUSTOMER
+        boolean flag = true;
+        if (!CheckForm.checkPhoneNumber(txtPhoneEdit.getText())) {
+            JOptionPane.showMessageDialog(this, "Phone is not phone format", "Error", JOptionPane.ERROR_MESSAGE);
+            txtPhoneEdit.setBackground(Color.red);
+            txtPhoneEdit.requestFocus();
+            flag = false;
+        }else if (!CheckForm.checkEmail(txtEmailEdit.getText())) {
+            JOptionPane.showMessageDialog(this, "Email is not email format", "Error", JOptionPane.ERROR_MESSAGE);
+            txtEmailEdit.requestFocus();
+            txtPhoneEdit.setBackground(Color.white);
+            txtEmailEdit.setBackground(Color.red);
+            flag = false;
+        }else if (!chkGenderFSearch.isSelected()&&!chkGenderMSearch.isSelected()) {
+            JOptionPane.showMessageDialog(this, "Gender must select one", "Error", JOptionPane.ERROR_MESSAGE);
+            txtPhoneEdit.setBackground(Color.white);
+            txtEmailEdit.setBackground(Color.white);
+            chkGenderFSearch.setBackground(Color.red);
+            chkGenderMSearch.setBackground(Color.red);
+            flag = false;
+        }else{
+            txtPhoneEdit.setBackground(Color.white);
+            txtEmailEdit.setBackground(Color.white);
+            chkGenderFSearch.setBackground(Color.white);
+            chkGenderMSearch.setBackground(Color.white);
+            flag = true;
+        }
+        return flag;
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnCancel;
@@ -615,12 +980,12 @@ public class frmCustomer extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnRefresh;
     private javax.swing.JButton btnSearch;
-    private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.ButtonGroup buttonGroup2;
+    private javax.swing.ButtonGroup buttonGroupGender;
+    private javax.swing.ButtonGroup buttonGroupGenderSearch;
     private javax.swing.JRadioButton chGenderF;
-    private javax.swing.JRadioButton chkGenderF1;
+    private javax.swing.JRadioButton chkGenderFSearch;
     private javax.swing.JRadioButton chkGenderM;
-    private javax.swing.JRadioButton chkGenderM1;
+    private javax.swing.JRadioButton chkGenderMSearch;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -649,17 +1014,17 @@ public class frmCustomer extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblPhone;
     private javax.swing.JLabel lblPhone1;
     private javax.swing.JTable tableCustomer;
-    private javax.swing.JTable tableCustomer1;
+    private javax.swing.JTable tableCustomerSearch;
     private javax.swing.JTextField txtAddress;
-    private javax.swing.JTextField txtAddress1;
+    private javax.swing.JTextField txtAddressEdit;
     private javax.swing.JTextField txtCustomerID;
-    private javax.swing.JTextField txtCustomerID1;
+    private javax.swing.JTextField txtCustomerIDEdit;
     private javax.swing.JTextField txtCustomerName;
+    private javax.swing.JTextField txtCustomerNameEdit;
     private javax.swing.JTextField txtEmail;
-    private javax.swing.JTextField txtEmail1;
-    private javax.swing.JTextField txtName1;
+    private javax.swing.JTextField txtEmailEdit;
     private javax.swing.JTextField txtPhone;
-    private javax.swing.JTextField txtPhone1;
+    private javax.swing.JTextField txtPhoneEdit;
     private javax.swing.JTextField txtSearchName;
     private javax.swing.JTextField txtSearhCustomerID;
     // End of variables declaration//GEN-END:variables

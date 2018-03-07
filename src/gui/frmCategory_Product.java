@@ -5,9 +5,20 @@
  */
 package gui;
 
+import entity.Category;
+import entity.Product;
+import interact.CheckForm;
+import interact.DataInteraction;
+import interact.GUIInteraction;
+import java.awt.Color;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
- *
- * @author kiems
+ * GIAO DIỆN QUẢN LÝ PRODUCT VÀ CATEGORY
+ * @author NHÓM 2
  */
 public class frmCategory_Product extends javax.swing.JInternalFrame {
 
@@ -16,6 +27,7 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
      */
     public frmCategory_Product() {
         initComponents();
+        refresh();
     }
 
     /**
@@ -27,7 +39,7 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        tabCategoryProducts = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -35,10 +47,10 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
         txtCategoryID = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txtCategoryName = new javax.swing.JTextField();
-        btnAdd = new javax.swing.JButton();
-        btnEdit = new javax.swing.JButton();
-        btnDelete = new javax.swing.JButton();
-        btnSearch = new javax.swing.JButton();
+        btnAddCategory = new javax.swing.JButton();
+        btnEditCategory = new javax.swing.JButton();
+        btnDeleteCategory = new javax.swing.JButton();
+        btnSearchCategory = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableCategory = new javax.swing.JTable(){
@@ -53,11 +65,11 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
         jPanel6 = new javax.swing.JPanel();
         txtProductID = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        btnAdd1 = new javax.swing.JButton();
-        btnDelete1 = new javax.swing.JButton();
-        btnSearch1 = new javax.swing.JButton();
-        btnCancel1 = new javax.swing.JButton();
-        btnEdit1 = new javax.swing.JButton();
+        btnAddProduct = new javax.swing.JButton();
+        btnDeleteProduct = new javax.swing.JButton();
+        btnSearchProduct = new javax.swing.JButton();
+        btnCancelProduct = new javax.swing.JButton();
+        btnEditProduct = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         txtProductName = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
@@ -82,7 +94,12 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
         };
         tableCategory.getTableHeader().setReorderingAllowed(false);
 
-        jTabbedPane1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tabCategoryProducts.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tabCategoryProducts.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabCategoryProductsMouseClicked(evt);
+            }
+        });
 
         jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -99,7 +116,7 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 722, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1297, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -119,21 +136,43 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setText("Category Name :");
 
-        btnAdd.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconAdd.png"))); // NOI18N
-        btnAdd.setText("Add");
+        txtCategoryName.setEnabled(false);
 
-        btnEdit.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconEdit.png"))); // NOI18N
-        btnEdit.setText("Edit");
+        btnAddCategory.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnAddCategory.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconAdd.png"))); // NOI18N
+        btnAddCategory.setText("Add");
+        btnAddCategory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddCategoryActionPerformed(evt);
+            }
+        });
 
-        btnDelete.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconDelete.png"))); // NOI18N
-        btnDelete.setText("Delete");
+        btnEditCategory.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnEditCategory.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconEdit.png"))); // NOI18N
+        btnEditCategory.setText("Edit");
+        btnEditCategory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditCategoryActionPerformed(evt);
+            }
+        });
 
-        btnSearch.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconSearch.png"))); // NOI18N
-        btnSearch.setText("Search");
+        btnDeleteCategory.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnDeleteCategory.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconDelete.png"))); // NOI18N
+        btnDeleteCategory.setText("Delete");
+        btnDeleteCategory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteCategoryActionPerformed(evt);
+            }
+        });
+
+        btnSearchCategory.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnSearchCategory.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconSearch.png"))); // NOI18N
+        btnSearchCategory.setText("Search");
+        btnSearchCategory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchCategoryActionPerformed(evt);
+            }
+        });
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Table Information", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
@@ -145,6 +184,11 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
 
             }
         ));
+        tableCategory.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableCategoryMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tableCategory);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -160,7 +204,7 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 253, Short.MAX_VALUE)
+            .addGap(0, 627, Short.MAX_VALUE)
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel3Layout.createSequentialGroup()
                     .addContainerGap()
@@ -187,13 +231,13 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
                                     .addComponent(txtCategoryName, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(222, 222, 222)
-                                .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnAddCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnEditCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(btnDelete)
+                                .addComponent(btnDeleteCategory)
                                 .addGap(17, 17, 17)
-                                .addComponent(btnSearch)))
+                                .addComponent(btnSearchCategory)))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
@@ -217,16 +261,16 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
                     .addComponent(jLabel3))
                 .addGap(0, 0, 0)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSearch))
+                    .addComponent(btnAddCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEditCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDeleteCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSearchCategory))
                 .addGap(0, 0, 0)
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Categories", new javax.swing.ImageIcon(getClass().getResource("/images/iconCategories.png")), jPanel1); // NOI18N
+        tabCategoryProducts.addTab("Categories", new javax.swing.ImageIcon(getClass().getResource("/images/iconCategories.png")), jPanel1); // NOI18N
 
         jPanel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -256,50 +300,84 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
 
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Information", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
+        txtProductID.setEnabled(false);
+
         jLabel7.setText("ID :");
 
-        btnAdd1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        btnAdd1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconAdd.png"))); // NOI18N
-        btnAdd1.setText("Add");
+        btnAddProduct.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnAddProduct.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconAdd.png"))); // NOI18N
+        btnAddProduct.setText("Add");
+        btnAddProduct.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddProductActionPerformed(evt);
+            }
+        });
 
-        btnDelete1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        btnDelete1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconDelete.png"))); // NOI18N
-        btnDelete1.setText("Delete");
+        btnDeleteProduct.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnDeleteProduct.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconDelete.png"))); // NOI18N
+        btnDeleteProduct.setText("Delete");
+        btnDeleteProduct.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteProductActionPerformed(evt);
+            }
+        });
 
-        btnSearch1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        btnSearch1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconSearch.png"))); // NOI18N
-        btnSearch1.setText("Search");
+        btnSearchProduct.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnSearchProduct.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconSearch.png"))); // NOI18N
+        btnSearchProduct.setText("Search");
+        btnSearchProduct.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchProductActionPerformed(evt);
+            }
+        });
 
-        btnCancel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        btnCancel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconCancel.png"))); // NOI18N
-        btnCancel1.setText("Cancel");
+        btnCancelProduct.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnCancelProduct.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconCancel.png"))); // NOI18N
+        btnCancelProduct.setText("Cancel");
+        btnCancelProduct.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelProductActionPerformed(evt);
+            }
+        });
 
-        btnEdit1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        btnEdit1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconEdit.png"))); // NOI18N
-        btnEdit1.setText("Edit");
+        btnEditProduct.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnEditProduct.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconEdit.png"))); // NOI18N
+        btnEditProduct.setText("Edit");
+        btnEditProduct.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditProductActionPerformed(evt);
+            }
+        });
 
         jLabel8.setText("Name :");
 
+        txtProductName.setEnabled(false);
+
         jLabel9.setText("Volume :");
+
+        txtVolume.setEnabled(false);
 
         jLabel10.setText("Price :");
 
+        txtPrice.setEnabled(false);
+
         jLabel11.setText("Exprired date :");
+
+        txtExpireDate.setEnabled(false);
 
         jLabel12.setText("Quantity :");
 
+        txtQuantity.setEnabled(false);
+
         jLabel13.setText("Category :");
 
-        cbbCategory.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbbCategoryItemStateChanged(evt);
-            }
-        });
+        cbbCategory.setEnabled(false);
 
         jLabel14.setText("Description :");
 
         txtDescription.setColumns(20);
         txtDescription.setRows(5);
+        txtDescription.setEnabled(false);
         jScrollPane3.setViewportView(txtDescription);
 
         jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Table Information", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
@@ -312,6 +390,11 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
 
             }
         ));
+        tableProduct.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableProductMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tableProduct);
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
@@ -327,7 +410,7 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 203, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
             .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel7Layout.createSequentialGroup()
                     .addContainerGap()
@@ -382,26 +465,27 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
                                 .addComponent(cbbCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(46, 46, 46)
                         .addComponent(jLabel14)
-                        .addGap(18, 18, 18)
+                        .addGap(60, 60, 60)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGap(153, 153, 153)
-                        .addComponent(btnAdd1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAddProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnEdit1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnEditProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnCancel1)
+                        .addComponent(btnCancelProduct)
                         .addGap(18, 18, 18)
-                        .addComponent(btnDelete1)
+                        .addComponent(btnDeleteProduct)
                         .addGap(18, 18, 18)
-                        .addComponent(btnSearch1)))
-                .addContainerGap())
+                        .addComponent(btnSearchProduct)))
+                .addGap(178, 178, 178))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtProductID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -409,7 +493,6 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
                             .addComponent(txtExpireDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel11)
                             .addComponent(jLabel14))
-                        .addGap(0, 0, 0)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtProductName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8)
@@ -421,18 +504,17 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
                             .addComponent(jLabel9)
                             .addComponent(jLabel13)
                             .addComponent(cbbCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, 0)
+                        .addGap(12, 12, 12)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel10)))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel10))))
                 .addGap(0, 0, 0)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAdd1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDelete1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSearch1)
-                    .addComponent(btnCancel1)
-                    .addComponent(btnEdit1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnAddProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDeleteProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSearchProduct)
+                    .addComponent(btnCancelProduct)
+                    .addComponent(btnEditProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0)
                 .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
@@ -442,11 +524,11 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -459,7 +541,7 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
                 .addGap(0, 0, 0))
         );
 
-        jTabbedPane1.addTab("Products", new javax.swing.ImageIcon(getClass().getResource("/images/iconProducts.png")), jPanel2); // NOI18N
+        tabCategoryProducts.addTab("Products", new javax.swing.ImageIcon(getClass().getResource("/images/iconProducts.png")), jPanel2); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -467,35 +549,464 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1)
+                .addComponent(tabCategoryProducts, javax.swing.GroupLayout.DEFAULT_SIZE, 1392, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE)
+                .addComponent(tabCategoryProducts, javax.swing.GroupLayout.DEFAULT_SIZE, 924, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cbbCategoryItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbCategoryItemStateChanged
 
-    }//GEN-LAST:event_cbbCategoryItemStateChanged
+    private void btnAddCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCategoryActionPerformed
+        // THÊM 1 CATEGORY MỚI
+        enableTXT();
+        btnEditCategory.setEnabled(false);
+        if (btnAddCategory.getText().equals("Add")) {
+            resetTXT();
+            btnAddCategory.setText("Save");
+        } else if (btnAddCategory.getText().equals("Save")) {
+            if (!validateCategory()) {
+                return;
+            }
+            
+            // TĂNG ID
+            int countCategory = GUIInteraction.indentityID("select top 1 * from Categories order by CategoryID Desc", "CategoryID") + 1;
+            String CategoryID = "CA" + countCategory;
+            while (true) {
+                if (!GUIInteraction.checkDuplicateID(String.valueOf(CategoryID), "select * from Categories", "CategoryID")) {
+                    countCategory = countCategory + 1;
+                    CategoryID = "CA" + countCategory;
+                } else {
+                    break;
+                }
+            }
+            
+            // INSERT
+            Category category = new Category(CategoryID, txtCategoryName.getText());
+            interact.Categories.insertCategory(category);
+            refresh();
+            resetTXT();
+            btnAddCategory.setText("Add");
+            resetTXT();
+            disableTXT();
+            btnEditCategory.setEnabled(true);
+        }
+    }//GEN-LAST:event_btnAddCategoryActionPerformed
 
+    private void btnAddProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddProductActionPerformed
+        // THÊM 1 SẢN PHẨM MỚI
+        enableTXT();
+        btnEditProduct.setEnabled(false);
+        if (btnAddProduct.getText().equals("Add")) {
+            resetTXT();
+            btnAddProduct.setText("Save");
+        } else if (btnAddProduct.getText().equals("Save")) {
+            if (!validateAddProduct()) {
+                return;
+            }
+            
+            // TĂNG ID
+            String condition = cbbCategory.getSelectedItem().toString();
+            String categoryID = DataInteraction.getCode("Categories", "CategoryName", condition, "CategoryID");
+            int countProduct = GUIInteraction.indentityID("select top 1 * from Products where CategoryID='"+categoryID+"' order by ProductID Desc", "ProductID") + 1;
+            String productID = categoryID + "PD" +countProduct;
+            while (true) {
+                if (!GUIInteraction.checkDuplicateID(String.valueOf(productID), "select * from Products", "ProductID")) {
+                    countProduct = countProduct + 1;
+                    productID = categoryID + "PD" +countProduct;
+                } else {
+                    break;
+                }
+            }
+            
+            // INSERT
+            entity.Product product = new Product(
+                    productID, 
+                    txtProductName.getText(),
+                    Integer.valueOf(txtQuantity.getText()),
+                    Integer.valueOf(txtPrice.getText()),
+                    entity.DateUtils.now("MM/dd/yy"),
+                    txtExpireDate.getText(),
+                    txtDescription.getText(),
+                    categoryID,
+                    Integer.valueOf(txtVolume.getText()));
+            interact.Product.insertProduct(product);
+            refresh();
+            resetTXT();
+            btnAddProduct.setText("Add");
+            resetTXT();
+            disableTXT();
+            btnEditProduct.setEnabled(true);
+        }
+    }//GEN-LAST:event_btnAddProductActionPerformed
 
+    private void btnSearchCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchCategoryActionPerformed
+        // TÌM KIẾM CATEGORY THEO TÊN
+        enableTXT();
+        btnEditCategory.setEnabled(false);
+        btnAddCategory.setEnabled(false);
+        if (btnSearchCategory.getText().equals("Search")) {
+            resetTXT();
+            btnSearchCategory.setText("OKE");
+        }else if (btnSearchCategory.getText().equals("OKE")) {
+            String cateName = txtCategoryName.getText().trim();
+            try {
+                GUIInteraction.readToTable("select * from Categories where CategoryName like N'%" + cateName + "%'", tableCategory);
+            } catch (SQLException ex) {
+                Logger.getLogger(frmCategory_Product.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            resetTXT();
+            btnSearchCategory.setText("Search");
+            resetTXT();
+            disableTXT();
+            btnEditCategory.setEnabled(true);
+            btnAddCategory.setEnabled(true);
+        }
+    }//GEN-LAST:event_btnSearchCategoryActionPerformed
+
+    private void btnDeleteCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteCategoryActionPerformed
+        // XÓA 1 CATEGORY NẾU NÓ KHÔNG CHỨA SẢN PHẨM NÀO
+        if(txtCategoryID.getText().trim().length()==0){
+            JOptionPane.showMessageDialog(this, "Please chose one row from table");
+            return;
+        }
+        int i = JOptionPane.showConfirmDialog(this, "Do you want to delete this Category.?");
+        if (i == JOptionPane.YES_OPTION) {
+            try {
+                // KIỂM TRA CATEGORY CÓ SẢN PHẨM NÀO KHÔNG 
+                int countProduct = GUIInteraction.countRecord("select * from Products where CategoryID='" + txtCategoryID.getText() + "'");
+                if (countProduct > 0) {
+                    JOptionPane.showMessageDialog(this, "This category have some product, can't delete it");
+                } else {
+                    interact.Categories.deleteCategory(txtCategoryID.getText());
+                    refresh();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(frmCreateNewStore.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_btnDeleteCategoryActionPerformed
+
+    private void btnEditCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditCategoryActionPerformed
+        // SỬA THÔNG TIN 1 CATEGORY
+        btnAddCategory.setEnabled(false);
+        if(txtCategoryID.getText().trim().length()==0){
+            JOptionPane.showMessageDialog(this, "Please chose one row from table");
+            return;
+        }
+        enableTXT();
+        if (btnEditCategory.getText().equals("Edit")) {
+            btnEditCategory.setText("Save");
+        } else if (btnEditCategory.getText().equals("Save")) {
+            if (!validateCategory()) {
+                return;
+            }
+            entity.Category ct = new Category(txtCategoryID.getText(), txtCategoryName.getText());
+            interact.Categories.editCategory(ct);
+            refresh();
+            btnEditCategory.setText("Edit");
+            disableTXT();
+            btnAddCategory.setEnabled(true);
+        }
+
+    }//GEN-LAST:event_btnEditCategoryActionPerformed
+
+    private void tableCategoryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableCategoryMouseClicked
+        // LOAD DỮ LIỆU TỪ BẢNG CATEGORY LÊN TEXTFIELD
+        int i = tableCategory.getSelectedRow();
+        txtCategoryID.setText(String.valueOf(tableCategory.getValueAt(i, 0)));
+        txtCategoryName.setText(String.valueOf(tableCategory.getValueAt(i, 1)));
+    }//GEN-LAST:event_tableCategoryMouseClicked
+
+    private void tableProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableProductMouseClicked
+        // LOAD DỮ LIỆU TỪ BẢNG PRODUCT LÊN TEXTFIELD
+        int i = tableProduct.getSelectedRow();
+        txtProductID.setText(String.valueOf(tableProduct.getValueAt(i, 0)));
+        txtProductName.setText(String.valueOf(tableProduct.getValueAt(i, 1)));
+        txtQuantity.setText(String.valueOf(tableProduct.getValueAt(i, 2)));
+        txtPrice.setText(String.valueOf(tableProduct.getValueAt(i, 3)));
+        txtExpireDate.setText(String.valueOf(tableProduct.getValueAt(i, 5)).substring(0,10));
+        txtDescription.setText(String.valueOf(tableProduct.getValueAt(i, 6)));
+        cbbCategory.setSelectedItem(String.valueOf(tableProduct.getValueAt(i, 7)));
+        txtVolume.setText(String.valueOf(tableProduct.getValueAt(i, 8)));
+    }//GEN-LAST:event_tableProductMouseClicked
+
+    private void btnDeleteProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteProductActionPerformed
+        // XÓA 1 SẢN PHẨM NẾU NÓ KHÔNG NẰM TRONG BẤT KỲ HÓA ĐƠN NÀO
+        if(txtProductID.getText().trim().length()==0){
+            JOptionPane.showMessageDialog(this, "Please chose one row from table");
+            return;
+        }
+        int i = JOptionPane.showConfirmDialog(this, "Do you want to delete this Product.?");
+        if (i == JOptionPane.YES_OPTION) {
+            try {
+                int countUser = GUIInteraction.countRecord("select * from OrderDetails where ProductID='" + txtProductID.getText() + "'");
+                if (countUser > 0) {
+                    JOptionPane.showMessageDialog(this, "This Product belong to some Bills, can't delete it");
+                }else{
+                    interact.Product.deleteProduct(txtProductID.getText());
+                    refresh();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(frmCategory_Product.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_btnDeleteProductActionPerformed
+
+    private void btnCancelProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelProductActionPerformed
+        // RESET TẤT CẢ BUTTON VÀ TEXTFIELD VỀ MẶC ĐỊNH
+        disableTXT();
+        resetTXT();
+        btnAddProduct.setText("Add");
+        btnAddProduct.setEnabled(true);
+        btnEditProduct.setText("Edit");
+        btnEditProduct.setEnabled(true);
+    }//GEN-LAST:event_btnCancelProductActionPerformed
+
+    private void btnEditProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditProductActionPerformed
+        // SỬA THÔNG TIN 1 SẢN PHẨM
+        btnAddProduct.setEnabled(false);
+        if(txtProductName.getText().trim().length()==0){
+            JOptionPane.showMessageDialog(this, "Please chose one row from table");
+            return;
+        }
+        enabletxtProduct();
+        if (btnEditProduct.getText().equals("Edit")) {
+            btnEditProduct.setText("Save");
+        } else if (btnEditProduct.getText().equals("Save")) {
+            if (!validateEditProduct()) {
+                return;
+            }
+            Product product = new Product(
+                    txtProductID.getText(), 
+                    txtProductName.getText(),
+                    Integer.valueOf(txtQuantity.getText()),
+                    Integer.valueOf(txtPrice.getText()),
+                    entity.DateUtils.now("MM/dd/yy"),
+                    txtExpireDate.getText(),
+                    txtDescription.getText(),
+                    DataInteraction.getCode("Categories", "CategoryName", cbbCategory.getSelectedItem().toString(), "CategoryID"),
+                    Integer.valueOf(txtVolume.getText()));
+            interact.Product.editProducts(product);
+            refresh();
+            btnEditProduct.setText("Edit");
+            disableTXT();
+            btnAddProduct.setEnabled(false);
+        }
+    }//GEN-LAST:event_btnEditProductActionPerformed
+
+    private void btnSearchProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchProductActionPerformed
+        // TÌM KIẾM SẢN PHẨM THEO TÊN
+        txtProductName.setEnabled(true);
+        btnEditProduct.setEnabled(false);
+        btnAddProduct.setEnabled(false);
+        if (btnSearchProduct.getText().equals("Search")) {
+            resetTXT();
+            btnSearchProduct.setText("OKE");
+        }else if (btnSearchProduct.getText().equals("OKE")) {
+            String productName = txtProductName.getText().trim();
+            try {
+                GUIInteraction.readToTable("select * from Products where ProductName like N'%" + productName + "%'", tableProduct);
+            } catch (SQLException ex) {
+                Logger.getLogger(frmCategory_Product.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            resetTXT();
+            btnSearchProduct.setText("Search");
+            resetTXT();
+            disableTXT();
+            btnEditProduct.setEnabled(true);
+            btnAddProduct.setEnabled(true);
+        }
+    }//GEN-LAST:event_btnSearchProductActionPerformed
+
+    private void tabCategoryProductsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabCategoryProductsMouseClicked
+        // RESET TẤT CẢ BUTTON VÀ TEXTFIELD VỀ MẶC ĐỊNH KHI CHUYỂN TAB
+        disableTXT();
+        resetTXT();
+        resetButton();
+    }//GEN-LAST:event_tabCategoryProductsMouseClicked
+    
+    private void refresh() {
+        // PHƯƠNG THỨC LOAD DỮ LIỆU RA BẢNG VÀ COMBOBOX
+        try {
+            interact.GUIInteraction.readToTable("select * from Categories", tableCategory);
+            interact.GUIInteraction.readToCombo("select * from Categories", cbbCategory, "CategoryName");
+            interact.GUIInteraction.readToTable("SELECT ProductID,ProductName,QuantityAvailable,Price,DateImport,ExpireDate,Descript,CategoryName,Volume FROM Products,Categories where Categories.CategoryID=Products.CategoryID", tableProduct);
+        } catch (SQLException ex) {
+            Logger.getLogger(frmCategory_Product.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void resetButton(){
+        // RESET TẤT CẢ BUTTON VỀ MẶC ĐỊNH
+        btnAddCategory.setText("Add");
+        btnAddCategory.setEnabled(true);
+        btnEditCategory.setText("Edit");
+        btnEditCategory.setEnabled(true);
+        btnAddProduct.setText("Add");
+        btnAddProduct.setEnabled(true);
+        btnEditProduct.setText("Edit");
+        btnEditProduct.setEnabled(true);
+    }
+    
+    private void enableTXT() {
+        // ENABLE TẤT CẢ TEXT FIELD
+        txtCategoryName.setEnabled(true);
+        
+        txtProductName.setEnabled(true);
+        txtQuantity.setEnabled(true);
+        enabletxtProduct();
+    }
+    
+    private void enabletxtProduct() {
+        // ENABLE NHỮNG TEXTFIELD CẦN CHỈNH SỬA THÔNG TIN PRODUCT
+        txtVolume.setEnabled(true);
+        txtPrice.setEnabled(true);
+        txtExpireDate.setEnabled(true);
+        cbbCategory.setEnabled(true);
+        txtDescription.setEnabled(true);
+    }
+
+    private void disableTXT() {
+        // DISABLE TẤT CẢ TEXTFIELD
+        txtCategoryName.setEnabled(false);
+        
+        txtProductName.setEnabled(false);
+        txtVolume.setEnabled(false);
+        txtPrice.setEnabled(false);
+        txtExpireDate.setEnabled(false);
+        txtQuantity.setEnabled(false);
+        cbbCategory.setEnabled(false);
+        txtDescription.setEnabled(false);
+    }
+
+    private void resetTXT() {
+        // RESET TẤT CẢ TEXTFIELD VỀ MẶC ĐỊNH
+        txtCategoryName.setText(null);
+        
+        txtProductID.setText(null);
+        txtProductName.setText(null);
+        txtVolume.setText(null);
+        txtPrice.setText(null);
+        txtExpireDate.setText(null);
+        txtQuantity.setText(null);
+        cbbCategory.setSelectedIndex(-1);
+        txtDescription.setText(null);
+    }
+    
+    private boolean validateCategory() {
+        // VALIDATE DỮ LIỆU NHẬP VÀO KHI INSERT HOẶC UPDATE CATEGORY
+        boolean flag = true;
+        if (!interact.CheckForm.isEmpty(txtCategoryName.getText())) {
+            JOptionPane.showMessageDialog(this, "Name is not blank", "Required", JOptionPane.ERROR_MESSAGE);
+            txtCategoryName.requestFocus();
+            txtCategoryName.setBackground(Color.red);
+            flag = false;
+        } else if (!interact.GUIInteraction.checkDuplicateName(txtCategoryName.getText().trim(), "select * from Categories", "CategoryName")) {
+            JOptionPane.showMessageDialog(this, "Category name is duplicated", "Error", JOptionPane.ERROR_MESSAGE);
+            txtCategoryName.requestFocus();
+            txtCategoryName.setBackground(Color.red);
+            flag = false;
+        } else {
+            txtCategoryName.setBackground(Color.white);
+            flag = true;
+        }
+        return flag;
+    }
+    
+    private boolean validateAddProduct() {
+        // VALIDATE DỮ LIỆU NHẬP VÀO KHI INSERT PRODUCT 
+        boolean flag = true;
+        if (!CheckForm.isEmpty(txtProductName.getText())) {
+            JOptionPane.showMessageDialog(this, "Name is not blank", "Error", JOptionPane.ERROR_MESSAGE);
+            txtProductName.setBackground(Color.red);
+            txtProductName.requestFocus();
+            flag = false;
+        }else if (!GUIInteraction.checkDuplicateName(txtProductName.getText().trim(), "select * from Products", "ProductName")) {
+            JOptionPane.showMessageDialog(this, "Name is not duplicatated", "Error", JOptionPane.ERROR_MESSAGE);
+            txtProductName.setBackground(Color.red);
+            txtProductName.requestFocus();
+            flag = false;
+        }else if(!validateEditProduct()){
+            flag = false;
+        }else if (!CheckForm.isNumberic(txtQuantity.getText())) {
+            JOptionPane.showMessageDialog(this, "Quantity must numberic", "Error", JOptionPane.ERROR_MESSAGE);
+            txtQuantity.requestFocus();
+            txtProductName.setBackground(Color.white);
+            txtVolume.setBackground(Color.white);
+            txtPrice.setBackground(Color.white);
+            txtExpireDate.setBackground(Color.white);
+            txtQuantity.setBackground(Color.red);
+            flag = false;
+        }else if (cbbCategory.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(this, "Category must select one", "Error", JOptionPane.ERROR_MESSAGE);
+            txtQuantity.requestFocus();
+            txtProductName.setBackground(Color.white);
+            txtVolume.setBackground(Color.white);
+            txtPrice.setBackground(Color.white);
+            txtExpireDate.setBackground(Color.white);
+            txtQuantity.setBackground(Color.white);
+            cbbCategory.setBackground(Color.red);
+            flag = false;
+        }else{
+            txtQuantity.requestFocus();
+            txtProductName.setBackground(Color.white);
+            txtVolume.setBackground(Color.white);
+            txtPrice.setBackground(Color.white);
+            txtExpireDate.setBackground(Color.white);
+            txtQuantity.setBackground(Color.white);
+            cbbCategory.setBackground(Color.white);
+            flag = true;
+        }
+        return flag;
+    }
+    
+    public boolean validateEditProduct(){
+        // VALIDATE DỮ LIỆU NHẬP VÀO KHI UPDATE PRODUCT 
+        boolean flag = true;
+        if (!CheckForm.isNumberic(txtVolume.getText())) {
+            JOptionPane.showMessageDialog(this, "Volume must numberic", "Error", JOptionPane.ERROR_MESSAGE);
+            txtVolume.requestFocus();
+            txtProductName.setBackground(Color.white);
+            txtVolume.setBackground(Color.red);
+            flag = false;
+        }else if (!CheckForm.isNumberic(txtPrice.getText())) {
+            JOptionPane.showMessageDialog(this, "Price must numberic", "Error", JOptionPane.ERROR_MESSAGE);
+            txtPrice.requestFocus();
+            txtProductName.setBackground(Color.white);
+            txtVolume.setBackground(Color.white);
+            txtPrice.setBackground(Color.red);
+            flag = false;
+        }else if (!CheckForm.validateDate(txtExpireDate.getText())) {
+            JOptionPane.showMessageDialog(this, "Expire Date must is date format (MM-DD-YYYY)", "Error", JOptionPane.ERROR_MESSAGE);
+            txtExpireDate.requestFocus();
+            txtProductName.setBackground(Color.white);
+            txtVolume.setBackground(Color.white);
+            txtPrice.setBackground(Color.white);
+            txtExpireDate.setBackground(Color.red);
+            flag = false;
+        }else{
+            flag = true;
+        }
+        return flag;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAdd;
-    private javax.swing.JButton btnAdd1;
-    private javax.swing.JButton btnCancel1;
-    private javax.swing.JButton btnDelete;
-    private javax.swing.JButton btnDelete1;
-    private javax.swing.JButton btnEdit;
-    private javax.swing.JButton btnEdit1;
-    private javax.swing.JButton btnSearch;
-    private javax.swing.JButton btnSearch1;
+    private javax.swing.JButton btnAddCategory;
+    private javax.swing.JButton btnAddProduct;
+    private javax.swing.JButton btnCancelProduct;
+    private javax.swing.JButton btnDeleteCategory;
+    private javax.swing.JButton btnDeleteProduct;
+    private javax.swing.JButton btnEditCategory;
+    private javax.swing.JButton btnEditProduct;
+    private javax.swing.JButton btnSearchCategory;
+    private javax.swing.JButton btnSearchProduct;
     private javax.swing.JComboBox cbbCategory;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -519,7 +1030,7 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTabbedPane tabCategoryProducts;
     public javax.swing.JTable tableCategory;
     public javax.swing.JTable tableProduct;
     private javax.swing.JTextField txtCategoryID;

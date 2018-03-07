@@ -8,8 +8,8 @@ package entity;
 import java.io.Serializable;
 
 /**
- *
- * @author Bach Ngoc  Toan
+ * ĐỐI TƯỢNG REMEMBER 
+ * @author NHÓM 2
  */
 public class Remember implements Serializable {
     String username;

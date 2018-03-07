@@ -5,9 +5,19 @@
  */
 package gui;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import interact.CheckForm;
+import interact.GUIInteraction;
+import interact.DataInteraction;
+import entity.User;
+import java.awt.Color;
+import javax.swing.*;
+
 /**
- *
- * @author kiems
+ * GIAO DIỆN QUẢN LÝ MANAGER VÀ INVENTORY
+ * @author NHÓM 2
  */
 public class frmCreateNewManager extends javax.swing.JInternalFrame {
 
@@ -16,6 +26,8 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
      */
     public frmCreateNewManager() {
         initComponents();
+        refresh();
+        warning();
     }
 
     /**
@@ -27,44 +39,35 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
-        buttonGroup2 = new javax.swing.ButtonGroup();
-        buttonGroup3 = new javax.swing.ButtonGroup();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        tab = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txtID = new javax.swing.JTextField();
+        txtManagerID = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        txtName = new javax.swing.JTextField();
+        txtManagerName = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        txtPhone = new javax.swing.JTextField();
+        txtManagerPhone = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        txtEmail = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txtAddress = new javax.swing.JTextArea();
-        jLabel9 = new javax.swing.JLabel();
-        chkGenderM = new javax.swing.JRadioButton();
-        chkGenderF = new javax.swing.JRadioButton();
+        txtManagerEmail = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
-        txtSalary = new javax.swing.JTextField();
+        txtManagerSalary = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         cboStore = new javax.swing.JComboBox();
-        btnCreate = new javax.swing.JButton();
-        btnEdit = new javax.swing.JButton();
-        btnCancel = new javax.swing.JButton();
-        btnDelete = new javax.swing.JButton();
+        btnManagerCreate = new javax.swing.JButton();
+        btnManagerEdit = new javax.swing.JButton();
+        btnManagerCancel = new javax.swing.JButton();
+        btnManagerDelete = new javax.swing.JButton();
         jLabel26 = new javax.swing.JLabel();
-        txtPassword = new javax.swing.JTextField();
         jLabel27 = new javax.swing.JLabel();
-        txtUsername = new javax.swing.JTextField();
+        txtManagerUsername = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
-        txtSearch = new javax.swing.JTextField();
-        btnSearch = new javax.swing.JButton();
+        txtManagerSearch = new javax.swing.JTextField();
+        btnManagerSearch = new javax.swing.JButton();
+        txtManagerPassword = new javax.swing.JPasswordField();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tableManager = new javax.swing.JTable();
@@ -74,39 +77,38 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
         jPanel15 = new javax.swing.JPanel();
         jLabel29 = new javax.swing.JLabel();
         jLabel30 = new javax.swing.JLabel();
-        txtID1 = new javax.swing.JTextField();
+        txtInventoryID = new javax.swing.JTextField();
         jLabel31 = new javax.swing.JLabel();
-        txtName1 = new javax.swing.JTextField();
+        txtInventoryName = new javax.swing.JTextField();
         jLabel32 = new javax.swing.JLabel();
-        txtPhone1 = new javax.swing.JTextField();
+        txtInventoryPhone = new javax.swing.JTextField();
         jLabel33 = new javax.swing.JLabel();
-        txtEmail1 = new javax.swing.JTextField();
-        jLabel34 = new javax.swing.JLabel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        txtAddress1 = new javax.swing.JTextArea();
-        jLabel35 = new javax.swing.JLabel();
-        chkGenderM1 = new javax.swing.JRadioButton();
-        chkGenderF1 = new javax.swing.JRadioButton();
+        txtInventoryEmail = new javax.swing.JTextField();
         jLabel36 = new javax.swing.JLabel();
-        txtSalary1 = new javax.swing.JTextField();
-        btnCreate1 = new javax.swing.JButton();
-        btnEdit1 = new javax.swing.JButton();
-        btnCancel1 = new javax.swing.JButton();
-        btnDelete1 = new javax.swing.JButton();
+        txtInventorySalary = new javax.swing.JTextField();
+        btnInventoryCreate = new javax.swing.JButton();
+        btnInventoryEdit = new javax.swing.JButton();
+        btnInventoryCancel = new javax.swing.JButton();
+        btnInventoryDelete = new javax.swing.JButton();
         jLabel40 = new javax.swing.JLabel();
-        txtPassword1 = new javax.swing.JTextField();
         jLabel41 = new javax.swing.JLabel();
-        txtUsername1 = new javax.swing.JTextField();
+        txtInventoryUsername = new javax.swing.JTextField();
         jLabel42 = new javax.swing.JLabel();
-        txtSearch1 = new javax.swing.JTextField();
-        btnSearch1 = new javax.swing.JButton();
+        txtInventorySearch = new javax.swing.JTextField();
+        btnInventorySearch = new javax.swing.JButton();
+        txtInventoryPassword = new javax.swing.JPasswordField();
         jPanel16 = new javax.swing.JPanel();
         jScrollPane7 = new javax.swing.JScrollPane();
         tableInventory = new javax.swing.JTable();
 
         setAutoscrolls(true);
 
-        jTabbedPane1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tab.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tab.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabMouseClicked(evt);
+            }
+        });
 
         jPanel3.setBackground(new java.awt.Color(102, 255, 255));
 
@@ -130,98 +132,93 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setText("Manager ID :");
 
-        txtID.setEditable(false);
-        txtID.setBackground(new java.awt.Color(204, 204, 204));
+        txtManagerID.setEditable(false);
+        txtManagerID.setBackground(new java.awt.Color(255, 255, 255));
+        txtManagerID.setEnabled(false);
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel5.setText("Name :");
 
-        txtName.setEditable(false);
-        txtName.setBackground(new java.awt.Color(204, 204, 204));
+        txtManagerName.setEnabled(false);
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel6.setText("Phone :");
 
-        txtPhone.setEditable(false);
-        txtPhone.setBackground(new java.awt.Color(204, 204, 204));
+        txtManagerPhone.setEnabled(false);
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel7.setText("Email :");
 
-        txtEmail.setEditable(false);
-        txtEmail.setBackground(new java.awt.Color(204, 204, 204));
-
-        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel8.setText("Address :");
-
-        txtAddress.setEditable(false);
-        txtAddress.setBackground(new java.awt.Color(204, 204, 204));
-        txtAddress.setColumns(20);
-        txtAddress.setRows(5);
-        jScrollPane1.setViewportView(txtAddress);
-
-        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel9.setText("Gender :");
-
-        chkGenderM.setBackground(new java.awt.Color(204, 204, 204));
-        buttonGroup1.add(chkGenderM);
-        chkGenderM.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        chkGenderM.setText("Male");
-
-        chkGenderF.setBackground(new java.awt.Color(204, 204, 204));
-        buttonGroup1.add(chkGenderF);
-        chkGenderF.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        chkGenderF.setText("Female");
+        txtManagerEmail.setEnabled(false);
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel12.setText("Salary :");
 
-        txtSalary.setEditable(false);
-        txtSalary.setBackground(new java.awt.Color(204, 204, 204));
+        txtManagerSalary.setEnabled(false);
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel13.setText("Store :");
 
-        btnCreate.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        btnCreate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconAdd.png"))); // NOI18N
-        btnCreate.setText("Create");
+        cboStore.setEditable(true);
+        cboStore.setEnabled(false);
 
-        btnEdit.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconEdit.png"))); // NOI18N
-        btnEdit.setText("Edit");
+        btnManagerCreate.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnManagerCreate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconAdd.png"))); // NOI18N
+        btnManagerCreate.setText("Create");
+        btnManagerCreate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnManagerCreateActionPerformed(evt);
+            }
+        });
 
-        btnCancel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconCancel.png"))); // NOI18N
-        btnCancel.setText("Cancel");
+        btnManagerEdit.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnManagerEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconEdit.png"))); // NOI18N
+        btnManagerEdit.setText("Edit");
+        btnManagerEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnManagerEditActionPerformed(evt);
+            }
+        });
 
-        btnDelete.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconDelete.png"))); // NOI18N
-        btnDelete.setText("Delete");
+        btnManagerCancel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnManagerCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconCancel.png"))); // NOI18N
+        btnManagerCancel.setText("Cancel");
+        btnManagerCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnManagerCancelActionPerformed(evt);
+            }
+        });
+
+        btnManagerDelete.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnManagerDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconDelete.png"))); // NOI18N
+        btnManagerDelete.setText("Delete");
+        btnManagerDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnManagerDeleteActionPerformed(evt);
+            }
+        });
 
         jLabel26.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel26.setText("Password :");
 
-        txtPassword.setEditable(false);
-        txtPassword.setBackground(new java.awt.Color(204, 204, 204));
-
         jLabel27.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel27.setText("UserName :");
 
-        txtUsername.setEditable(false);
-        txtUsername.setBackground(new java.awt.Color(204, 204, 204));
+        txtManagerUsername.setEnabled(false);
 
         jLabel16.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel16.setText("Search Manager ID :");
 
-        txtSearch.addActionListener(new java.awt.event.ActionListener() {
+        btnManagerSearch.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnManagerSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconBrower.png"))); // NOI18N
+        btnManagerSearch.setText("Search");
+        btnManagerSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSearchActionPerformed(evt);
+                btnManagerSearchActionPerformed(evt);
             }
         });
 
-        btnSearch.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconBrower.png"))); // NOI18N
-        btnSearch.setText("Search");
+        txtManagerPassword.setEnabled(false);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -233,127 +230,106 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jLabel16)
                         .addGap(18, 18, 18)
-                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtManagerSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnSearch))
+                        .addComponent(btnManagerSearch))
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(btnCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnManagerCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnManagerEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnCancel)
+                        .addComponent(btnManagerCancel)
                         .addGap(18, 18, 18)
-                        .addComponent(btnDelete))
+                        .addComponent(btnManagerDelete))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addGroup(jPanel5Layout.createSequentialGroup()
                                     .addComponent(jLabel5)
                                     .addGap(18, 18, 18)
-                                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txtManagerName, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(jPanel5Layout.createSequentialGroup()
                                     .addComponent(jLabel3)
                                     .addGap(18, 18, 18)
-                                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txtManagerID, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(jPanel5Layout.createSequentialGroup()
                                     .addComponent(jLabel6)
                                     .addGap(18, 18, 18)
-                                    .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(txtManagerPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jLabel4)
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addGap(35, 35, 35)
                                 .addComponent(jLabel7)
                                 .addGap(18, 18, 18)
-                                .addComponent(txtEmail)))
-                        .addGap(44, 44, 44)
+                                .addComponent(txtManagerEmail)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(jLabel8)
-                                .addGap(18, 18, 18)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addGap(18, 18, 18)
-                                .addComponent(chkGenderM)
-                                .addGap(18, 18, 18)
-                                .addComponent(chkGenderF)))
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addGap(67, 67, 67)
-                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel12)
-                                    .addComponent(jLabel13)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel26, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel27, javax.swing.GroupLayout.Alignment.TRAILING))))))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(txtPassword)
-                        .addComponent(txtSalary)
-                        .addComponent(cboStore, 0, 182, Short.MAX_VALUE)))
-                .addContainerGap(21, Short.MAX_VALUE))
+                            .addComponent(jLabel27, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel26, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtManagerUsername)
+                            .addComponent(txtManagerSalary, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(cboStore, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtManagerPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(106, 106, 106)))
+                .addContainerGap(319, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel3)
-                        .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel9)
-                        .addComponent(chkGenderM)
-                        .addComponent(chkGenderF))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel27)))
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, 0)
-                        .addComponent(jLabel4)
-                        .addGap(0, 0, 0)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
-                            .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8)))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel26))
-                        .addGap(0, 0, 0)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtSalary, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel12))
-                        .addGap(0, 0, 0)
+                            .addComponent(jLabel3)
+                            .addComponent(txtManagerID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel7))
-                            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(cboStore, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel13))))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, 0)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel5)
+                                    .addComponent(txtManagerName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, 0)
+                                .addComponent(jLabel4)
+                                .addGap(0, 0, 0)
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel6)
+                                    .addComponent(txtManagerPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addGap(53, 53, 53)
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtManagerEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel7))))
+                        .addGap(10, 10, 10))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel27)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(txtManagerUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtManagerPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel26))
+                                .addGap(3, 3, 3)
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtManagerSalary, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel12))
+                                .addGap(0, 0, 0)
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(cboStore, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel13))))
+                        .addGap(18, 18, 18)))
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCancel)
-                    .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnManagerCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnManagerEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnManagerCancel)
+                    .addComponent(btnManagerDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel16)
-                    .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, 0))
+                    .addComponent(txtManagerSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnManagerSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(1, 1, 1))
         );
 
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Table Information", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
@@ -410,7 +386,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
                 .addGap(0, 0, 0))
         );
 
-        jTabbedPane1.addTab("New Manager", new javax.swing.ImageIcon(getClass().getResource("/images/iconManager.png")), jPanel1); // NOI18N
+        tab.addTab("New Manager", new javax.swing.ImageIcon(getClass().getResource("/images/iconManager.png")), jPanel1); // NOI18N
 
         jPanel14.setBackground(new java.awt.Color(102, 255, 255));
 
@@ -434,216 +410,202 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
         jLabel30.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel30.setText("Inventory ID :");
 
-        txtID1.setEditable(false);
-        txtID1.setBackground(new java.awt.Color(204, 204, 204));
+        txtInventoryID.setEditable(false);
+        txtInventoryID.setBackground(new java.awt.Color(255, 255, 255));
+        txtInventoryID.setEnabled(false);
 
         jLabel31.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel31.setText("Name :");
 
-        txtName1.setEditable(false);
-        txtName1.setBackground(new java.awt.Color(204, 204, 204));
+        txtInventoryName.setBackground(new java.awt.Color(255, 255, 255));
+        txtInventoryName.setEnabled(false);
 
         jLabel32.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel32.setText("Phone :");
 
-        txtPhone1.setEditable(false);
-        txtPhone1.setBackground(new java.awt.Color(204, 204, 204));
+        txtInventoryPhone.setBackground(new java.awt.Color(255, 255, 255));
+        txtInventoryPhone.setEnabled(false);
 
         jLabel33.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel33.setText("Email :");
 
-        txtEmail1.setEditable(false);
-        txtEmail1.setBackground(new java.awt.Color(204, 204, 204));
-
-        jLabel34.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel34.setText("Address :");
-
-        txtAddress1.setEditable(false);
-        txtAddress1.setBackground(new java.awt.Color(204, 204, 204));
-        txtAddress1.setColumns(20);
-        txtAddress1.setRows(5);
-        jScrollPane4.setViewportView(txtAddress1);
-
-        jLabel35.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel35.setText("Gender :");
-
-        chkGenderM1.setBackground(new java.awt.Color(204, 204, 204));
-        buttonGroup2.add(chkGenderM1);
-        chkGenderM1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        chkGenderM1.setText("Male");
-
-        chkGenderF1.setBackground(new java.awt.Color(204, 204, 204));
-        buttonGroup2.add(chkGenderF1);
-        chkGenderF1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        chkGenderF1.setText("Female");
+        txtInventoryEmail.setBackground(new java.awt.Color(255, 255, 255));
+        txtInventoryEmail.setEnabled(false);
 
         jLabel36.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel36.setText("Salary :");
 
-        txtSalary1.setEditable(false);
-        txtSalary1.setBackground(new java.awt.Color(204, 204, 204));
+        txtInventorySalary.setBackground(new java.awt.Color(255, 255, 255));
+        txtInventorySalary.setEnabled(false);
 
-        btnCreate1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        btnCreate1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconAdd.png"))); // NOI18N
-        btnCreate1.setText("Create");
+        btnInventoryCreate.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnInventoryCreate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconAdd.png"))); // NOI18N
+        btnInventoryCreate.setText("Create");
+        btnInventoryCreate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInventoryCreateActionPerformed(evt);
+            }
+        });
 
-        btnEdit1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        btnEdit1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconEdit.png"))); // NOI18N
-        btnEdit1.setText("Edit");
+        btnInventoryEdit.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnInventoryEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconEdit.png"))); // NOI18N
+        btnInventoryEdit.setText("Edit");
+        btnInventoryEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInventoryEditActionPerformed(evt);
+            }
+        });
 
-        btnCancel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        btnCancel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconCancel.png"))); // NOI18N
-        btnCancel1.setText("Cancel");
+        btnInventoryCancel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnInventoryCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconCancel.png"))); // NOI18N
+        btnInventoryCancel.setText("Cancel");
+        btnInventoryCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInventoryCancelActionPerformed(evt);
+            }
+        });
 
-        btnDelete1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        btnDelete1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconDelete.png"))); // NOI18N
-        btnDelete1.setText("Delete");
+        btnInventoryDelete.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnInventoryDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconDelete.png"))); // NOI18N
+        btnInventoryDelete.setText("Delete");
+        btnInventoryDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInventoryDeleteActionPerformed(evt);
+            }
+        });
 
         jLabel40.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel40.setText("Password :");
 
-        txtPassword1.setEditable(false);
-        txtPassword1.setBackground(new java.awt.Color(204, 204, 204));
-
         jLabel41.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel41.setText("UserName :");
 
-        txtUsername1.setEditable(false);
-        txtUsername1.setBackground(new java.awt.Color(204, 204, 204));
+        txtInventoryUsername.setBackground(new java.awt.Color(255, 255, 255));
+        txtInventoryUsername.setEnabled(false);
 
         jLabel42.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel42.setText("Search Inventory ID :");
 
-        txtSearch1.addActionListener(new java.awt.event.ActionListener() {
+        btnInventorySearch.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnInventorySearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconBrower.png"))); // NOI18N
+        btnInventorySearch.setText("Search");
+        btnInventorySearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSearch1ActionPerformed(evt);
+                btnInventorySearchActionPerformed(evt);
             }
         });
-
-        btnSearch1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        btnSearch1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconBrower.png"))); // NOI18N
-        btnSearch1.setText("Search");
 
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
         jPanel15.setLayout(jPanel15Layout);
         jPanel15Layout.setHorizontalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel15Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel15Layout.createSequentialGroup()
-                        .addComponent(jLabel42)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtSearch1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnSearch1))
-                    .addGroup(jPanel15Layout.createSequentialGroup()
-                        .addComponent(btnCreate1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnEdit1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnCancel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnDelete1))
-                    .addGroup(jPanel15Layout.createSequentialGroup()
-                        .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(jPanel15Layout.createSequentialGroup()
-                                    .addComponent(jLabel31)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(txtName1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel15Layout.createSequentialGroup()
-                                    .addComponent(jLabel30)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(txtID1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel15Layout.createSequentialGroup()
-                                    .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLabel32)
-                                        .addComponent(jLabel33))
-                                    .addGap(18, 18, 18)
-                                    .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(txtEmail1)
-                                        .addComponent(txtPhone1, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))))
-                            .addComponent(jLabel29))
-                        .addGap(44, 44, 44)
-                        .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addContainerGap()
+                        .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel15Layout.createSequentialGroup()
-                                .addComponent(jLabel34)
+                                .addComponent(jLabel42)
                                 .addGap(18, 18, 18)
-                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtInventorySearch, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnInventorySearch))
                             .addGroup(jPanel15Layout.createSequentialGroup()
-                                .addComponent(jLabel35)
-                                .addGap(18, 18, 18)
-                                .addComponent(chkGenderM1)
-                                .addGap(18, 18, 18)
-                                .addComponent(chkGenderF1)))
-                        .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel15Layout.createSequentialGroup()
-                                .addGap(67, 67, 67)
-                                .addComponent(jLabel36))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel15Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel40, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel41, javax.swing.GroupLayout.Alignment.TRAILING))))))
-                .addGap(18, 18, 18)
+                                    .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(jPanel15Layout.createSequentialGroup()
+                                            .addComponent(jLabel31)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(txtInventoryName, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(jPanel15Layout.createSequentialGroup()
+                                            .addComponent(jLabel30)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(txtInventoryID, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(jPanel15Layout.createSequentialGroup()
+                                            .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addComponent(jLabel32)
+                                                .addComponent(jLabel33))
+                                            .addGap(18, 18, 18)
+                                            .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(txtInventoryEmail)
+                                                .addComponent(txtInventoryPhone, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))))
+                                    .addComponent(jLabel29))
+                                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel15Layout.createSequentialGroup()
+                                        .addGap(370, 370, 370)
+                                        .addComponent(jLabel36))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel15Layout.createSequentialGroup()
+                                        .addGap(346, 346, 346)
+                                        .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel40, javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel41, javax.swing.GroupLayout.Alignment.TRAILING)))))))
+                    .addGroup(jPanel15Layout.createSequentialGroup()
+                        .addGap(64, 64, 64)
+                        .addComponent(btnInventoryCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnInventoryEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnInventoryCancel)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnInventoryDelete)))
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtUsername1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(txtPassword1, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
-                        .addComponent(txtSalary1)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel15Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(txtInventorySalary, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel15Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtInventoryUsername, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
+                            .addComponent(txtInventoryPassword))))
+                .addContainerGap(112, Short.MAX_VALUE))
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel15Layout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel30)
-                        .addComponent(txtID1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel35)
-                        .addComponent(chkGenderM1)
-                        .addComponent(chkGenderF1))
+                    .addGroup(jPanel15Layout.createSequentialGroup()
+                        .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel30)
+                            .addComponent(txtInventoryID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(2, 2, 2))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtUsername1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtInventoryUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel41)))
-                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel15Layout.createSequentialGroup()
                         .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel31)
-                            .addComponent(txtName1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtInventoryName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, 0)
                         .addComponent(jLabel29)
                         .addGap(0, 0, 0)
                         .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel32)
-                            .addComponent(txtPhone1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel34)))
+                            .addComponent(txtInventoryPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel15Layout.createSequentialGroup()
                         .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtPassword1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel40))
-                        .addGap(0, 0, 0)
+                            .addComponent(jLabel40)
+                            .addComponent(txtInventoryPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(3, 3, 3)
                         .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtSalary1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtInventorySalary, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel36))
                         .addGap(0, 0, 0)
                         .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtEmail1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel33)))
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                            .addComponent(txtInventoryEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel33))))
                 .addGap(0, 0, 0)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCreate1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEdit1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCancel1)
-                    .addComponent(btnDelete1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnInventoryCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnInventoryEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnInventoryCancel)
+                    .addComponent(btnInventoryDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel42)
-                    .addComponent(txtSearch1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSearch1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtInventorySearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnInventorySearch, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0))
         );
 
@@ -699,7 +661,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("New Inventory", new javax.swing.ImageIcon(getClass().getResource("/images/iconIventory.png")), jPanel2); // NOI18N
+        tab.addTab("New Inventory", new javax.swing.ImageIcon(getClass().getResource("/images/iconIventory.png")), jPanel2); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -707,56 +669,509 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1)
+                .addComponent(tab)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1)
+                .addComponent(tab)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSearchActionPerformed
+    private void btnManagerCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManagerCreateActionPerformed
+        // TẠO MỚI TÀI KHOẢN MANAGER
+        enableTXT();
+        btnManagerEdit.setEnabled(false);
+        if(btnManagerCreate.getText().equals("Create")){
+            resetTXT();
+            btnManagerCreate.setText("Save");
+        }else if(btnManagerCreate.getText().equals("Save")){
+            if (!validateInsertManager()) {
+                return;
+            }
+            String condition = cboStore.getSelectedItem().toString();
+            String getCode = DataInteraction.getCode("Stores", "StoreName", condition, "StoreID");
+            String userID = getCode + "MN";
+            User user = new User(
+                    userID,
+                    txtManagerUsername.getText(),
+                    txtManagerPassword.getText(),
+                    txtManagerName.getText(),
+                    txtManagerPhone.getText(),
+                    txtManagerEmail.getText(),
+                    "MN",
+                    getCode,
+                    Integer.valueOf(txtManagerSalary.getText()));
+            interact.User.insertUser(user);
+            refresh();
+            btnManagerCreate.setText("Create");
+            resetTXT();
+            disableTXT();
+            btnManagerEdit.setEnabled(true);
+        }
+    }//GEN-LAST:event_btnManagerCreateActionPerformed
 
     private void tableManagerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableManagerMouseClicked
-
+        // LOAD DỮ LIỆU BẢNG MANAGER VÀO CÁC Ô TEXTFIELD:
+        int i = tableManager.getSelectedRow();
+        txtManagerID.setText(String.valueOf(tableManager.getValueAt(i, 0)));
+        txtManagerName.setText(String.valueOf(tableManager.getValueAt(i, 1)));
+        txtManagerPhone.setText(String.valueOf(tableManager.getValueAt(i, 2)));
+        txtManagerEmail.setText(String.valueOf(tableManager.getValueAt(i, 3)));
+        cboStore.setSelectedItem(String.valueOf(tableManager.getValueAt(i, 4)));
+        txtManagerSalary.setText(String.valueOf(tableManager.getValueAt(i, 5)));
     }//GEN-LAST:event_tableManagerMouseClicked
 
-    private void txtSearch1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearch1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSearch1ActionPerformed
+    private void btnManagerDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManagerDeleteActionPerformed
+        // XÓA 1 TÀI KHOÀN MANAGER
+        if(txtManagerName.getText().trim().length()==0){
+            JOptionPane.showMessageDialog(this, "Please chose one row from table");
+            return;
+        }
+        int i = JOptionPane.showConfirmDialog(this, "Do you want to delete this Manager.?");
+        if (i == JOptionPane.YES_OPTION) {
+            interact.User.deleteUser(txtManagerID.getText());
+            refresh();
+        }
+    }//GEN-LAST:event_btnManagerDeleteActionPerformed
+
+    private void btnManagerEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManagerEditActionPerformed
+        // CHỈNH SỬA 1 TÀI KHOẢN MANAGER
+        btnManagerCreate.setEnabled(false);
+        if(txtManagerName.getText().trim().length()==0){
+            JOptionPane.showMessageDialog(this, "Please chose one row from table");
+            return;
+        }
+        enableTXTEdit();
+        if (btnManagerEdit.getText().equals("Edit")) {
+            btnManagerEdit.setText("Save");
+        } else if (btnManagerEdit.getText().equals("Save")) {
+            if (!validateEditManager()) {
+                return;
+            }
+            User user = new User(
+                    txtManagerID.getText(),
+                    txtManagerUsername.getText(),
+                    txtManagerPassword.getText(),
+                    txtManagerName.getText(),
+                    txtManagerPhone.getText(), 
+                    txtManagerEmail.getText(),
+                    "MN",
+                    cboStore.getSelectedItem().toString(),
+                    Integer.valueOf(txtManagerSalary.getText()));
+            interact.User.editUser(user);
+            refresh();
+            btnManagerEdit.setText("Edit");
+            disableTXT();
+            btnManagerCreate.setEnabled(true);
+        }
+    }//GEN-LAST:event_btnManagerEditActionPerformed
+
+    private void btnManagerCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManagerCancelActionPerformed
+        // NÚT RESET TẤT CẢ BUTTON VÀ TEXTFIELD VỀ MẶC ĐỊNH
+        disableTXT();
+        resetTXT();
+        resetButton();
+    }//GEN-LAST:event_btnManagerCancelActionPerformed
+
+    private void btnManagerSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManagerSearchActionPerformed
+        // TÌM KIẾM MANAGER
+        String searchName = txtManagerSearch.getText().trim();
+        try {
+            GUIInteraction.readToTable("select * from View_Manager where Name like N'%" + searchName + "%' AND RoleName='Manager'", tableManager);
+        } catch (SQLException ex) {
+            Logger.getLogger(frmCreateNewStore.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnManagerSearchActionPerformed
+
+    private void btnInventoryCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventoryCreateActionPerformed
+        // TẠO MỚI TÀI KHOẢN 1 INVENTORY
+        enableTXT();
+        btnInventoryEdit.setEnabled(false);
+        if(btnInventoryCreate.getText().equals("Create")){
+            resetTXT();
+            btnInventoryCreate.setText("Save");
+        }else if(btnInventoryCreate.getText().equals("Save")){
+            if (!validateInsertInventory()) {
+                return;
+            }
+            
+            //TĂNG ID
+            int countUser = GUIInteraction.indentityID("select top 1 * from Users Where RoleID='IV' order by UserID Desc", "UserID") + 1;
+            String userID = "IV" + countUser;
+            
+            User user = new User(
+                    userID,
+                    txtInventoryUsername.getText(),
+                    txtInventoryPassword.getText(),
+                    txtInventoryName.getText(),
+                    txtInventoryPhone.getText(),
+                    txtInventoryEmail.getText(),
+                    "IV",
+                    "ST1",
+                    Integer.valueOf(txtInventorySalary.getText()));
+            interact.User.insertUser(user);
+            refresh();
+            btnInventoryCreate.setText("Create");
+            resetTXT();
+            disableTXT();
+            btnInventoryEdit.setEnabled(true);
+        }
+    }//GEN-LAST:event_btnInventoryCreateActionPerformed
+
+    private void btnInventoryCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventoryCancelActionPerformed
+        // NÚT RESET TẤT CẢ BUTTON VÀ TEXTFIELD VỀ MẶC ĐỊNH
+        disableTXT();
+        resetTXT();
+        resetButton();
+    }//GEN-LAST:event_btnInventoryCancelActionPerformed
+
+    private void tabMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabMouseClicked
+        // RESET TẤT CẢ BUTTON VÀ TEXTFIELD VỀ MẶC ĐỊNH KHI CHUYỂN TAB
+        disableTXT();
+        resetTXT();
+        resetButton();
+    }//GEN-LAST:event_tabMouseClicked
+
+    private void btnInventoryEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventoryEditActionPerformed
+        // CHÍNH SỬA TÀI KHOẢN 1 INVENTORY
+        btnInventoryCreate.setEnabled(false);
+        if(txtInventoryName.getText().trim().length()==0){
+            JOptionPane.showMessageDialog(this, "Please chose one row from table");
+            return;
+        }
+        enableTXTEdit();
+        if (btnInventoryEdit.getText().equals("Edit")) {
+            btnInventoryEdit.setText("Save");
+        } else if (btnInventoryEdit.getText().equals("Save")) {
+            if (!validateEditInventory()) {
+                return;
+            }
+            User user = new User(
+                    txtInventoryID.getText(),
+                    txtInventoryUsername.getText(),
+                    txtInventoryPassword.getText(),
+                    txtInventoryName.getText(),
+                    txtInventoryPhone.getText(), 
+                    txtInventoryEmail.getText(),
+                    "IV",
+                    cboStore.getSelectedItem().toString(),
+                    Integer.valueOf(txtInventorySalary.getText()));
+            interact.User.editUser(user);
+            refresh();
+            btnInventoryEdit.setText("Edit");
+            disableTXT();
+            btnInventoryCreate.setEnabled(true);
+        }
+    }//GEN-LAST:event_btnInventoryEditActionPerformed
 
     private void tableInventoryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableInventoryMouseClicked
-        // TODO add your handling code here:
+        // LOAD DỮ LIỆU BẢNG INVENTORY VÀO Ô TEXTFIELD
+        int i = tableInventory.getSelectedRow();
+        txtInventoryID.setText(String.valueOf(tableInventory.getValueAt(i, 0)));
+        txtInventoryName.setText(String.valueOf(tableInventory.getValueAt(i, 1)));
+        txtInventoryPhone.setText(String.valueOf(tableInventory.getValueAt(i, 2)));
+        txtInventoryEmail.setText(String.valueOf(tableInventory.getValueAt(i, 3)));
+        cboStore.setSelectedItem(String.valueOf(tableInventory.getValueAt(i, 4)));
+        txtInventorySalary.setText(String.valueOf(tableInventory.getValueAt(i, 5)));
     }//GEN-LAST:event_tableInventoryMouseClicked
 
+    private void btnInventoryDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventoryDeleteActionPerformed
+        // XÓA 1 TÀI KHOẢN INVENTORY
+        if(txtInventoryName.getText().trim().length()==0){
+            JOptionPane.showMessageDialog(this, "Please chose one row from table");
+            return;
+        }
+        int i = JOptionPane.showConfirmDialog(this, "Do you want to delete this Inventory.?");
+        if (i == JOptionPane.YES_OPTION) {
+            interact.User.deleteUser(txtInventoryID.getText());
+            refresh();
+        }
+    }//GEN-LAST:event_btnInventoryDeleteActionPerformed
+
+    private void btnInventorySearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventorySearchActionPerformed
+        // TÌM KIẾM THÔNG TIN 1 INVENTORY
+        String searchName = txtInventorySearch.getText().trim();
+        try {
+            GUIInteraction.readToTable("select * from View_Manager where Name like N'%" + searchName + "%' AND RoleName='Inventory'", tableInventory);
+        } catch (SQLException ex) {
+            Logger.getLogger(frmCreateNewStore.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnInventorySearchActionPerformed
+    
+    private void refresh() {
+        // LOAD DỮ LIỆU VÀO BẢNG VÀ COMBOBOX
+        try {
+            interact.GUIInteraction.readToTable("select * from View_Manager where RoleName='Manager'", tableManager);
+            interact.GUIInteraction.readToTable("select * from View_Manager where RoleName='Inventory'", tableInventory);
+            interact.GUIInteraction.readToCombo("select StoreName from Stores", cboStore, "StoreName");
+        } catch (SQLException ex) {
+            Logger.getLogger(frmCreateNewManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void resetButton(){
+        // RESET TẤT CẢ BUTTON VỀ MẶC ĐỊNH
+        btnManagerCreate.setText("Create");
+        btnManagerCreate.setEnabled(true);
+        btnManagerEdit.setText("Edit");
+        btnManagerEdit.setEnabled(true);
+        btnInventoryCreate.setText("Create");
+        btnInventoryCreate.setEnabled(true);
+        btnInventoryEdit.setText("Edit");
+        btnInventoryEdit.setEnabled(true);
+    }
+    
+    private void enableTXT() {
+        // ENABALE TẤT CẢ TEXTFIELD 
+        txtManagerName.setEnabled(true);
+        txtManagerUsername.setEnabled(true);
+        txtManagerPassword.setEnabled(true);
+        cboStore.setEnabled(true);
+        
+        txtInventoryName.setEnabled(true);
+        txtInventoryUsername.setEnabled(true);
+        txtInventoryPassword.setEnabled(true);
+        
+        enableTXTEdit();
+    }
+    
+    private void disableTXT(){
+        // DISABLE TẤT CẢ TEXTFIELD
+        txtManagerName.setEnabled(false);
+        txtManagerPhone.setEnabled(false);
+        txtManagerEmail.setEnabled(false);
+        txtManagerUsername.setEnabled(false);
+        txtManagerPassword.setEnabled(false);
+        txtManagerSalary.setEnabled(false);
+        cboStore.setEnabled(false);
+        
+        txtInventoryName.setEnabled(false);
+        txtInventoryPhone.setEnabled(false);
+        txtInventoryEmail.setEnabled(false);
+        txtInventoryUsername.setEnabled(false);
+        txtInventoryPassword.setEnabled(false);
+        txtInventorySalary.setEnabled(false);
+    }
+    
+    private void enableTXTEdit(){
+        // ENABALE TẤT CẢ TEXTFIELD CÁC Ô CẦN EDIT THÔNG TIN
+        txtManagerPhone.setEnabled(true);
+        txtManagerEmail.setEnabled(true);
+        txtManagerSalary.setEnabled(true);
+        
+        txtInventoryPhone.setEnabled(true);
+        txtInventoryEmail.setEnabled(true);
+        txtInventorySalary.setEnabled(true);
+    }
+    
+    private void resetTXT(){
+        // RESET TẤT CẢ TEXTFIELD VỀ MẶC ĐỊNH
+        txtManagerName.setText(null);
+        txtManagerPhone.setText(null);
+        txtManagerEmail.setText(null);
+        txtManagerUsername.setText(null);
+        txtManagerPassword.setText(null);
+        txtManagerSalary.setText(null);
+        cboStore.setSelectedIndex(-1);
+        
+        txtInventoryName.setText(null);
+        txtInventoryPhone.setText(null);
+        txtInventoryEmail.setText(null);
+        txtInventoryUsername.setText(null);
+        txtInventoryPassword.setText(null);
+        txtInventorySalary.setText(null);
+    }
+    
+    private void warning(){
+        // SHOW CẢNH BÁO NẾU 1 CỬA HÀNG NÀO ĐÓ KHÔNG CÓ MANAGER
+        // BONUS
+    }   
+    
+    private boolean validateInsertManager(){
+        // VALIDATE THÔNG TIN NHẬP VÀO KHI INSERT MANAGER
+        boolean flag;
+        String username = txtManagerUsername.getText();
+        String password = txtManagerPassword.getText();
+        if (!CheckForm.isEmpty(txtManagerName.getText())) {
+            JOptionPane.showMessageDialog(this, "Name is not blank", "Error", JOptionPane.ERROR_MESSAGE);
+            txtManagerName.setBackground(Color.red);
+            txtManagerName.requestFocus();
+            flag = false;
+        }else if (!GUIInteraction.checkDuplicateName(txtManagerName.getText().trim(), "select * from Users", "UserName")) {
+            JOptionPane.showMessageDialog(this, "Name is not duplicatated", "Error", JOptionPane.ERROR_MESSAGE);
+            txtManagerName.setBackground(Color.red);
+            txtManagerName.requestFocus();
+            flag = false;
+        }else if (!CheckForm.overLength(txtManagerName.getText())) {
+            JOptionPane.showMessageDialog(this, "Name is not than 50", "Error", JOptionPane.ERROR_MESSAGE);
+            txtManagerName.setBackground(Color.red);
+            txtManagerName.requestFocus();
+            flag = false;
+        }else if (!CheckForm.isWhiteSpace(username)||!CheckForm.isEmpty(username) || !GUIInteraction.checkDuplicateName(username,"select * from Users", "Username")) {
+            JOptionPane.showMessageDialog(this, "Username not have white space AND not blank AND dont duplicate", "Error", JOptionPane.ERROR_MESSAGE);
+            txtManagerUsername.requestFocus();
+            txtManagerName.setBackground(Color.white);
+            txtManagerPhone.setBackground(Color.white);
+            txtManagerEmail.setBackground(Color.white);
+            txtManagerUsername.setBackground(Color.red);
+            flag = false;
+        }else if (!CheckForm.isPwdUsername(password)||!CheckForm.isEmpty(password) || !CheckForm.isWhiteSpace(password)) {
+            JOptionPane.showMessageDialog(this, "Password not valid ", "Error", JOptionPane.ERROR_MESSAGE);
+            txtManagerPassword.requestFocus();
+            txtManagerName.setBackground(Color.white);
+            txtManagerPhone.setBackground(Color.white);
+            txtManagerEmail.setBackground(Color.white);
+            txtManagerUsername.setBackground(Color.white);
+            txtManagerPassword.setBackground(Color.red);
+            flag = false;
+        }else if(!validateEditManager()){
+            flag = false;
+        }else if (cboStore.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(this, "Store must select one", "Error", JOptionPane.ERROR_MESSAGE);
+            txtManagerSalary.requestFocus();
+            txtManagerName.setBackground(Color.white);
+            txtManagerPhone.setBackground(Color.white);
+            txtManagerEmail.setBackground(Color.white);
+            txtManagerUsername.setBackground(Color.white);
+            txtManagerPassword.setBackground(Color.white);
+            txtManagerSalary.setBackground(Color.white);
+            cboStore.setBackground(Color.red);
+            flag = false;
+        }else{
+            flag = true;
+        }
+        return flag;
+    }
+    
+    private boolean validateEditManager(){
+        // VALIDATE THÔNH TIN NHẬP VÀO KHI UPDATE MANAGER
+        boolean flag;
+        if (!CheckForm.checkPhoneNumber(txtManagerPhone.getText())) {
+            JOptionPane.showMessageDialog(this, "Phone is not phone format", "Error", JOptionPane.ERROR_MESSAGE);
+            txtManagerName.setBackground(Color.white);
+            txtManagerPhone.setBackground(Color.red);
+            txtManagerPhone.requestFocus();
+            flag = false;
+        }else if (!CheckForm.checkEmail(txtManagerEmail.getText())) {
+            JOptionPane.showMessageDialog(this, "Email is not email format", "Error", JOptionPane.ERROR_MESSAGE);
+            txtManagerEmail.requestFocus();
+            txtManagerName.setBackground(Color.white);
+            txtManagerPhone.setBackground(Color.white);
+            txtManagerEmail.setBackground(Color.red);
+            flag = false;
+        }else if (!CheckForm.isNumberic(txtManagerSalary.getText())) {
+            JOptionPane.showMessageDialog(this, "Salary must numberic", "Error", JOptionPane.ERROR_MESSAGE);
+            txtManagerSalary.requestFocus();
+            txtManagerName.setBackground(Color.white);
+            txtManagerPhone.setBackground(Color.white);
+            txtManagerEmail.setBackground(Color.white);
+            txtManagerUsername.setBackground(Color.white);
+            txtManagerPassword.setBackground(Color.white);
+            txtManagerSalary.setBackground(Color.red);
+            flag = false;
+        }else{
+            flag = true;
+        }
+        return flag;
+    }
+    
+    private boolean validateInsertInventory(){
+        // VALIDATE THÔNG TIN NHẬP VÀO KHI INSERT INVENTORY
+        boolean flag;
+        String username = txtInventoryUsername.getText();
+        String password = txtInventoryPassword.getText();
+        if (!CheckForm.isEmpty(txtInventoryName.getText())) {
+            JOptionPane.showMessageDialog(this, "Name is not blank", "Error", JOptionPane.ERROR_MESSAGE);
+            txtInventoryName.setBackground(Color.red);
+            txtInventoryName.requestFocus();
+            flag = false;
+        }else if (!GUIInteraction.checkDuplicateName(txtInventoryName.getText().trim(), "select * from Users", "UserName")) {
+            JOptionPane.showMessageDialog(this, "Name is not duplicatated", "Error", JOptionPane.ERROR_MESSAGE);
+            txtInventoryName.setBackground(Color.red);
+            txtInventoryName.requestFocus();
+            flag = false;
+        }else if (!CheckForm.overLength(txtInventoryName.getText())) {
+            JOptionPane.showMessageDialog(this, "Name is not than 50", "Error", JOptionPane.ERROR_MESSAGE);
+            txtInventoryName.setBackground(Color.red);
+            txtInventoryName.requestFocus();
+            flag = false;
+        }else if (!CheckForm.isWhiteSpace(username)||!CheckForm.isEmpty(username) || !GUIInteraction.checkDuplicateName(username,"select * from Users", "Username")) {
+            JOptionPane.showMessageDialog(this, "Username not have white space AND not blank AND dont duplicate", "Error", JOptionPane.ERROR_MESSAGE);
+            txtInventoryUsername.requestFocus();
+            txtInventoryName.setBackground(Color.white);
+            txtInventoryPhone.setBackground(Color.white);
+            txtInventoryEmail.setBackground(Color.white);
+            txtInventoryUsername.setBackground(Color.red);
+            flag = false;
+        }else if (!CheckForm.isPwdUsername(password)||!CheckForm.isEmpty(password) || !CheckForm.isWhiteSpace(password)) {
+            JOptionPane.showMessageDialog(this, "Password not valid ", "Error", JOptionPane.ERROR_MESSAGE);
+            txtInventoryPassword.requestFocus();
+            txtInventoryName.setBackground(Color.white);
+            txtInventoryPhone.setBackground(Color.white);
+            txtInventoryEmail.setBackground(Color.white);
+            txtInventoryUsername.setBackground(Color.white);
+            txtInventoryPassword.setBackground(Color.red);
+            flag = false;
+        }else if(!validateEditInventory()){
+            flag = false;
+        }else{
+            flag = true;
+        }
+        return flag;
+    }
+    
+    private boolean validateEditInventory(){
+        // VALIDATE THÔNG TIN NHẬP VÀO KHI UPDATE INVENTORY
+        boolean flag;
+        String username = txtInventoryUsername.getText();
+        String password = txtInventoryPassword.getText();
+        if (!CheckForm.checkPhoneNumber(txtInventoryPhone.getText())) {
+            JOptionPane.showMessageDialog(this, "Phone is not phone format", "Error", JOptionPane.ERROR_MESSAGE);
+            txtInventoryName.setBackground(Color.white);
+            txtInventoryPhone.setBackground(Color.red);
+            txtInventoryPhone.requestFocus();
+            flag = false;
+        }else if (!CheckForm.checkEmail(txtInventoryEmail.getText())) {
+            JOptionPane.showMessageDialog(this, "Email is not email format", "Error", JOptionPane.ERROR_MESSAGE);
+            txtInventoryEmail.requestFocus();
+            txtInventoryName.setBackground(Color.white);
+            txtInventoryPhone.setBackground(Color.white);
+            txtInventoryEmail.setBackground(Color.red);
+            flag = false;
+        }else if (!CheckForm.isNumberic(txtInventorySalary.getText())) {
+            JOptionPane.showMessageDialog(this, "Salary must numberic", "Error", JOptionPane.ERROR_MESSAGE);
+            txtInventorySalary.requestFocus();
+            txtInventoryName.setBackground(Color.white);
+            txtInventoryPhone.setBackground(Color.white);
+            txtInventoryEmail.setBackground(Color.white);
+            txtInventoryUsername.setBackground(Color.white);
+            txtInventoryPassword.setBackground(Color.white);
+            txtInventorySalary.setBackground(Color.red);
+            flag = false;
+        }else{
+            flag = true;
+        }
+        return flag;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCancel;
-    private javax.swing.JButton btnCancel1;
-    private javax.swing.JButton btnCreate;
-    private javax.swing.JButton btnCreate1;
-    private javax.swing.JButton btnDelete;
-    private javax.swing.JButton btnDelete1;
-    private javax.swing.JButton btnEdit;
-    private javax.swing.JButton btnEdit1;
-    private javax.swing.JButton btnSearch;
-    private javax.swing.JButton btnSearch1;
-    private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.ButtonGroup buttonGroup2;
-    private javax.swing.ButtonGroup buttonGroup3;
+    private javax.swing.JButton btnInventoryCancel;
+    private javax.swing.JButton btnInventoryCreate;
+    private javax.swing.JButton btnInventoryDelete;
+    private javax.swing.JButton btnInventoryEdit;
+    private javax.swing.JButton btnInventorySearch;
+    private javax.swing.JButton btnManagerCancel;
+    private javax.swing.JButton btnManagerCreate;
+    private javax.swing.JButton btnManagerDelete;
+    private javax.swing.JButton btnManagerEdit;
+    private javax.swing.JButton btnManagerSearch;
     private javax.swing.JComboBox cboStore;
-    private javax.swing.JRadioButton chkGenderF;
-    private javax.swing.JRadioButton chkGenderF1;
-    private javax.swing.JRadioButton chkGenderM;
-    private javax.swing.JRadioButton chkGenderM1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
@@ -770,8 +1185,6 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
-    private javax.swing.JLabel jLabel34;
-    private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
@@ -780,8 +1193,6 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
@@ -790,30 +1201,26 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane7;
-    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTabbedPane tab;
     private javax.swing.JTable tableInventory;
     private javax.swing.JTable tableManager;
-    private javax.swing.JTextArea txtAddress;
-    private javax.swing.JTextArea txtAddress1;
-    private javax.swing.JTextField txtEmail;
-    private javax.swing.JTextField txtEmail1;
-    private javax.swing.JTextField txtID;
-    private javax.swing.JTextField txtID1;
-    private javax.swing.JTextField txtName;
-    private javax.swing.JTextField txtName1;
-    private javax.swing.JTextField txtPassword;
-    private javax.swing.JTextField txtPassword1;
-    private javax.swing.JTextField txtPhone;
-    private javax.swing.JTextField txtPhone1;
-    private javax.swing.JTextField txtSalary;
-    private javax.swing.JTextField txtSalary1;
-    private javax.swing.JTextField txtSearch;
-    private javax.swing.JTextField txtSearch1;
-    private javax.swing.JTextField txtUsername;
-    private javax.swing.JTextField txtUsername1;
+    private javax.swing.JTextField txtInventoryEmail;
+    private javax.swing.JTextField txtInventoryID;
+    private javax.swing.JTextField txtInventoryName;
+    private javax.swing.JPasswordField txtInventoryPassword;
+    private javax.swing.JTextField txtInventoryPhone;
+    private javax.swing.JTextField txtInventorySalary;
+    private javax.swing.JTextField txtInventorySearch;
+    private javax.swing.JTextField txtInventoryUsername;
+    private javax.swing.JTextField txtManagerEmail;
+    private javax.swing.JTextField txtManagerID;
+    private javax.swing.JTextField txtManagerName;
+    private javax.swing.JPasswordField txtManagerPassword;
+    private javax.swing.JTextField txtManagerPhone;
+    private javax.swing.JTextField txtManagerSalary;
+    private javax.swing.JTextField txtManagerSearch;
+    private javax.swing.JTextField txtManagerUsername;
     // End of variables declaration//GEN-END:variables
 }

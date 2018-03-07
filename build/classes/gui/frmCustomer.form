@@ -2,9 +2,9 @@
 
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JInternalFrameFormInfo">
   <NonVisualComponents>
-    <Component class="javax.swing.ButtonGroup" name="buttonGroup1">
+    <Component class="javax.swing.ButtonGroup" name="buttonGroupGender">
     </Component>
-    <Component class="javax.swing.ButtonGroup" name="buttonGroup2">
+    <Component class="javax.swing.ButtonGroup" name="buttonGroupGenderSearch">
     </Component>
   </NonVisualComponents>
   <SyntheticProperties>
@@ -196,6 +196,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Add"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnCancel">
               <Properties>
@@ -207,6 +210,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Cancel"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancelActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnRefresh">
               <Properties>
@@ -250,13 +256,20 @@
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="cc" green="cc" red="cc" type="rgb"/>
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtCustomerName">
+              <Properties>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtPhone">
+              <Properties>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblAddress">
               <Properties>
@@ -283,29 +296,37 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtEmail">
+              <Properties>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtAddress">
+              <Properties>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
             </Component>
             <Component class="javax.swing.JRadioButton" name="chkGenderM">
               <Properties>
                 <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                  <ComponentRef name="buttonGroup1"/>
+                  <ComponentRef name="buttonGroupGender"/>
                 </Property>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="12" style="0"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Male"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JRadioButton" name="chGenderF">
               <Properties>
                 <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                  <ComponentRef name="buttonGroup1"/>
+                  <ComponentRef name="buttonGroupGender"/>
                 </Property>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="12" style="0"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Female"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Container class="javax.swing.JPanel" name="jPanel3">
@@ -391,9 +412,6 @@
                           <Table columnCount="0" rowCount="0"/>
                         </Property>
                       </Properties>
-                      <Events>
-                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tableCustomerMouseClicked"/>
-                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -558,6 +576,7 @@
                 </Component>
                 <Component class="javax.swing.JTextField" name="txtSearhCustomerID">
                   <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtSearhCustomerIDActionPerformed"/>
                     <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtSearhCustomerIDKeyReleased"/>
                   </Events>
                 </Component>
@@ -607,16 +626,16 @@
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="txtCustomerID1" alignment="1" min="-2" pref="160" max="-2" attributes="1"/>
-                              <Component id="txtPhone1" alignment="1" min="-2" pref="160" max="-2" attributes="1"/>
-                              <Component id="txtName1" alignment="1" min="-2" pref="160" max="-2" attributes="1"/>
+                              <Component id="txtCustomerIDEdit" alignment="1" min="-2" pref="160" max="-2" attributes="1"/>
+                              <Component id="txtPhoneEdit" alignment="1" min="-2" pref="160" max="-2" attributes="1"/>
+                              <Component id="txtCustomerNameEdit" alignment="1" min="-2" pref="160" max="-2" attributes="1"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" max="-2" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="lblAddress1" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="txtAddress1" min="-2" pref="181" max="-2" attributes="1"/>
+                                  <Component id="txtAddressEdit" min="-2" pref="181" max="-2" attributes="1"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <Group type="103" groupAlignment="1" attributes="0">
@@ -625,11 +644,11 @@
                                   </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="txtEmail1" alignment="0" min="-2" pref="181" max="-2" attributes="1"/>
+                                      <Component id="txtEmailEdit" alignment="0" min="-2" pref="181" max="-2" attributes="1"/>
                                       <Group type="102" alignment="0" attributes="0">
-                                          <Component id="chkGenderM1" min="-2" max="-2" attributes="0"/>
+                                          <Component id="chkGenderMSearch" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Component id="chkGenderF1" min="-2" max="-2" attributes="0"/>
+                                          <Component id="chkGenderFSearch" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -656,33 +675,33 @@
                                   <Group type="102" alignment="1" attributes="0">
                                       <Group type="103" groupAlignment="3" attributes="0">
                                           <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="txtCustomerID1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txtCustomerIDEdit" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="txtName1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txtCustomerNameEdit" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="lblName1" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                                      <Component id="txtPhone1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="txtPhoneEdit" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Component id="lblPhone1" alignment="1" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="lblAddress1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="txtAddress1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="txtAddressEdit" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="txtEmail1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="txtEmailEdit" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="lblEmail1" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="lblGender1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="chkGenderM1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="chkGenderF1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="chkGenderMSearch" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="chkGenderFSearch" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -708,6 +727,9 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value="Edit"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel4">
                   <Properties>
@@ -717,12 +739,13 @@
                     <Property name="text" type="java.lang.String" value="ID :"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txtCustomerID1">
+                <Component class="javax.swing.JTextField" name="txtCustomerIDEdit">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="cc" green="cc" red="cc" type="rgb"/>
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblName1">
@@ -733,12 +756,13 @@
                     <Property name="text" type="java.lang.String" value="Name :"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txtName1">
+                <Component class="javax.swing.JTextField" name="txtCustomerNameEdit">
                   <Properties>
-                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="cc" green="cc" red="cc" type="rgb"/>
-                    </Property>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtCustomerNameEditActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblPhone1">
                   <Properties>
@@ -748,11 +772,9 @@
                     <Property name="text" type="java.lang.String" value="Phone :"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txtPhone1">
+                <Component class="javax.swing.JTextField" name="txtPhoneEdit">
                   <Properties>
-                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="cc" green="cc" red="cc" type="rgb"/>
-                    </Property>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblAddress1">
@@ -763,11 +785,9 @@
                     <Property name="text" type="java.lang.String" value="Address :"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txtAddress1">
+                <Component class="javax.swing.JTextField" name="txtAddressEdit">
                   <Properties>
-                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="cc" green="cc" red="cc" type="rgb"/>
-                    </Property>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblEmail1">
@@ -778,11 +798,9 @@
                     <Property name="text" type="java.lang.String" value="Email :"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txtEmail1">
+                <Component class="javax.swing.JTextField" name="txtEmailEdit">
                   <Properties>
-                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="cc" green="cc" red="cc" type="rgb"/>
-                    </Property>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblGender1">
@@ -793,26 +811,28 @@
                     <Property name="text" type="java.lang.String" value="Gender :"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JRadioButton" name="chkGenderM1">
+                <Component class="javax.swing.JRadioButton" name="chkGenderMSearch">
                   <Properties>
                     <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                      <ComponentRef name="buttonGroup2"/>
+                      <ComponentRef name="buttonGroupGenderSearch"/>
                     </Property>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="12" style="0"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Male"/>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JRadioButton" name="chkGenderF1">
+                <Component class="javax.swing.JRadioButton" name="chkGenderFSearch">
                   <Properties>
                     <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                      <ComponentRef name="buttonGroup2"/>
+                      <ComponentRef name="buttonGroupGenderSearch"/>
                     </Property>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="12" style="0"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Female"/>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnDelete">
@@ -825,6 +845,9 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value="Delete"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeleteActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnCancel1">
                   <Properties>
@@ -836,6 +859,9 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value="Cancel"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancel1ActionPerformed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -878,14 +904,14 @@
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                   <SubComponents>
-                    <Component class="javax.swing.JTable" name="tableCustomer1">
+                    <Component class="javax.swing.JTable" name="tableCustomerSearch">
                       <Properties>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                           <Table columnCount="0" rowCount="0"/>
                         </Property>
                       </Properties>
                       <Events>
-                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tableCustomer1MouseClicked"/>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tableCustomerSearchMouseClicked"/>
                       </Events>
                     </Component>
                   </SubComponents>

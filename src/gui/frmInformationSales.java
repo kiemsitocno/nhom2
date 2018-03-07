@@ -5,17 +5,29 @@
  */
 package gui;
 
+import interact.DataInteraction;
+import interact.GUIInteraction;
+import interact.Login;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
+ * GIAO DIỆN XEM THÔNG TIN CÁ NHÂN CỦA SALES
  *
- * @author kiems
+ * @author NHÓM 2
  */
 public class frmInformationSales extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form frmInformationSales
      */
+    String salesID = Login.getAdminID();
+    String salesName = DataInteraction.getCode("Users", "UserID", salesID, "Name");
     public frmInformationSales() {
         initComponents();
+        loadInfo();
+        loadArchive();
     }
 
     /**
@@ -32,18 +44,28 @@ public class frmInformationSales extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
+        labelName = new javax.swing.JLabel();
+        labelPhone = new javax.swing.JLabel();
+        labelStore = new javax.swing.JLabel();
+        labelPosition = new javax.swing.JLabel();
+        labelEmail = new javax.swing.JLabel();
+        labelSalary = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
+        labelBillSold = new javax.swing.JLabel();
+        labelProductSold = new javax.swing.JLabel();
+        labelWorkDay = new javax.swing.JLabel();
+        labelBonus = new javax.swing.JLabel();
+        labelSalaryMonth = new javax.swing.JLabel();
 
         jPanel6.setBackground(new java.awt.Color(0, 255, 255));
 
@@ -77,9 +99,6 @@ public class frmInformationSales extends javax.swing.JInternalFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setText("Phone :");
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel4.setText("Address :");
-
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel5.setText("Store :");
 
@@ -94,6 +113,18 @@ public class frmInformationSales extends javax.swing.JInternalFrame {
         jLabel15.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel15.setText("Salary :");
 
+        labelName.setText("jLabel2");
+
+        labelPhone.setText("jLabel2");
+
+        labelStore.setText("jLabel2");
+
+        labelPosition.setText("jLabel2");
+
+        labelEmail.setText("jLabel2");
+
+        labelSalary.setText("jLabel2");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -106,17 +137,29 @@ public class frmInformationSales extends javax.swing.JInternalFrame {
                         .addComponent(jLabel9))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(labelName))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(labelPhone))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel15)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(labelSalary)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
                             .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING))))
-                .addGap(153, 153, 153)
-                .addComponent(jLabel15)
-                .addGap(221, 221, 221))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelPosition)
+                    .addComponent(labelEmail)
+                    .addComponent(labelStore))
+                .addGap(373, 373, 373))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -125,15 +168,22 @@ public class frmInformationSales extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel5)
-                    .addComponent(jLabel15))
+                    .addComponent(labelName)
+                    .addComponent(labelStore))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel6))
+                    .addComponent(jLabel6)
+                    .addComponent(labelPhone)
+                    .addComponent(labelPosition))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel7))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel15)
+                        .addComponent(labelSalary))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel7)
+                        .addComponent(labelEmail)))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel9)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -156,6 +206,16 @@ public class frmInformationSales extends javax.swing.JInternalFrame {
         jLabel14.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel14.setText("Salary of month :");
 
+        labelBillSold.setText("jLabel2");
+
+        labelProductSold.setText("jLabel2");
+
+        labelWorkDay.setText("jLabel2");
+
+        labelBonus.setText("jLabel2");
+
+        labelSalaryMonth.setText("jLabel2");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -163,26 +223,51 @@ public class frmInformationSales extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel10)
-                    .addComponent(jLabel11)
-                    .addComponent(jLabel12)
-                    .addComponent(jLabel13)
-                    .addComponent(jLabel14))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelBillSold))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(labelProductSold))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(labelWorkDay))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel13)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelBonus))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel14)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelSalaryMonth)))
+                .addContainerGap(502, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel10)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(labelBillSold))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel11)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(labelProductSold))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel12)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(labelWorkDay))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel13)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(labelBonus))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel14)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14)
+                    .addComponent(labelSalaryMonth))
                 .addContainerGap(42, Short.MAX_VALUE))
         );
 
@@ -213,6 +298,43 @@ public class frmInformationSales extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void loadInfo(){
+        // LOAD DỮ LIỆU SQL VÀO TEXTFIELD
+        labelName.setText(DataInteraction.getLines("Users", "UserID", salesID, "Name"));
+        labelPhone.setText(DataInteraction.getLines("Users", "UserID", salesID, "Phone"));
+        labelStore.setText(DataInteraction.getLines("Users", "UserID", salesID, "StoreID"));
+        labelPosition.setText(DataInteraction.getLines("Users", "UserID", salesID, "RoleID"));
+        labelEmail.setText(DataInteraction.getLines("Users", "UserID", salesID, "Email"));
+        labelSalary.setText(DataInteraction.getLines("Users", "UserID", salesID, "Salary"));
+    }
+    
+    private void loadArchive(){
+        // LOAD PERSONAL
+        try {
+            int countBillSold = GUIInteraction.countRecord("select * from Bills where SalesID='"+salesID+"'");
+            labelBillSold.setText(String.valueOf(countBillSold));
+            // sua lai sau
+//            int countProductSold = GUIInteraction.countQuantity("select sum(Quantity) as Total from Bills where SalesID='"+salesID+"'");
+//            labelProductSold.setText(String.valueOf(countProductSold));
+            int countDay = GUIInteraction.countRecord("select * from DayWork where UserID='"+salesID+"'");
+            labelWorkDay.setText(String.valueOf(countDay));
+            
+            int bonus;
+//            if(countProductSold<50){
+//                bonus=0;
+//            }else if(countProductSold<100){
+//                bonus=100000;
+//            }else{
+//                bonus=500000;
+//            }
+//            labelBonus.setText(String.valueOf(bonus));
+            int salary = Integer.valueOf(DataInteraction.getLines("Users", "UserID", salesID, "Salary"));
+//            int salaryMonth = salary/30*countDay+bonus;
+//            labelSalaryMonth.setText(String.valueOf(salaryMonth));
+        } catch (SQLException ex) {
+            Logger.getLogger(frmInformationSales.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -223,7 +345,6 @@ public class frmInformationSales extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -232,5 +353,16 @@ public class frmInformationSales extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JLabel labelBillSold;
+    private javax.swing.JLabel labelBonus;
+    private javax.swing.JLabel labelEmail;
+    private javax.swing.JLabel labelName;
+    private javax.swing.JLabel labelPhone;
+    private javax.swing.JLabel labelPosition;
+    private javax.swing.JLabel labelProductSold;
+    private javax.swing.JLabel labelSalary;
+    private javax.swing.JLabel labelSalaryMonth;
+    private javax.swing.JLabel labelStore;
+    private javax.swing.JLabel labelWorkDay;
     // End of variables declaration//GEN-END:variables
 }

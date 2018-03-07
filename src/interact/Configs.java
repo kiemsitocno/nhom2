@@ -15,13 +15,12 @@ import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.PBEParameterSpec;
 
 /**
- *
- * @author Bach Ngoc  Toan
+ * CONFIG KẾT NỐI VỚI SQL
+ * @author NHÓM 2
  */
 public class Configs {
-
+    
     public static final String CONFIG_FILENAME = "configs.properties";
-
     public static final String CONFIG_SERVERNAME = "serverName";
     public static final String CONFIG_PORTNUMBER = "port";
     public static final String CONFIG_DATABASENAME = "databaseName";
@@ -32,14 +31,11 @@ public class Configs {
     private static final int count = 20;
     private static final byte[] salt = {
             (byte)0xc7, (byte)0x73, (byte)0x21, (byte)0x8c,
-            (byte)0x7e, (byte)0xc8, (byte)0xee, (byte)0x99
-        };
-
+            (byte)0x7e, (byte)0xc8, (byte)0xee, (byte)0x99};
 
     private static boolean logged = false;
-
     private static Properties p;
-
+    
     public static boolean isLogged() {
         return logged;
     }
@@ -50,38 +46,28 @@ public class Configs {
 
     public static String encrypt(String input) throws Exception {
         String output;
-
         byte[] plain = input.getBytes();
-
         PBEParameterSpec pbeParamSpec = new PBEParameterSpec(salt, count);
-
         PBEKeySpec pbeKeySpec = new PBEKeySpec(PASSKEY.toCharArray());
         SecretKeyFactory skFact = SecretKeyFactory.getInstance("PBEWithMD5AndDES");
         SecretKey key = skFact.generateSecret(pbeKeySpec);
-
         Cipher c = Cipher.getInstance("PBEWithMD5AndDES");
         c.init(Cipher.ENCRYPT_MODE, key, pbeParamSpec);
         byte[] encryted =  c.doFinal(plain);
-
         output = new String(encryted);
         return output;
     }
 
     public static String decrypt(String input) throws Exception {
         String output;
-
         byte[] plain = input.getBytes();
-
         PBEParameterSpec pbeParamSpec = new PBEParameterSpec(salt, count);
-
         PBEKeySpec pbeKeySpec = new PBEKeySpec(PASSKEY.toCharArray());
         SecretKeyFactory skFact = SecretKeyFactory.getInstance("PBEWithMD5AndDES");
         SecretKey key = skFact.generateSecret(pbeKeySpec);
-
         Cipher c = Cipher.getInstance("PBEWithMD5AndDES");
         c.init(Cipher.DECRYPT_MODE, key, pbeParamSpec );
         byte[] encryted =  c.doFinal(plain);
-
         output = new String(encryted);
         return output;
     }
@@ -92,7 +78,6 @@ public class Configs {
         if(p == null) {
             return "";
         }
-
         return p.getProperty(prop);
     }
 
@@ -114,13 +99,11 @@ public class Configs {
         } catch (Exception ex) {
             return false;
         }
-
         return true;
     }
 
     public static void saveConfiguration() {
         FileOutputStream fos = null;
-
         try {
             fos = new FileOutputStream(CONFIG_FILENAME);
             String serverPass = p.getProperty(CONFIG_SERVERPASSWORD);
