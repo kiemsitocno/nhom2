@@ -11,7 +11,9 @@ import entity.Product;
 import interact.CheckForm;
 import interact.DataInteraction;
 import interact.GUIInteraction;
+import interact.Login;
 import java.awt.Color;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -144,6 +146,11 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
         jLabel3.setText("Category Name :");
 
         txtCategoryName.setEnabled(false);
+        txtCategoryName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCategoryNameKeyReleased(evt);
+            }
+        });
 
         btnAddCategory.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnAddCategory.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconAdd.png"))); // NOI18N
@@ -359,6 +366,11 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
         jLabel8.setText("Name :");
 
         txtProductName.setEnabled(false);
+        txtProductName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtProductNameKeyReleased(evt);
+            }
+        });
 
         jLabel9.setText("Volume :");
 
@@ -377,6 +389,11 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
         jLabel13.setText("Category :");
 
         cbbCategory.setEnabled(false);
+        cbbCategory.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbbCategoryItemStateChanged(evt);
+            }
+        });
 
         jLabel14.setText("Description :");
 
@@ -831,7 +848,14 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
 
     private void btnSearchProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchProductActionPerformed
         // TÌM KIẾM SẢN PHẨM THEO TÊN
+        String cateName;
+        try{
+            cateName = cbbCategory.getSelectedItem().toString();
+        }catch(Exception ex){
+            cateName = "";
+        }
         txtProductName.setEnabled(true);
+        cbbCategory.setEnabled(true);
         btnEditProduct.setEnabled(false);
         btnAddProduct.setEnabled(false);
         if (btnSearchProduct.getText().equals("Search")) {
@@ -859,6 +883,54 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
         resetTXT();
         resetButton();
     }//GEN-LAST:event_tabCategoryProductsMouseClicked
+
+    private void txtCategoryNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCategoryNameKeyReleased
+        // TODO add your handling code here:
+        String cateName = txtCategoryName.getText();
+        String sql = "select * from Categories where CategoryName like '%"+cateName+"%'";
+        try {
+            GUIInteraction.readToTable(sql, tableCategory);
+        } catch (SQLException ex) {
+            Logger.getLogger(frmCreateBill.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_txtCategoryNameKeyReleased
+
+    private void txtProductNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtProductNameKeyReleased
+        // TODO add your handling code here:
+        String cateName;
+        String cateID;
+        try{
+            cateName = cbbCategory.getSelectedItem().toString();
+            cateID = DataInteraction.getCode("Categories", "CategoryName", cateName, "CategoryID");
+        }catch(Exception ex){
+            cateID = "";
+        }
+        String productName = txtProductName.getText();
+        String sql = "select * from Products where ProductName like '%"+productName+"%' and CategoryID='"+cateID+"'";
+        try {
+            GUIInteraction.readToTable(sql, tableProduct);
+        } catch (SQLException ex) {
+            Logger.getLogger(frmCreateBill.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_txtProductNameKeyReleased
+
+    private void cbbCategoryItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbCategoryItemStateChanged
+        // TODO add your handling code here:
+        String cateName;
+        String cateID;
+        try{
+            cateName = cbbCategory.getSelectedItem().toString();
+            cateID = DataInteraction.getCode("Categories", "CategoryName", cateName, "CategoryID");
+        }catch(Exception ex){
+            cateID = "";
+        }
+        String sql = "select * from Products where CategoryID like '%"+cateID+"%'";
+        try {
+            GUIInteraction.readToTable(sql, tableProduct);
+        } catch (SQLException ex) {
+            Logger.getLogger(frmCreateBill.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_cbbCategoryItemStateChanged
     
     private void refresh() {
         // PHƯƠNG THỨC LOAD DỮ LIỆU RA BẢNG VÀ COMBOBOX

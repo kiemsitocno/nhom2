@@ -45,8 +45,6 @@ public class frmCustomerBrower extends javax.swing.JFrame {
         tblCustomer.getTableHeader().setReorderingAllowed(false);
         jLabel2 = new javax.swing.JLabel();
         txtSearchName = new javax.swing.JTextField();
-        txtSearhCustomerID = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
         btnSearchRefresh = new javax.swing.JButton();
         btnSelect = new javax.swing.JButton();
 
@@ -70,15 +68,7 @@ public class frmCustomerBrower extends javax.swing.JFrame {
             }
         });
 
-        txtSearhCustomerID.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtSearhCustomerIDKeyReleased(evt);
-            }
-        });
-
-        jLabel1.setText("Customer ID:");
-
-        btnSearchRefresh.setText("Refresh");
+        btnSearchRefresh.setText("SEARCH");
         btnSearchRefresh.setPreferredSize(new java.awt.Dimension(100, 23));
         btnSearchRefresh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -101,12 +91,9 @@ public class frmCustomerBrower extends javax.swing.JFrame {
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(layout.createSequentialGroup()
                         .add(30, 30, 30)
-                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                            .add(jLabel1)
-                            .add(jLabel2))
+                        .add(jLabel2)
                         .add(18, 18, 18)
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(txtSearhCustomerID, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 253, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                             .add(txtSearchName, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 253, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                             .add(org.jdesktop.layout.GroupLayout.TRAILING, btnSearchRefresh, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
                     .add(layout.createSequentialGroup()
@@ -120,11 +107,7 @@ public class frmCustomerBrower extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                    .add(jLabel1)
-                    .add(txtSearhCustomerID, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .addContainerGap(37, Short.MAX_VALUE)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jLabel2)
                     .add(txtSearchName, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
@@ -153,25 +136,6 @@ public class frmCustomerBrower extends javax.swing.JFrame {
             Logger.getLogger(frmCustomer.class.getName()).log(Level.SEVERE, null, ex);
         }
 }//GEN-LAST:event_txtSearchNameKeyReleased
-
-    private void txtSearhCustomerIDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearhCustomerIDKeyReleased
-        String str = txtSearhCustomerID.getText();
-        String sql = "";
-        if (str.equals("")) {
-            sql = "select * from Customers";
-        }
-        if (!interact.CheckForm.isNumberic(str)) {
-            JOptionPane.showMessageDialog(this, "Invalid fomat", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        } else {
-            sql = ("select * from Customers where CustomerID=" + Integer.valueOf(str));
-        }
-        try {
-            interact.GUIInteraction.readToTable(sql, tblCustomer);
-        } catch (SQLException ex) {
-            Logger.getLogger(frmCustomer.class.getName()).log(Level.SEVERE, null, ex);
-        }
-}//GEN-LAST:event_txtSearhCustomerIDKeyReleased
 
     private void btnSearchRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchRefreshActionPerformed
         refresh();
@@ -202,12 +166,10 @@ public class frmCustomerBrower extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSearchRefresh;
     private javax.swing.JButton btnSelect;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tblCustomer;
     private javax.swing.JTextField txtSearchName;
-    private javax.swing.JTextField txtSearhCustomerID;
     // End of variables declaration//GEN-END:variables
 
 }

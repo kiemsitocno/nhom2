@@ -5,15 +5,25 @@
  */
 package gui;
 
+import interact.SendMail;
+import java.nio.channels.SeekableByteChannel;
+import java.util.Date;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.mail.*;
+import javax.mail.internet.*;
+import javax.swing.JOptionPane;
 /**
  *
- * @author kiems
+ * @author DESKTOP-EQP0G7D
  */
-public class frmSendMail extends javax.swing.JInternalFrame {
+public class frmSendMail extends javax.swing.JFrame {
 
     /**
-     * Creates new form frmSendMail
+     * Creates new form frmSendMail1
      */
+    static frmManagementBill code;
     public frmSendMail() {
         initComponents();
     }
@@ -34,7 +44,7 @@ public class frmSendMail extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         txtFrom = new javax.swing.JTextField();
         txtPass = new javax.swing.JPasswordField();
-        btnLogon1 = new javax.swing.JButton();
+        btnSign = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         txtTo = new javax.swing.JTextField();
@@ -43,8 +53,10 @@ public class frmSendMail extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
-        btnLogon = new javax.swing.JButton();
-        btnExit = new javax.swing.JButton();
+        btnSend = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(102, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -79,13 +91,13 @@ public class frmSendMail extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Password :");
 
-        btnLogon1.setBackground(new java.awt.Color(255, 255, 255));
-        btnLogon1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconLogin.png"))); // NOI18N
-        btnLogon1.setMnemonic('L');
-        btnLogon1.setText("Sign In");
-        btnLogon1.addActionListener(new java.awt.event.ActionListener() {
+        btnSign.setBackground(new java.awt.Color(255, 255, 255));
+        btnSign.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconLogin.png"))); // NOI18N
+        btnSign.setMnemonic('L');
+        btnSign.setText("Sign In");
+        btnSign.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLogon1ActionPerformed(evt);
+                btnSignActionPerformed(evt);
             }
         });
 
@@ -105,7 +117,7 @@ public class frmSendMail extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnLogon1)
+                .addComponent(btnSign)
                 .addGap(248, 248, 248))
         );
         jPanel2Layout.setVerticalGroup(
@@ -120,7 +132,7 @@ public class frmSendMail extends javax.swing.JInternalFrame {
                     .addComponent(jLabel3)
                     .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(btnLogon1)
+                .addComponent(btnSign)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -138,23 +150,23 @@ public class frmSendMail extends javax.swing.JInternalFrame {
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
-        btnLogon.setBackground(new java.awt.Color(255, 255, 255));
-        btnLogon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconSendMail.png"))); // NOI18N
-        btnLogon.setMnemonic('L');
-        btnLogon.setText("Send Mail");
-        btnLogon.addActionListener(new java.awt.event.ActionListener() {
+        btnSend.setBackground(new java.awt.Color(255, 255, 255));
+        btnSend.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconSendMail.png"))); // NOI18N
+        btnSend.setMnemonic('L');
+        btnSend.setText("Send Mail");
+        btnSend.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLogonActionPerformed(evt);
+                btnSendActionPerformed(evt);
             }
         });
 
-        btnExit.setBackground(new java.awt.Color(255, 255, 255));
-        btnExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconBack.png"))); // NOI18N
-        btnExit.setMnemonic('L');
-        btnExit.setText("  Back");
-        btnExit.addActionListener(new java.awt.event.ActionListener() {
+        btnBack.setBackground(new java.awt.Color(255, 255, 255));
+        btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconBack.png"))); // NOI18N
+        btnBack.setMnemonic('L');
+        btnBack.setText("  Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnExitActionPerformed(evt);
+                btnBackActionPerformed(evt);
             }
         });
 
@@ -177,9 +189,9 @@ public class frmSendMail extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnLogon)
+                .addComponent(btnSend)
                 .addGap(18, 18, 18)
-                .addComponent(btnExit)
+                .addComponent(btnBack)
                 .addGap(183, 183, 183))
         );
         jPanel3Layout.setVerticalGroup(
@@ -202,8 +214,8 @@ public class frmSendMail extends javax.swing.JInternalFrame {
                         .addComponent(jLabel6)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnLogon, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSend, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -236,23 +248,95 @@ public class frmSendMail extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnLogon1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogon1ActionPerformed
+	Session session = null;
+    private void clearLogin() {
+        txtFrom.setText("");
+        txtPass.setText("");
+    }    
+	private void btnSignActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSignActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnLogon1ActionPerformed
+		if (txtFrom.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(this, "Don't Blank From");
+		}
+		else if (txtPass.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(this, "Don't Blank Password");
+		} 
+		else if (SendMail.runCheck(txtFrom.getText(), txtPass.getText())!=null) {
+			JOptionPane.showMessageDialog(this, "SignIn Successful");
+			jPanel3.setVisible(true);
+			txtFrom.setEditable(false);
+			txtPass.setEditable(false);
+			btnSign.setEnabled(false);
+		}
+    }//GEN-LAST:event_btnSignActionPerformed
 
-    private void btnLogonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogonActionPerformed
+    private void btnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendActionPerformed
+	try {
+            //Message ms = new MimeMessage(session);
+            Message ms = new MimeMessage (SendMail.runCheck(txtFrom.getText(), txtPass.getText()));
+            ms.setFrom(new InternetAddress(txtFrom.getText()));
+            ms.setRecipient(Message.RecipientType.TO, new InternetAddress(txtTo.getText()));
+            ms.setSubject(txtSubject.getText());
+            ms.setText(jTextArea1.getText());
+            ms.setSentDate(new Date());
+            Transport.send(ms);
+            JOptionPane.showMessageDialog(this, "Send Mail Complete");
+        } catch (MessagingException ex) {
+            Logger.getLogger(SendMail.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
-    }//GEN-LAST:event_btnLogonActionPerformed
-
-    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+    }//GEN-LAST:event_btnSendActionPerformed
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnExitActionPerformed
+	this.clearLogin();
+        jPanel3.setVisible(false);
+        jPanel2.setEnabled(true);
+        txtFrom.setEditable(true);
+        txtPass.setEditable(true);
+        btnSign.setEnabled(true);
+    }//GEN-LAST:event_btnBackActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(frmSendMail.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(frmSendMail.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(frmSendMail.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(frmSendMail.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new frmSendMail().setVisible(true);
+            }
+        });
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnExit;
-    private javax.swing.JButton btnLogon;
-    private javax.swing.JButton btnLogon1;
+    private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnSend;
+    private javax.swing.JButton btnSign;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

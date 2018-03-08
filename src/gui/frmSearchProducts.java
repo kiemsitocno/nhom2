@@ -49,6 +49,7 @@ public class frmSearchProducts extends javax.swing.JInternalFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableProduct = new javax.swing.JTable();
+        txtPriceTo = new javax.swing.JTextField();
 
         jPanel1.setBackground(new java.awt.Color(51, 255, 255));
 
@@ -80,16 +81,31 @@ public class frmSearchProducts extends javax.swing.JInternalFrame {
                 txtProductIDMouseClicked(evt);
             }
         });
+        txtProductID.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtProductIDKeyReleased(evt);
+            }
+        });
 
         jLabel4.setText("Price :");
 
         cboCategory.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "All" }));
+        cboCategory.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cboCategoryItemStateChanged(evt);
+            }
+        });
 
         jLabel5.setText("Category :");
 
         txtProductName.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 txtProductNameMouseClicked(evt);
+            }
+        });
+        txtProductName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtProductNameKeyReleased(evt);
             }
         });
 
@@ -134,6 +150,12 @@ public class frmSearchProducts extends javax.swing.JInternalFrame {
                 .addGap(0, 0, 0))
         );
 
+        txtPriceTo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPriceToKeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -165,9 +187,12 @@ public class frmSearchProducts extends javax.swing.JInternalFrame {
                                 .addGap(60, 60, 60)
                                 .addComponent(jLabel5)))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(cboCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtPriceTo, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -182,7 +207,8 @@ public class frmSearchProducts extends javax.swing.JInternalFrame {
                     .addComponent(jLabel2)
                     .addComponent(txtProductID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
-                    .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtPriceTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtProductName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -221,6 +247,7 @@ public class frmSearchProducts extends javax.swing.JInternalFrame {
             String id = txtProductID.getText().trim();
             String name = txtProductName.getText().trim();
             String price = txtPrice.getText().trim();
+            String priceTo = txtPriceTo.getText().trim();
             String category;
             if(cboCategory.getSelectedIndex()==0){
                 category="";
@@ -229,7 +256,8 @@ public class frmSearchProducts extends javax.swing.JInternalFrame {
             }
             String sql = "select * from View_ProductSales where ProductID like N'%" + id + "%' AND "
                                                     + "ProductName like N'%" + name + "%' AND "
-                                                    + "Price like N'%" + price + "%' AND "
+                                                    + "Price >= '" + price + "' AND "
+                                                    + "Price <= '" + priceTo + "' AND "
                                                     + "CategoryName like N'%" + category + "%'";
             GUIInteraction.readToTable(sql, tableProduct);
         } catch (SQLException ex) {
@@ -246,6 +274,124 @@ public class frmSearchProducts extends javax.swing.JInternalFrame {
         // NẾU SEARCH BẰNG NAME THÌ Ô ID SẼ RESET TRỐNG
         txtProductID.setText("");
     }//GEN-LAST:event_txtProductNameMouseClicked
+
+    private void txtProductNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtProductNameKeyReleased
+        // TODO add your handling code here:
+        try {
+            // TÌM KIẾM SẢN PHẨM
+            String id = txtProductID.getText().trim();
+            String name = txtProductName.getText().trim();
+            String price = txtPrice.getText().trim();
+            String priceTo = txtPriceTo.getText().trim();
+            String category;
+            if(cboCategory.getSelectedIndex()==0){
+                category="";
+            }else{
+                category = cboCategory.getSelectedItem().toString();
+            }
+            if(price.length()==0){
+                price = "0";
+            }
+            if(priceTo.length()==0){
+                priceTo = "1000000000";
+            }
+            String sql = "select * from View_ProductSales where ProductID like N'%" + id + "%' AND "
+                                                    + "ProductName like N'%" + name + "%' AND "
+                                                    + "Price >= '" + price + "' AND "
+                                                    + "Price <= '" + priceTo + "' AND "
+                                                    + "CategoryName like N'%" + category + "%'";
+            GUIInteraction.readToTable(sql, tableProduct);
+        } catch (SQLException ex) {
+            Logger.getLogger(frmSearchProducts.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_txtProductNameKeyReleased
+
+    private void txtProductIDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtProductIDKeyReleased
+        // TODO add your handling code here:
+        try {
+            // TÌM KIẾM SẢN PHẨM
+            String id = txtProductID.getText().trim();
+            String name = txtProductName.getText().trim();
+            String price = txtPrice.getText().trim();
+            String priceTo = txtPriceTo.getText().trim();
+            String category;
+            if(cboCategory.getSelectedIndex()==0){
+                category="";
+            }else{
+                category = cboCategory.getSelectedItem().toString();
+            }
+            if(price.length()==0){
+                price = "0";
+            }
+            if(priceTo.length()==0){
+                priceTo = "1000000000";
+            }
+            String sql = "select * from View_ProductSales where ProductID like N'%" + id + "%' AND "
+                                                    + "ProductName like N'%" + name + "%' AND "
+                                                    + "Price >= '" + price + "' AND "
+                                                    + "Price <= '" + priceTo + "' AND "
+                                                    + "CategoryName like N'%" + category + "%'";
+            GUIInteraction.readToTable(sql, tableProduct);
+        } catch (SQLException ex) {
+            Logger.getLogger(frmSearchProducts.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_txtProductIDKeyReleased
+
+    private void txtPriceToKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPriceToKeyReleased
+        // TODO add your handling code here:
+        try {
+            // TÌM KIẾM SẢN PHẨM
+            String id = txtProductID.getText().trim();
+            String name = txtProductName.getText().trim();
+            String price = txtPrice.getText().trim();
+            String priceTo = txtPriceTo.getText().trim();
+            String category;
+            if(cboCategory.getSelectedIndex()==0){
+                category="";
+            }else{
+                category = cboCategory.getSelectedItem().toString();
+            }
+            String sql = "select * from View_ProductSales where ProductID like N'%" + id + "%' AND "
+                                                    + "ProductName like N'%" + name + "%' AND "
+                                                    + "Price >= '" + price + "' AND "
+                                                    + "Price <= '" + priceTo + "' AND "
+                                                    + "CategoryName like N'%" + category + "%'";
+            GUIInteraction.readToTable(sql, tableProduct);
+        } catch (SQLException ex) {
+            Logger.getLogger(frmSearchProducts.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_txtPriceToKeyReleased
+
+    private void cboCategoryItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboCategoryItemStateChanged
+        // TODO add your handling code here:
+        try {
+            // TÌM KIẾM SẢN PHẨM
+            String id = txtProductID.getText().trim();
+            String name = txtProductName.getText().trim();
+            String price = txtPrice.getText().trim();
+            String priceTo = txtPriceTo.getText().trim();
+            String category;
+            if(cboCategory.getSelectedIndex()==0){
+                category="";
+            }else{
+                category = cboCategory.getSelectedItem().toString();
+            }
+            if(price.length()==0){
+                price = "0";
+            }
+            if(priceTo.length()==0){
+                priceTo = "1000000000";
+            }
+            String sql = "select * from View_ProductSales where ProductID like N'%" + id + "%' AND "
+                                                    + "ProductName like N'%" + name + "%' AND "
+                                                    + "Price >= '" + price + "' AND "
+                                                    + "Price <= '" + priceTo + "' AND "
+                                                    + "CategoryName like N'%" + category + "%'";
+            GUIInteraction.readToTable(sql, tableProduct);
+        } catch (SQLException ex) {
+            Logger.getLogger(frmSearchProducts.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_cboCategoryItemStateChanged
 
     private void refresh() {
         // LOAD DỮ LIỆU TỪ SQL RA BẢNG
@@ -271,6 +417,7 @@ public class frmSearchProducts extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tableProduct;
     private javax.swing.JTextField txtPrice;
+    private javax.swing.JTextField txtPriceTo;
     private javax.swing.JTextField txtProductID;
     private javax.swing.JTextField txtProductName;
     // End of variables declaration//GEN-END:variables

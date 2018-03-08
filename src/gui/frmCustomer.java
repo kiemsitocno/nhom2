@@ -341,11 +341,23 @@ public class frmCustomer extends javax.swing.JInternalFrame {
             }
         });
 
+        txtSearhCustomerID.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtSearhCustomerIDKeyReleased(evt);
+            }
+        });
+
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel1.setText("Customer ID :");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setText("Customer Name :");
+
+        txtSearchName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtSearchNameKeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -772,6 +784,38 @@ public class frmCustomer extends javax.swing.JInternalFrame {
             }
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void txtSearchNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchNameKeyReleased
+        // TODO add your handling code here:
+        try {
+            String searchName = txtSearchName.getText().trim();
+            String searchID = txtSearhCustomerID.getText().trim();
+            if(searchName.length()==0 && searchID.length()>0){
+                GUIInteraction.readToTable("select * from Customers where CustomerID like N'%" + searchID + "%'", tableCustomerSearch);
+            }else{
+                txtSearhCustomerID.setText(null);
+                GUIInteraction.readToTable("select * from Customers where CustomerName like N'%" + searchName + "%'", tableCustomerSearch);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(frmCustomer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_txtSearchNameKeyReleased
+
+    private void txtSearhCustomerIDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearhCustomerIDKeyReleased
+        // TODO add your handling code here:
+        try {
+            String searchName = txtSearchName.getText().trim();
+            String searchID = txtSearhCustomerID.getText().trim();
+            if(searchName.length()==0 && searchID.length()>0){
+                GUIInteraction.readToTable("select * from Customers where CustomerID like N'%" + searchID + "%'", tableCustomerSearch);
+            }else{
+                txtSearchName.setText(null);
+                GUIInteraction.readToTable("select * from Customers where CustomerName like N'%" + searchName + "%'", tableCustomerSearch);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(frmCustomer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_txtSearhCustomerIDKeyReleased
 
     private void refresh() {
         try {

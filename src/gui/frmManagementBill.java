@@ -600,8 +600,9 @@ public class frmManagementBill extends javax.swing.JInternalFrame {
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         // HỦY YÊU CẦU XÓA HÓA ĐƠN TỪ SALES
-        // UPDATE BILLS WHERE BILLID SET STATUS=1
-        // SEND MAIL
+        frmSendMail sendMail = new frmSendMail();
+        sendMail.code = this;
+        sendMail.show();
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed

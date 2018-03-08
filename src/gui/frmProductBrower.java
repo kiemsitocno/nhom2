@@ -5,6 +5,8 @@
 package gui;
 
 import interact.DataInteraction;
+import interact.GUIInteraction;
+import interact.Login;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -39,8 +41,6 @@ public class frmProductBrower extends javax.swing.JFrame {
 
         txtItemName = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        txtItemID = new javax.swing.JTextField();
         btnRefresh = new javax.swing.JButton();
         txtPrice = new javax.swing.JTextField();
         cboCategory = new javax.swing.JComboBox();
@@ -54,6 +54,7 @@ public class frmProductBrower extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         btnSelect = new javax.swing.JButton();
+        txtPriceTo = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Items");
@@ -66,24 +67,10 @@ public class frmProductBrower extends javax.swing.JFrame {
 
         jLabel3.setText("Item Name:");
 
-        jLabel2.setText("Item ID:");
-
-        txtItemID.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtItemIDKeyReleased(evt);
-            }
-        });
-
-        btnRefresh.setText("Refresh");
+        btnRefresh.setText("Search");
         btnRefresh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRefreshActionPerformed(evt);
-            }
-        });
-
-        txtPrice.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtPriceKeyReleased(evt);
             }
         });
 
@@ -115,40 +102,42 @@ public class frmProductBrower extends javax.swing.JFrame {
             }
         });
 
+        txtPriceTo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPriceToKeyReleased(evt);
+            }
+        });
+
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .addContainerGap()
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
                     .add(layout.createSequentialGroup()
                         .add(10, 10, 10)
                         .add(btnSelect))
-                    .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                        .add(layout.createSequentialGroup()
-                            .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                                .add(jLabel3)
-                                .add(jLabel2))
-                            .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                                .add(layout.createSequentialGroup()
-                                    .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                                    .add(txtItemID, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 132, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                                .add(layout.createSequentialGroup()
-                                    .add(12, 12, 12)
-                                    .add(txtItemName)))
-                            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                            .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                                .add(jLabel1)
-                                .add(jLabel4))
-                            .add(32, 32, 32)
-                            .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
-                                .add(cboCategory, 0, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .add(txtPrice, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)))
-                        .add(layout.createSequentialGroup()
-                            .add(38, 38, 38)
-                            .add(btnRefresh))
-                        .add(jScrollPane1, 0, 0, Short.MAX_VALUE)))
+                    .add(layout.createSequentialGroup()
+                        .add(38, 38, 38)
+                        .add(btnRefresh))
+                    .add(jScrollPane1, 0, 0, Short.MAX_VALUE)
+                    .add(layout.createSequentialGroup()
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(jLabel3)
+                            .add(jLabel1))
+                        .add(12, 12, 12)
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
+                            .add(txtPrice)
+                            .add(txtItemName, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE))
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(layout.createSequentialGroup()
+                                .add(jLabel4)
+                                .add(32, 32, 32)
+                                .add(cboCategory, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 101, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .add(0, 0, Short.MAX_VALUE))
+                            .add(txtPriceTo))))
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -156,10 +145,9 @@ public class frmProductBrower extends javax.swing.JFrame {
             .add(layout.createSequentialGroup()
                 .addContainerGap()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jLabel2)
-                    .add(txtItemID, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jLabel1)
-                    .add(txtPrice, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(txtPrice, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(txtPriceTo, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .add(31, 31, 31)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jLabel3)
@@ -193,47 +181,17 @@ public class frmProductBrower extends javax.swing.JFrame {
         }
 }//GEN-LAST:event_txtItemNameKeyReleased
 
-    private void txtItemIDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtItemIDKeyReleased
-        String str = txtItemID.getText();
-        String sql = "";
-        if (str.equals("")) {
-            sql = "select * from Products";
-        } else {
-            sql = "select * from Products where ProductID like '%" + str + "%'";
-        }
-        try {
-            interact.GUIInteraction.readToTable(sql, tblItems);
-        } catch (SQLException ex) {
-            Logger.getLogger(frmCustomer.class.getName()).log(Level.SEVERE, null, ex);
-        }
-}//GEN-LAST:event_txtItemIDKeyReleased
-
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
         refresh();
 }//GEN-LAST:event_btnRefreshActionPerformed
-
-    private void txtPriceKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPriceKeyReleased
-        String str = txtPrice.getText();
-        String sql = "";
-        if (str.equals("")) {
-            sql = "select * from Products";
-        } else {
-            sql = "select * from Products where Price=" + Integer.valueOf(str);
-        }
-        try {
-            interact.GUIInteraction.readToTable(sql, tblItems);
-        } catch (SQLException ex) {
-            Logger.getLogger(frmCustomer.class.getName()).log(Level.SEVERE, null, ex);
-        }
-}//GEN-LAST:event_txtPriceKeyReleased
 
     private void cboCategoryItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboCategoryItemStateChanged
         String cateName = cboCategory.getSelectedItem().toString();
         try {
             ResultSet rs = DataInteraction.queryResultSet("select CategoryID from Categories where CategoryName='" + cateName + "'");
-            int cateid = 1;
+            String cateid = "";
             while (rs.next()) {
-                cateid = rs.getInt("CategoryID");
+                cateid = rs.getString("CategoryID");
             }
 
             String sql = "select * from Products where CategoryID=" + cateid;
@@ -254,6 +212,26 @@ public class frmProductBrower extends javax.swing.JFrame {
             this.dispose();
         }
 }//GEN-LAST:event_btnSelectActionPerformed
+
+    private void txtPriceToKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPriceToKeyReleased
+        // TODO add your handling code here:
+        try {
+            String fromTest = txtPrice.getText();
+            String toTest = txtPriceTo.getText();
+        } catch (Exception ex) {
+            return;
+        }
+        String from = txtPrice.getText();
+        String to = txtPriceTo.getText();
+        
+        String salesID = Login.getAdminID();
+        String sql = "select * from Products where Price>='" + from + "' and Price<='" + to + "'";
+        try {
+            GUIInteraction.readToTable(sql, tblItems);
+        } catch (SQLException ex) {
+            Logger.getLogger(frmCreateBill.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_txtPriceToKeyReleased
     private void refresh() {
         try {
             interact.GUIInteraction.readToTable("select * from Products", tblItems);
@@ -271,14 +249,13 @@ public class frmProductBrower extends javax.swing.JFrame {
     private javax.swing.JButton btnSelect;
     private javax.swing.JComboBox cboCategory;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblItems;
-    private javax.swing.JTextField txtItemID;
     private javax.swing.JTextField txtItemName;
     private javax.swing.JTextField txtPrice;
+    private javax.swing.JTextField txtPriceTo;
     // End of variables declaration//GEN-END:variables
 
 }
