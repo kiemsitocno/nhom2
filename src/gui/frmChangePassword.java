@@ -5,6 +5,14 @@
  */
 package gui;
 
+import interact.DataInteraction;
+import interact.Login;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author kiems
@@ -16,6 +24,7 @@ public class frmChangePassword extends javax.swing.JInternalFrame {
      */
     public frmChangePassword() {
         initComponents();
+        labelWarning.setText(Login.getUsername());
     }
 
     /**
@@ -173,7 +182,46 @@ public class frmChangePassword extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnChangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangeActionPerformed
-
+        try {
+            if (!interact.CheckForm.isPwdUsername(txtOldPassword.getText())) {
+                JOptionPane.showMessageDialog(this, "Please enter old password");
+                return;
+            }
+            if (!interact.CheckForm.isPwdUsername(txtNewPassword.getText())) {
+                JOptionPane.showMessageDialog(this, "Please enter new password");
+                return;
+            }
+            if (!interact.CheckForm.isPwdUsername(txtReNewPassword.getText())) {
+                JOptionPane.showMessageDialog(this, "Please enter confirm new password");
+                return;
+            }
+            if (!txtNewPassword.getText().equals(txtReNewPassword.getText())) {
+                JOptionPane.showMessageDialog(this, "Confirm new password incorrectly.");
+                return;
+            }
+            char[] strold = txtOldPassword.getPassword();
+            char[] strnew = txtReNewPassword.getPassword();
+            String old = new String(strold);
+            String newpass = new String(strnew);
+            String sql = "select * from Users where UserID='" + interact.Login.getAdminID() + "'";
+            ResultSet rs = DataInteraction.queryResultSet(sql);
+            String dataPass = null;
+            while (rs.next()) {
+                dataPass=rs.getString("Password");
+            }
+            if(!old.equals(dataPass))
+            {
+                JOptionPane.showMessageDialog(this, "Old password incorrectly.");
+                return;
+            }else
+            {
+                DataInteraction.exec("update Users set Password='"+newpass+"' where UserID='"+interact.Login.getAdminID()+"'");
+                JOptionPane.showMessageDialog(this, "Change password successfully.");
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(frmChangePassword.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnChangeActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed

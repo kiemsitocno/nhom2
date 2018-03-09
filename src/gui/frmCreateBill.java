@@ -718,7 +718,7 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
                     break;
                 }
             }
-
+            
             // GIỚI HẠN SỐ LƯỢNG ORDER PHẢI ÍT HƠN SỐ LƯỢNG SẢN PHẨM HIỆN CÓ
             if (product.getQuantityAvailable() - countQuantityOrder < 0 || product.getQuantityAvailable() - iQuantity < 0) {
                 JOptionPane.showMessageDialog(null, "This product of quantity not enough");

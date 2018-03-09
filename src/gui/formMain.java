@@ -27,7 +27,6 @@ public class formMain extends javax.swing.JFrame {
     public formMain() {
         initComponents();
         this.setLocationRelativeTo(this);
-        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("../images/iconMain.png")));
         setTitle("Perfume Store Management System");
         permissing();
     }

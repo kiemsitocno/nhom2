@@ -40,7 +40,6 @@ public class formLogin extends javax.swing.JFrame {
 
         initComponents();
         this.setLocationRelativeTo(this);
-        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("../images/iconMain.png")));
         setTitle("Login System");
 
         GUIInteraction.readToCombo("select * from Roles", cbbRole, "RoleName");

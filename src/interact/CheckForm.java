@@ -124,8 +124,8 @@ public class CheckForm {
     public static String strFormat(String value){
         String name = value.replaceAll("\\s+"," ");
         for (int i = 0; i<name.length()-1;i++){
-            if(name.indexOf(" ")==i){
-                name = name.substring(1);
+            if(name.indexOf(" ")==0){
+                name = name.substring(0);
                 break;
             }
         }

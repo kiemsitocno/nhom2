@@ -775,7 +775,11 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
             Logger.getLogger(frmCategory_Product.class.getName()).log(Level.SEVERE, null, ex);
         }
         txtDescription.setText(String.valueOf(tableProduct.getValueAt(i, 6)));
-        cbbCategory.setSelectedItem(String.valueOf(tableProduct.getValueAt(i, 7)));
+        String cateID = String.valueOf(tableProduct.getValueAt(i,7));
+        System.out.println(cateID);
+        String cateName = DataInteraction.getCode("Categories", "CategoryID", cateID, "CategoryName");
+        System.out.println(cateName);
+        cbbCategory.setSelectedItem(cateName);
         txtVolume.setText(String.valueOf(tableProduct.getValueAt(i, 8)));
     }//GEN-LAST:event_tableProductMouseClicked
 
