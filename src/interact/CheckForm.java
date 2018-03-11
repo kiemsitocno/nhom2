@@ -123,13 +123,13 @@ public class CheckForm {
     
     public static String strFormat(String value){
         String name = value.replaceAll("\\s+"," ");
-        for (int i = 0; i<name.length()-1;i++){
-            if(name.indexOf(" ")==0){
-                name = name.substring(0);
-                break;
-            }
+        if(name.indexOf(" ")==0){
+            name = name.substring(1);
+            System.out.println(name);
+            return name;
+        }else{
+            return name;
         }
-        
-        return name; 
+         
     }
 }

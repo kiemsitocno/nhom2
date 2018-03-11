@@ -412,6 +412,8 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
         btnCreate.setEnabled(true);
         btnEdit.setText("Edit");
         btnEdit.setEnabled(true);
+        btnDelete.setText("Delete");
+        btnDelete.setEnabled(true);
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
@@ -436,6 +438,7 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
     private boolean validateStore() {
         // VALIDATE THÔNG TIN NHẬP VÀO KHI INSERT VÀ UPDATE STORE
         boolean flag = true;
+        String storeName = CheckForm.strFormat(txtName.getText());
         String name = DataInteraction.getCode("Stores", "StoreID", txtID.getText(), "StoreName");
         String phone = DataInteraction.getCode("Stores", "StoreID", txtID.getText(), "StorePhone");
         String address = DataInteraction.getCode("Stores", "StoreID", txtID.getText(), "StoreAddress");
@@ -444,7 +447,7 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
             txtName.requestFocus();
             txtName.setBackground(Color.red);
             flag = false;
-        } else if (!GUIInteraction.checkDuplicateName(txtName.getText().trim(), "select * from Stores", "StoreName")&&!txtName.getText().trim().equals(name)) {
+        } else if (!GUIInteraction.checkDuplicateName(storeName, "select * from Stores", "StoreName")&&!storeName.equals(name)) {
             JOptionPane.showMessageDialog(this, "Name is not duplicatated", "Error", JOptionPane.ERROR_MESSAGE);
             txtName.requestFocus();
             txtName.setBackground(Color.red);
@@ -460,8 +463,8 @@ public class frmCreateNewStore extends javax.swing.JInternalFrame {
             txtPhone.setBackground(Color.red);
             txtName.setBackground(Color.white);
             flag = false;
-        } else if (!CheckForm.overLength(txtAddress.getText())) {
-            JOptionPane.showMessageDialog(this, "Address not than 50 ", "Error", JOptionPane.ERROR_MESSAGE);
+        } else if (!CheckForm.isEmpty(txtAddress.getText())) {
+            JOptionPane.showMessageDialog(this, "Address not empty ", "Error", JOptionPane.ERROR_MESSAGE);
             txtAddress.requestFocus();
             txtAddress.setBackground(Color.red);
             txtPhone.setBackground(Color.white);
