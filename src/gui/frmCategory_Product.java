@@ -7,6 +7,7 @@ package gui;
 
 import com.toedter.calendar.JTextFieldDateEditor;
 import entity.Category;
+import entity.ImportDetails;
 import entity.Product;
 import interact.CheckForm;
 import interact.DataInteraction;
@@ -102,6 +103,10 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
         };
         tableCategory.getTableHeader().setReorderingAllowed(false);
         txtExpireDate = new com.toedter.calendar.JDateChooser();
+        btnUpdateQuantity = new javax.swing.JButton();
+        jPanel8 = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tableImport = new javax.swing.JTable();
 
         tabCategoryProducts.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         tabCategoryProducts.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -125,7 +130,7 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1297, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1473, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -423,34 +428,71 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel7Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jScrollPane2)
-                    .addContainerGap()))
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 834, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 611, Short.MAX_VALUE)
-            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel7Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 305, Short.MAX_VALUE)
-                    .addContainerGap()))
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 597, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         txtExpireDate.setDateFormatString("yyyy-MM-dd");
         txtExpireDate.setEnabled(false);
 
+        btnUpdateQuantity.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnUpdateQuantity.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconEdit.png"))); // NOI18N
+        btnUpdateQuantity.setText("Update Quantity");
+        btnUpdateQuantity.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateQuantityActionPerformed(evt);
+            }
+        });
+
+        jPanel8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        tableImport.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane4.setViewportView(tableImport);
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane4)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel6Layout.createSequentialGroup()
+                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel6Layout.createSequentialGroup()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel6Layout.createSequentialGroup()
                                 .addGap(52, 52, 52)
@@ -490,8 +532,8 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
                         .addGap(46, 46, 46)
                         .addComponent(jLabel14)
                         .addGap(60, 60, 60)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 502, Short.MAX_VALUE))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 634, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel6Layout.createSequentialGroup()
                         .addGap(153, 153, 153)
                         .addComponent(btnAddProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -500,8 +542,11 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
                         .addComponent(btnCancelProduct)
                         .addGap(18, 18, 18)
                         .addComponent(btnDeleteProduct)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnSearchProduct)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnUpdateQuantity)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnSearchProduct)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(178, 178, 178))
         );
         jPanel6Layout.setVerticalGroup(
@@ -524,25 +569,32 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
                             .addComponent(jLabel8)
                             .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel12))
-                        .addGap(0, 0, 0)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtVolume, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel13)
-                            .addComponent(cbbCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(12, 12, 12)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel10))))
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtVolume, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel9))
+                                .addGap(12, 12, 12)
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel10)))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(cbbCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel13))))))
                 .addGap(0, 0, 0)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnDeleteProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSearchProduct)
                     .addComponent(btnCancelProduct)
-                    .addComponent(btnEditProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnEditProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnUpdateQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0)
-                .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, 0))
         );
 
@@ -663,8 +715,6 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
                     productName,
                     Integer.valueOf(txtQuantity.getText()),
                     Integer.valueOf(txtPrice.getText()),
-                    entity.DateUtils.now("MM/dd/yy"),
-                    sf.format(txtExpireDate.getDate()),
                     txtDescription.getText(),
                     categoryID,
                     Integer.valueOf(txtVolume.getText()));
@@ -765,22 +815,25 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
         int i = tableProduct.getSelectedRow();
         txtProductID.setText(String.valueOf(tableProduct.getValueAt(i, 0)));
         txtProductName.setText(String.valueOf(tableProduct.getValueAt(i, 1)));
-        txtQuantity.setText(String.valueOf(tableProduct.getValueAt(i, 2)));
         txtPrice.setText(String.valueOf(tableProduct.getValueAt(i, 3)));
-        try {
-            // tableProduct.getValueAt(i, 5)
-            java.util.Date dutyDay = (java.util.Date) sf.parse((String) tableProduct.getValueAt(i, 5));
-            txtExpireDate.setDate(dutyDay);
-        } catch (ParseException ex) {
-            Logger.getLogger(frmCategory_Product.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        txtDescription.setText(String.valueOf(tableProduct.getValueAt(i, 6)));
-        String cateID = String.valueOf(tableProduct.getValueAt(i,7));
+        txtDescription.setText(String.valueOf(tableProduct.getValueAt(i, 4)));
+        String cateID = String.valueOf(tableProduct.getValueAt(i,5));
         System.out.println(cateID);
         String cateName = DataInteraction.getCode("Categories", "CategoryID", cateID, "CategoryName");
         System.out.println(cateName);
         cbbCategory.setSelectedItem(cateName);
-        txtVolume.setText(String.valueOf(tableProduct.getValueAt(i, 8)));
+        txtVolume.setText(String.valueOf(tableProduct.getValueAt(i, 6)));
+        
+        
+        String productId = tableProduct.getValueAt(i, 1).toString();
+        try {
+            int count = GUIInteraction.countRecord("select * from ImportDetails where ProductID='" + productId + "'");
+            if (count!=0){
+                GUIInteraction.readToTable("select * from ImportDetails where ProductID='" + productId + "'", tableImport);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "This product not import quantity");
+        }
     }//GEN-LAST:event_tableProductMouseClicked
 
     private void btnDeleteProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteProductActionPerformed
@@ -797,6 +850,7 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
                     JOptionPane.showMessageDialog(this, "This Product belong to some Bills, can't delete it");
                 }else{
                     interact.Product.deleteProduct(txtProductID.getText());
+                    DataInteraction.exec("delete from ImportDetails where ProductID='" + txtProductID.getText() + "'");
                     refresh();
                 }
             } catch (SQLException ex) {
@@ -836,8 +890,6 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
                     productName,
                     Integer.valueOf(txtQuantity.getText()),
                     Integer.valueOf(txtPrice.getText()),
-                    entity.DateUtils.now("MM/dd/yy"),
-                    sf.format(txtExpireDate.getDate()),
                     txtDescription.getText(),
                     DataInteraction.getCode("Categories", "CategoryName", cbbCategory.getSelectedItem().toString(), "CategoryID"),
                     Integer.valueOf(txtVolume.getText()));
@@ -935,6 +987,50 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
             Logger.getLogger(frmCreateBill.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_cbbCategoryItemStateChanged
+
+    private void btnUpdateQuantityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateQuantityActionPerformed
+        // TODO add your handling code here:
+        btnAddProduct.setEnabled(false);
+        btnDeleteProduct.setEnabled(false);
+        if(txtProductName.getText().trim().length()==0){
+            JOptionPane.showMessageDialog(this, "Please chose one row from table");
+            return;
+        }
+        txtExpireDate.setEnabled(true);
+        txtQuantity.setEnabled(true);
+        if (btnUpdateQuantity.getText().equals("Update")) {
+            btnUpdateQuantity.setText("Save");
+        } else if (btnUpdateQuantity.getText().equals("Save")) {
+            String productID = txtProductID.getText();
+            int countProduct = GUIInteraction.indentityID("select top 1 * from ImportDetails where ProductID='"+productID+"' order by ImportID Desc", "ImportID") + 1;
+            String importID = productID + "IM" +countProduct;
+            while (true) {
+                if (!GUIInteraction.checkDuplicateID(String.valueOf(productID), "select * from ImportDetails", "ImportID")) {
+                    countProduct = countProduct + 1;
+                    importID = productID + "IM" +countProduct;
+                } else {
+                    break;
+                }
+            }
+            
+            ImportDetails imports = new ImportDetails(
+                    importID,
+                    txtProductID.getText(),
+                    Integer.valueOf(txtQuantity.getText()),
+                    entity.DateUtils.now("MM/dd/yy"),
+                    sf.format(txtExpireDate.getDate())
+            );
+            interact.ImportDetails.insertImport(imports);
+            int countQuantity = GUIInteraction.countQuantity("select QuantityAvailable from Products where ProductID='"+productID+"'");
+            int sumAvailable = countQuantity+Integer.valueOf(txtQuantity.getText());
+            DataInteraction.exec("update Product set QuantityAvailable='"+sumAvailable+"' where ProductID='"+productID+"'");
+            refresh();
+            btnEditProduct.setText("Edit");
+            disableTXT();
+            btnAddProduct.setEnabled(true);
+            btnDeleteProduct.setEnabled(true);
+        }
+    }//GEN-LAST:event_btnUpdateQuantityActionPerformed
     
     private void refresh() {
         // PHƯƠNG THỨC LOAD DỮ LIỆU RA BẢNG VÀ COMBOBOX
@@ -942,7 +1038,7 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
         try {
             interact.GUIInteraction.readToTable("select * from Categories", tableCategory);
             interact.GUIInteraction.readToCombo("select * from Categories", cbbCategory, "CategoryName");
-            interact.GUIInteraction.readToTable("SELECT ProductID,ProductName,QuantityAvailable,Price,DateImport,ExpireDate,Descript,CategoryName,Volume FROM Products,Categories where Categories.CategoryID=Products.CategoryID", tableProduct);
+            interact.GUIInteraction.readToTable("SELECT ProductID,ProductName,QuantityAvailable,Price,Descript,CategoryName,Volume FROM Products,Categories where Categories.CategoryID=Products.CategoryID", tableProduct);
         } catch (SQLException ex) {
             Logger.getLogger(frmCategory_Product.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1125,6 +1221,7 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnEditProduct;
     private javax.swing.JButton btnSearchCategory;
     private javax.swing.JButton btnSearchProduct;
+    private javax.swing.JButton btnUpdateQuantity;
     private javax.swing.JComboBox cbbCategory;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -1145,11 +1242,14 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane tabCategoryProducts;
     public javax.swing.JTable tableCategory;
+    private javax.swing.JTable tableImport;
     public javax.swing.JTable tableProduct;
     private javax.swing.JTextField txtCategoryID;
     private javax.swing.JTextField txtCategoryName;

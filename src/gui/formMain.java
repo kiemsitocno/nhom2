@@ -356,6 +356,11 @@ public class formMain extends javax.swing.JFrame {
         jMenuItem16.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jMenuItem16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconReport2.png"))); // NOI18N
         jMenuItem16.setText("View Report Inventory");
+        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem16ActionPerformed(evt);
+            }
+        });
         menuInventory.add(jMenuItem16);
 
         jMenuBar1.add(menuInventory);
@@ -592,6 +597,11 @@ public class formMain extends javax.swing.JFrame {
         // THOÁT CHƯƠNG TRÌNH
         System.exit(1);
     }//GEN-LAST:event_menuItemExitActionPerformed
+
+    private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jMenuItem16ActionPerformed
     public void permissing() {
         // PHƯƠNG THỨC PHÂN QUYỀN
         if (Login.getAdminID() == null && Login.getUsername() == null && Login.getPassword() == null && Login.getPermit() == null) {

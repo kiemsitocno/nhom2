@@ -22,18 +22,16 @@ import javax.swing.*;
 public class Product {
     // PHƯƠNG THỨC INSERT CỦA ĐỐI TƯỢNG PRODUCT
     public static boolean insertProduct(entity.Product product) {
-        String sql = "insert into Products values(?,?,?,?,?,?,?,?,?)";
+        String sql = "insert into Products values(?,?,?,?,?,?,?)";
         try {
             PreparedStatement pst = DataInteraction.getConnect().prepareStatement(sql);
             pst.setString(1, product.getProductID());
             pst.setString(2, product.getProductName());
             pst.setInt(3, product.getQuantityAvailable());
             pst.setInt(4, product.getPrice());
-            pst.setString(5, product.getDateImport());
-            pst.setString(6, product.getExpireDate());
-            pst.setString(7, product.getDescript());
-            pst.setString(8, product.getCategoryID());
-            pst.setInt(9, product.getVolume());
+            pst.setString(5, product.getDescript());
+            pst.setString(6, product.getCategoryID());
+            pst.setInt(7, product.getVolume());
             JOptionPane.showMessageDialog(null, "Insert product success", "Successfully", JOptionPane.INFORMATION_MESSAGE);
             return (pst.executeUpdate() == 1);
         } catch (SQLException ex) {
@@ -44,18 +42,16 @@ public class Product {
     
     public static boolean editProducts(entity.Product product) {
         // PHƯƠNG THỨC EDIT CỦA ĐỐI TƯỢNG PRODUCT
-        String sql = "update Products set ProductName=?, QuantityAvailable=?, Price=?, DateImport=?, ExpireDate=?, Descript=?, CategoryID=?, Volume=? where ProductID=?";
+        String sql = "update Products set ProductName=?, QuantityAvailable=?, Price=?, Descript=?, CategoryID=?, Volume=? where ProductID=?";
         try {
             PreparedStatement ps = interact.DataInteraction.getConnect().prepareCall(sql);
             ps.setString(1, product.getProductName());
             ps.setInt(2, product.getQuantityAvailable());
             ps.setInt(3, product.getPrice());
-            ps.setString(4, product.getDateImport());
-            ps.setString(5, product.getExpireDate());
-            ps.setString(6, product.getDescript());
-            ps.setString(7, product.getCategoryID());
-            ps.setInt(8, product.getVolume());
-            ps.setString(9, product.getProductID());
+            ps.setString(4, product.getDescript());
+            ps.setString(5, product.getCategoryID());
+            ps.setInt(6, product.getVolume());
+            ps.setString(7, product.getProductID());
             JOptionPane.showMessageDialog(null, "Update Products successfully", "Successfully", JOptionPane.INFORMATION_MESSAGE);
             return (ps.executeUpdate() == 1);
         } catch (SQLException ex) {
@@ -92,8 +88,6 @@ public class Product {
             product.setProductName(rsProduct.getString("ProductName"));
             product.setQuantityAvailable(rsProduct.getInt("QuantityAvailable"));
             product.setPrice(rsProduct.getInt("Price"));
-            product.setDateImport(String.valueOf(rsProduct.getDate("DateImport")));
-            product.setExpireDate(String.valueOf(rsProduct.getDate("ExpireDate")));
             product.setDescript(String.valueOf(rsProduct.getString("Descript")));
             product.setCategoryID(String.valueOf(rsProduct.getString("CategoryID")));
             product.setVolume(rsProduct.getInt("Volume"));
