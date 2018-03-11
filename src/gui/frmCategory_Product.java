@@ -371,11 +371,6 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
         jLabel8.setText("Name :");
 
         txtProductName.setEnabled(false);
-        txtProductName.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtProductNameKeyReleased(evt);
-            }
-        });
 
         jLabel9.setText("Volume :");
 
@@ -394,11 +389,6 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
         jLabel13.setText("Category :");
 
         cbbCategory.setEnabled(false);
-        cbbCategory.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbbCategoryItemStateChanged(evt);
-            }
-        });
 
         jLabel14.setText("Description :");
 
@@ -430,14 +420,14 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 834, Short.MAX_VALUE)
+                .addComponent(jScrollPane2)
                 .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 597, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 601, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -471,7 +461,7 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane4)
                 .addContainerGap())
         );
         jPanel8Layout.setVerticalGroup(
@@ -489,50 +479,48 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel6Layout.createSequentialGroup()
-                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel6Layout.createSequentialGroup()
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel6Layout.createSequentialGroup()
-                                .addGap(52, 52, 52)
-                                .addComponent(jLabel7)
+                        .addGap(52, 52, 52)
+                        .addComponent(jLabel7)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtProductID, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                                .addComponent(jLabel10)
                                 .addGap(18, 18, 18)
-                                .addComponent(txtProductID, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                                        .addComponent(jLabel10)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addGroup(jPanel6Layout.createSequentialGroup()
-                                            .addComponent(jLabel9)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(txtVolume, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(jPanel6Layout.createSequentialGroup()
-                                            .addComponent(jLabel8)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(txtProductName, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                        .addGap(25, 25, 25)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addComponent(jLabel12)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addComponent(jLabel13)
-                                .addGap(18, 18, 18)
-                                .addComponent(cbbCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addComponent(jLabel11)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtExpireDate, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(46, 46, 46)
-                        .addComponent(jLabel14)
-                        .addGap(60, 60, 60)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 634, Short.MAX_VALUE))
+                                .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(jPanel6Layout.createSequentialGroup()
+                                    .addComponent(jLabel9)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(txtVolume, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel6Layout.createSequentialGroup()
+                                    .addComponent(jLabel8)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(txtProductName, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addGap(25, 25, 25)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel12)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel13)
+                        .addGap(18, 18, 18)
+                        .addComponent(cbbCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel11)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtExpireDate, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(46, 46, 46)
+                .addComponent(jLabel14)
+                .addGap(60, 60, 60)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 634, Short.MAX_VALUE)
+                .addGap(178, 178, 178))
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel6Layout.createSequentialGroup()
                         .addGap(153, 153, 153)
                         .addComponent(btnAddProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -541,13 +529,17 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addComponent(btnCancelProduct)
                         .addGap(18, 18, 18)
-                        .addComponent(btnDeleteProduct)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnDeleteProduct)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(btnUpdateQuantity)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnSearchProduct)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(178, 178, 178))
+                        .addGap(0, 612, Short.MAX_VALUE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -686,6 +678,7 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
         enableTXT();
         btnEditProduct.setEnabled(false);
         btnDeleteProduct.setEnabled(false);
+        btnUpdateQuantity.setEnabled(false);
         if (btnAddProduct.getText().equals("Add")) {
             resetTXT();
             btnAddProduct.setText("Save");
@@ -713,7 +706,7 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
             entity.Product product = new Product(
                     productID, 
                     productName,
-                    Integer.valueOf(txtQuantity.getText()),
+                    0,
                     Integer.valueOf(txtPrice.getText()),
                     txtDescription.getText(),
                     categoryID,
@@ -726,6 +719,7 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
             disableTXT();
             btnEditProduct.setEnabled(true);
             btnDeleteProduct.setEnabled(true);
+            btnUpdateQuantity.setEnabled(true);
         }
     }//GEN-LAST:event_btnAddProductActionPerformed
 
@@ -817,15 +811,12 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
         txtProductName.setText(String.valueOf(tableProduct.getValueAt(i, 1)));
         txtPrice.setText(String.valueOf(tableProduct.getValueAt(i, 3)));
         txtDescription.setText(String.valueOf(tableProduct.getValueAt(i, 4)));
-        String cateID = String.valueOf(tableProduct.getValueAt(i,5));
-        System.out.println(cateID);
-        String cateName = DataInteraction.getCode("Categories", "CategoryID", cateID, "CategoryName");
-        System.out.println(cateName);
+        String cateName = String.valueOf(tableProduct.getValueAt(i,5));
         cbbCategory.setSelectedItem(cateName);
         txtVolume.setText(String.valueOf(tableProduct.getValueAt(i, 6)));
         
         
-        String productId = tableProduct.getValueAt(i, 1).toString();
+        String productId = txtProductID.getText().toString();
         try {
             int count = GUIInteraction.countRecord("select * from ImportDetails where ProductID='" + productId + "'");
             if (count!=0){
@@ -849,8 +840,8 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
                 if (countUser > 0) {
                     JOptionPane.showMessageDialog(this, "This Product belong to some Bills, can't delete it");
                 }else{
-                    interact.Product.deleteProduct(txtProductID.getText());
                     DataInteraction.exec("delete from ImportDetails where ProductID='" + txtProductID.getText() + "'");
+                    interact.Product.deleteProduct(txtProductID.getText());
                     refresh();
                 }
             } catch (SQLException ex) {
@@ -867,12 +858,17 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
         btnAddProduct.setEnabled(true);
         btnEditProduct.setText("Edit");
         btnEditProduct.setEnabled(true);
+        btnUpdateQuantity.setText("Update Quantity");
+        btnUpdateQuantity.setEnabled(true);
     }//GEN-LAST:event_btnCancelProductActionPerformed
 
     private void btnEditProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditProductActionPerformed
         // SỬA THÔNG TIN 1 SẢN PHẨM
+        int i = tableProduct.getSelectedRow();
+        int quantityAvaila = Integer.valueOf(tableProduct.getValueAt(i, 2).toString()); 
         btnAddProduct.setEnabled(false);
         btnDeleteProduct.setEnabled(false);
+        btnUpdateQuantity.setEnabled(false);
         if(txtProductName.getText().trim().length()==0){
             JOptionPane.showMessageDialog(this, "Please chose one row from table");
             return;
@@ -888,7 +884,7 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
             Product product = new Product(
                     txtProductID.getText(), 
                     productName,
-                    Integer.valueOf(txtQuantity.getText()),
+                    quantityAvaila,
                     Integer.valueOf(txtPrice.getText()),
                     txtDescription.getText(),
                     DataInteraction.getCode("Categories", "CategoryName", cbbCategory.getSelectedItem().toString(), "CategoryID"),
@@ -899,6 +895,7 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
             disableTXT();
             btnAddProduct.setEnabled(true);
             btnDeleteProduct.setEnabled(true);
+            btnUpdateQuantity.setEnabled(true);
         }
     }//GEN-LAST:event_btnEditProductActionPerformed
 
@@ -951,43 +948,6 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_txtCategoryNameKeyReleased
 
-    private void txtProductNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtProductNameKeyReleased
-        // TODO add your handling code here:
-        String cateName;
-        String cateID;
-        try{
-            cateName = cbbCategory.getSelectedItem().toString();
-            cateID = DataInteraction.getCode("Categories", "CategoryName", cateName, "CategoryID");
-        }catch(Exception ex){
-            cateID = "";
-        }
-        String productName = txtProductName.getText();
-        String sql = "select * from Products where ProductName like '%"+productName+"%' and CategoryID='"+cateID+"'";
-        try {
-            GUIInteraction.readToTable(sql, tableProduct);
-        } catch (SQLException ex) {
-            Logger.getLogger(frmCreateBill.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_txtProductNameKeyReleased
-
-    private void cbbCategoryItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbCategoryItemStateChanged
-        // TODO add your handling code here:
-        String cateName;
-        String cateID;
-        try{
-            cateName = cbbCategory.getSelectedItem().toString();
-            cateID = DataInteraction.getCode("Categories", "CategoryName", cateName, "CategoryID");
-        }catch(Exception ex){
-            cateID = "";
-        }
-        String sql = "select * from Products where CategoryID like '%"+cateID+"%'";
-        try {
-            GUIInteraction.readToTable(sql, tableProduct);
-        } catch (SQLException ex) {
-            Logger.getLogger(frmCreateBill.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_cbbCategoryItemStateChanged
-
     private void btnUpdateQuantityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateQuantityActionPerformed
         // TODO add your handling code here:
         btnAddProduct.setEnabled(false);
@@ -998,7 +958,7 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
         }
         txtExpireDate.setEnabled(true);
         txtQuantity.setEnabled(true);
-        if (btnUpdateQuantity.getText().equals("Update")) {
+        if (btnUpdateQuantity.getText().equals("Update Quantity")) {
             btnUpdateQuantity.setText("Save");
         } else if (btnUpdateQuantity.getText().equals("Save")) {
             String productID = txtProductID.getText();
@@ -1023,7 +983,7 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
             interact.ImportDetails.insertImport(imports);
             int countQuantity = GUIInteraction.countQuantity("select QuantityAvailable from Products where ProductID='"+productID+"'");
             int sumAvailable = countQuantity+Integer.valueOf(txtQuantity.getText());
-            DataInteraction.exec("update Product set QuantityAvailable='"+sumAvailable+"' where ProductID='"+productID+"'");
+            DataInteraction.exec("update Products set QuantityAvailable='"+sumAvailable+"' where ProductID='"+productID+"'");
             refresh();
             btnEditProduct.setText("Edit");
             disableTXT();
@@ -1063,7 +1023,6 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
         txtCategoryName.setEnabled(true);
         
         txtProductName.setEnabled(true);
-        txtQuantity.setEnabled(true);
         enabletxtProduct();
     }
     
@@ -1084,7 +1043,6 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
         
         txtVolume.setEnabled(true);
         txtPrice.setEnabled(true);
-        txtExpireDate.setEnabled(true);
         cbbCategory.setEnabled(true);
         txtDescription.setEnabled(true);
     }
@@ -1151,15 +1109,6 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
             txtProductName.requestFocus();
             flag = false;
         }else if(!validateEditProduct()){
-            flag = false;
-        }else if (!CheckForm.isNumberic(txtQuantity.getText())) {
-            JOptionPane.showMessageDialog(this, "Quantity must numberic", "Error", JOptionPane.ERROR_MESSAGE);
-            txtQuantity.requestFocus();
-            txtProductName.setBackground(Color.white);
-            txtVolume.setBackground(Color.white);
-            txtPrice.setBackground(Color.white);
-            txtExpireDate.setBackground(Color.white);
-            txtQuantity.setBackground(Color.red);
             flag = false;
         }else if (cbbCategory.getSelectedItem() == null) {
             JOptionPane.showMessageDialog(this, "Category must select one", "Error", JOptionPane.ERROR_MESSAGE);

@@ -5,6 +5,7 @@
  */
 package gui;
 import com.toedter.calendar.JTextFieldDateEditor;
+import entity.ImportDetails;
 import interact.GUIInteraction;
 import interact.CheckForm;
 import entity.Product;
@@ -377,7 +378,7 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
     private void btnExpireDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExpireDateActionPerformed
         // ĐẾM SỐ LƯỢNG SẢN PHẨM HẾT HẠN
         try {
-            GUIInteraction.readToTable("select * from View_ProductExpire where datediff(dd,ExpireDate,getdate())<30", tableInventory);
+            GUIInteraction.readToTable("select * from ImportDetails where datediff(dd,ExpireDate,getdate())<30", tableInventory);
         } catch (SQLException ex) {
             Logger.getLogger(frmInventoryManagement.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -394,6 +395,7 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
 
     private void btnQuantityUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuantityUpdateActionPerformed
         // UPDATE SỐ LƯỢNG CHO SẢN PHẨM
+        /*
         if(txtQuantityUpdate.getText().trim().length()==0){
             JOptionPane.showMessageDialog(this, "Please chose one row from table");
             return;
@@ -419,12 +421,56 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
             txtQuantityUpdate.setEnabled(false);
             txtQuantityUpdate.setText(null);
         }
+        */
+        if(txtQuantityUpdate.getText().trim().length()==0){
+            JOptionPane.showMessageDialog(this, "Please chose one row from table");
+            return;
+        }
+        txtQuantityUpdate.setEnabled(true);
+        if (btnQuantityUpdate.getText().equals("Update")) {
+            btnQuantityUpdate.setText("Save");
+        } else if (btnQuantityUpdate.getText().equals("Save")) {
+            if (!validateProduct()) {
+                return;
+            }
+            int i = tableInventory.getSelectedRow();
+            String productID = String.valueOf(tableInventory.getValueAt(i, 0));
+            int countProduct = GUIInteraction.indentityID("select top 1 * from ImportDetails where ProductID='"+productID+"' order by ImportID Desc", "ImportID") + 1;
+            String importID = productID + "IM" +countProduct;
+            while (true) {
+                if (!GUIInteraction.checkDuplicateID(String.valueOf(productID), "select * from ImportDetails", "ImportID")) {
+                    countProduct = countProduct + 1;
+                    importID = productID + "IM" +countProduct;
+                } else {
+                    break;
+                }
+            }
+            
+            ImportDetails imports = new ImportDetails(
+                    importID,
+                    productID,
+                    Integer.valueOf(txtQuantityUpdate.getText()),
+                    entity.DateUtils.now("MM/dd/yy"),
+                    sf.format(txtExpireDateUpdate.getDate())
+            );
+            interact.ImportDetails.insertImport(imports);
+            int countQuantity = GUIInteraction.countQuantity("select QuantityAvailable from Products where ProductID='"+productID+"'");
+            int sumAvailable = countQuantity+Integer.valueOf(txtQuantityUpdate.getText());
+            DataInteraction.exec("update Products set QuantityAvailable='"+sumAvailable+"' where ProductID='"+productID+"'");
+            getStatus();
+            btnQuantityUpdate.setText("Update");
+            txtQuantityUpdate.setEnabled(false);
+            txtQuantityUpdate.setText(null);
+        }
     }//GEN-LAST:event_btnQuantityUpdateActionPerformed
 
     private void tableInventoryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableInventoryMouseClicked
         // LOAD DỮ LIỆU TỪ BẢNG RA TEXTFIELD
         int i = tableInventory.getSelectedRow();
-        txtQuantityUpdate.setText(String.valueOf(tableInventory.getValueAt(i, 5)));
+        int countColumn = tableInventory.getColumnCount();
+        if(countColumn==4){
+            txtQuantityUpdate.setText(String.valueOf(tableInventory.getValueAt(i, 3)));
+        }
     }//GEN-LAST:event_tableInventoryMouseClicked
     
     private void getStatus(){
@@ -441,7 +487,7 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
         txtProductTranstract.setText(String.valueOf(productTranstract));
         int productSold=GUIInteraction.countQuantity("select sum(Sold) as Total from View_ProductSold where datediff(dd,Date,getdate())=1");
         txtSoldQuantity.setText(String.valueOf(productSold));
-        int productExpire=GUIInteraction.countQuantity("select count(*) from Products where datediff(dd,ExpireDate,getdate())<30");
+        int productExpire=GUIInteraction.countQuantity("select count(*) from ImportDetails where datediff(dd,ExpireDate,getdate())<30");
         txtExpireDate.setText(String.valueOf(productExpire));
     }
     
@@ -474,7 +520,7 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
         if(productNotAvaliable!=0){
             JOptionPane.showMessageDialog(null, "CẢNH BÁO! CÓ " + productNotAvaliable + " SẢN PHẨM HẾT HÀNG, HÃY NHẬP VỀ NGAY");
         }
-        int productExpire=GUIInteraction.countQuantity("select count(*) from Products where datediff(dd,ExpireDate,getdate())>7");
+        int productExpire=GUIInteraction.countQuantity("select count(*) from ImportDetails where datediff(dd,ExpireDate,getdate())>7");
         if(productExpire!=0){
             JOptionPane.showMessageDialog(null, "CẢNH BÁO! CÓ " + productExpire + " SẢN PHẨM SẮP HẾT HẠN SỬ DỤNG");
         }
