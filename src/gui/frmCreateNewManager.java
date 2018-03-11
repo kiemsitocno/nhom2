@@ -688,6 +688,8 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
             if (!validateInsertManager()) {
                 return;
             }
+            
+            String name = CheckForm.strFormat(txtManagerName.getText());
             String condition = cboStore.getSelectedItem().toString();
             String getCode = DataInteraction.getCode("Stores", "StoreName", condition, "StoreID");
             String userID = getCode + "MN";
@@ -695,7 +697,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
                     userID,
                     txtManagerUsername.getText(),
                     txtManagerPassword.getText(),
-                    txtManagerName.getText(),
+                    name,
                     txtManagerPhone.getText(),
                     txtManagerEmail.getText(),
                     "MN",
@@ -751,11 +753,12 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
             if (!validateEditManager()) {
                 return;
             }
+            String name = CheckForm.strFormat(txtManagerName.getText());
             User user = new User(
                     txtManagerID.getText(),
                     txtManagerUsername.getText(),
                     txtManagerPassword.getText(),
-                    txtManagerName.getText(),
+                    name,
                     txtManagerPhone.getText(), 
                     txtManagerEmail.getText(),
                     "MN",
@@ -801,6 +804,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
             }
             
             //TĂNG ID
+            String name = CheckForm.strFormat(txtInventoryName.getText());
             int countUser = GUIInteraction.indentityID("select top 1 * from Users Where RoleID='IV' order by UserID Desc", "UserID") + 1;
             String userID = "IV" + countUser;
             
@@ -808,7 +812,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
                     userID,
                     txtInventoryUsername.getText(),
                     txtInventoryPassword.getText(),
-                    txtInventoryName.getText(),
+                    name,
                     txtInventoryPhone.getText(),
                     txtInventoryEmail.getText(),
                     "IV",
@@ -929,6 +933,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
         btnInventoryEdit.setText("Edit");
         btnInventoryEdit.setEnabled(true);
         btnManagerDelete.setEnabled(true);
+        btnInventoryDelete.setEnabled(true);
     }
     
     private void enableTXT() {
@@ -1023,6 +1028,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
     private boolean validateInsertManager(){
         // VALIDATE THÔNG TIN NHẬP VÀO KHI INSERT MANAGER
         boolean flag;
+        String managerName = CheckForm.strFormat(txtManagerName.getText());
         String username = txtManagerUsername.getText();
         String password = txtManagerPassword.getText();
         if (!CheckForm.isEmpty(txtManagerName.getText())) {
@@ -1030,7 +1036,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
             txtManagerName.setBackground(Color.red);
             txtManagerName.requestFocus();
             flag = false;
-        }else if (!GUIInteraction.checkDuplicateName(txtManagerName.getText().trim(), "select * from Users", "UserName")) {
+        }else if (!GUIInteraction.checkDuplicateName(managerName, "select * from Users", "UserName")) {
             JOptionPane.showMessageDialog(this, "Name is not duplicatated", "Error", JOptionPane.ERROR_MESSAGE);
             txtManagerName.setBackground(Color.red);
             txtManagerName.requestFocus();
@@ -1079,10 +1085,11 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
     private boolean validateEditManager(){
         // VALIDATE THÔNH TIN NHẬP VÀO KHI UPDATE MANAGER
         boolean flag;
+        String managerName = CheckForm.strFormat(txtManagerName.getText());
         String nameManager = DataInteraction.getCode("Users", "UserID", txtManagerID.getText(), "Name");
         String phoneManager = DataInteraction.getCode("Users", "UserID", txtManagerID.getText(), "Phone");
         String emailManager = DataInteraction.getCode("Users", "UserID", txtManagerID.getText(), "Email");
-        if(!GUIInteraction.checkDuplicateName(txtManagerName.getText(), "select * from Users", "Name")&&!txtManagerName.getText().trim().equals(nameManager)){
+        if(!GUIInteraction.checkDuplicateName(managerName, "select * from Users", "Name")&&!managerName.equals(nameManager)){
             JOptionPane.showMessageDialog(this, "Name is not duplicate");
             txtManagerName.setBackground(Color.red);
             txtManagerName.requestFocus();
@@ -1119,6 +1126,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
     private boolean validateInsertInventory(){
         // VALIDATE THÔNG TIN NHẬP VÀO KHI INSERT INVENTORY
         boolean flag;
+        String name = CheckForm.strFormat(txtInventoryName.getText());
         String username = txtInventoryUsername.getText();
         String password = txtInventoryPassword.getText();
         if (!CheckForm.isEmpty(txtInventoryName.getText())) {
@@ -1126,7 +1134,7 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
             txtInventoryName.setBackground(Color.red);
             txtInventoryName.requestFocus();
             flag = false;
-        }else if (!GUIInteraction.checkDuplicateName(txtInventoryName.getText().trim(), "select * from Users", "UserName")) {
+        }else if (!GUIInteraction.checkDuplicateName(name, "select * from Users", "UserName")) {
             JOptionPane.showMessageDialog(this, "Name is not duplicatated", "Error", JOptionPane.ERROR_MESSAGE);
             txtInventoryName.setBackground(Color.red);
             txtInventoryName.requestFocus();
@@ -1164,10 +1172,11 @@ public class frmCreateNewManager extends javax.swing.JInternalFrame {
     private boolean validateEditInventory(){
         // VALIDATE THÔNG TIN NHẬP VÀO KHI UPDATE INVENTORY
         boolean flag;
+        String name = CheckForm.strFormat(txtInventoryName.getText());
         String nameInventory = DataInteraction.getCode("Users", "UserID", txtInventoryID.getText(), "Name");
         String phoneInventory = DataInteraction.getCode("Users", "UserID", txtInventoryID.getText(), "Phone");
         String emailInventory = DataInteraction.getCode("Users", "UserID", txtInventoryID.getText(), "Email");
-        if(!GUIInteraction.checkDuplicateName(txtInventoryName.getText(), "select * from Users", "Name")&&!txtInventoryName.getText().trim().equals(nameInventory)){
+        if(!GUIInteraction.checkDuplicateName(name, "select * from Users", "Name")&&!name.trim().equals(nameInventory)){
             JOptionPane.showMessageDialog(this, "Name is not duplicate");
             txtInventoryName.setBackground(Color.red);
             txtInventoryName.requestFocus();

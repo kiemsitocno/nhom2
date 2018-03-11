@@ -269,11 +269,11 @@ public class frmManagementSales extends javax.swing.JInternalFrame {
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel10)
                             .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(0, 0, 0)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel11))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(0, 0, 0)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel12)
                             .addComponent(txtSalary, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -281,7 +281,7 @@ public class frmManagementSales extends javax.swing.JInternalFrame {
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel13)
                             .addComponent(cbbStore, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, 0)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCancel)))
@@ -307,7 +307,7 @@ public class frmManagementSales extends javax.swing.JInternalFrame {
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -328,7 +328,7 @@ public class frmManagementSales extends javax.swing.JInternalFrame {
                 .addGap(0, 0, 0)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -531,7 +531,7 @@ public class frmManagementSales extends javax.swing.JInternalFrame {
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
         );
 
         jLabel23.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -721,7 +721,7 @@ public class frmManagementSales extends javax.swing.JInternalFrame {
         String searchName = txtSearch.getText().trim();
         String condition = cbbStore.getSelectedItem().toString();
         try {
-            GUIInteraction.readToTable("select * from View_Sales where Name like N'%" + searchName + "%' and Position='Sales' and StoreName='"+condition+"'" , tableSaleEdit);
+            GUIInteraction.readToTable("select * from View_Sales where Name like N'%" + searchName + "%' and Position='Sales' and StoreName like N'%"+condition+"%'" , tableSaleEdit);
         } catch (SQLException ex) {
             Logger.getLogger(frmManagementSales.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -789,6 +789,7 @@ public class frmManagementSales extends javax.swing.JInternalFrame {
         txtPassword.setEnabled(false);
         txtSalary.setEnabled(false);
         
+        txtNameEdit.setEnabled(false);
         txtPhoneEdit.setEnabled(false);
         txtEmailEdit.setEnabled(false);
         txtSalaryEdit.setEnabled(false);
@@ -821,6 +822,7 @@ public class frmManagementSales extends javax.swing.JInternalFrame {
     private boolean validateInsertSales(){
         // VALIDATE THÔNG TIN NHẬP VÀO KHI INSERT MANAGER
         boolean flag = true;
+        String salesName = CheckForm.strFormat(txtName.getText());
         String username = txtUsername.getText();
         String password = txtPassword.getText();
         if (!CheckForm.isEmpty(txtName.getText())) {
@@ -828,7 +830,7 @@ public class frmManagementSales extends javax.swing.JInternalFrame {
             txtName.setBackground(Color.red);
             txtName.requestFocus();
             flag = false;
-        }else if (!GUIInteraction.checkDuplicateName(txtName.getText().trim(), "select * from Users", "UserName")) {
+        }else if (!GUIInteraction.checkDuplicateName(salesName, "select * from Users", "UserName")) {
             JOptionPane.showMessageDialog(this, "Name is not duplicatated", "Error", JOptionPane.ERROR_MESSAGE);
             txtName.setBackground(Color.red);
             txtName.requestFocus();
@@ -887,10 +889,11 @@ public class frmManagementSales extends javax.swing.JInternalFrame {
     private boolean validateEditSales(){
         // VALIDATE THÔNH TIN NHẬP VÀO KHI UPDATE MANAGER
         boolean flag = true;
+        String salesName = CheckForm.strFormat(txtNameEdit.getText());
         String name = DataInteraction.getCode("Users", "UserID", txtIDEdit.getText(), "Name");
         String phone = DataInteraction.getCode("Users", "UserID", txtIDEdit.getText(), "Phone");
         String email = DataInteraction.getCode("Users", "UserID", txtIDEdit.getText(), "Email");
-        if(!GUIInteraction.checkDuplicateName(txtNameEdit.getText(), "select * from Users", "Name")&&!txtNameEdit.getText().trim().equals(name)){
+        if(!GUIInteraction.checkDuplicateName(salesName, "select * from Users", "Name")&&!salesName.equals(name)){
             JOptionPane.showMessageDialog(this, "Name is not duplicate");
             txtNameEdit.setBackground(Color.red);
             txtNameEdit.requestFocus();

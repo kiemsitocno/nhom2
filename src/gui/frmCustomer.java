@@ -895,12 +895,13 @@ public class frmCustomer extends javax.swing.JInternalFrame {
     private boolean validateInsert(){
         // VALIDATE THÔNG TIN NHẬP VÀO KHI TẠO MỚI CUSTOMER
         boolean flag = true;
+        String customerName = CheckForm.strFormat(txtCustomerName.getText());
         if(!CheckForm.isEmpty(txtCustomerName.getText())){
             JOptionPane.showMessageDialog(this, "Name is not blank", "Error", JOptionPane.ERROR_MESSAGE);
             txtCustomerName.setBackground(Color.red);
             txtCustomerName.requestFocus();
             flag = false;
-        }else if(!GUIInteraction.checkDuplicateName(txtCustomerName.getText().trim(), "select * from Customers", "CustomerName")){
+        }else if(!GUIInteraction.checkDuplicateName(customerName, "select * from Customers", "CustomerName")){
             JOptionPane.showMessageDialog(this, "Name is not duplicatated", "Error", JOptionPane.ERROR_MESSAGE);
             txtCustomerName.setBackground(Color.red);
             txtCustomerName.requestFocus();
@@ -940,10 +941,11 @@ public class frmCustomer extends javax.swing.JInternalFrame {
     private boolean validateEdit(){
         // VALIDATE THÔNG TIN NHẬP VÀO KHI EDIT CUSTOMER
         boolean flag = true;
+        String customerName = CheckForm.strFormat(txtCustomerNameEdit.getText());
         String nameCustomer = DataInteraction.getCode("Customers", "CustomerID", txtCustomerIDEdit.getText(), "CustomerName");
         String phoneCustomer = DataInteraction.getCode("Customers", "CustomerID", txtCustomerIDEdit.getText(), "Phone");
         String emailCustomer = DataInteraction.getCode("Customers", "CustomerID", txtCustomerIDEdit.getText(), "Email");
-        if(!GUIInteraction.checkDuplicateName(txtCustomerNameEdit.getText(), "select * from Customers", "CustomerName")&&!txtCustomerNameEdit.getText().trim().equals(nameCustomer)){
+        if(!GUIInteraction.checkDuplicateName(customerName, "select * from Customers", "CustomerName")&&!customerName.equals(nameCustomer)){
             JOptionPane.showMessageDialog(this, "Name is not duplicate");
             txtCustomerNameEdit.setBackground(Color.red);
             txtCustomerNameEdit.requestFocus();

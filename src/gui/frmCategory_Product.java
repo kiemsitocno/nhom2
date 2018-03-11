@@ -151,11 +151,6 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
         jLabel3.setText("Category Name :");
 
         txtCategoryName.setEnabled(false);
-        txtCategoryName.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtCategoryNameKeyReleased(evt);
-            }
-        });
 
         btnAddCategory.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnAddCategory.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconAdd.png"))); // NOI18N
@@ -744,6 +739,7 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
             disableTXT();
             btnEditCategory.setEnabled(true);
             btnAddCategory.setEnabled(true);
+            btnDeleteCategory.setEnabled(true);
         }
     }//GEN-LAST:event_btnSearchCategoryActionPerformed
 
@@ -860,6 +856,8 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
         btnEditProduct.setEnabled(true);
         btnUpdateQuantity.setText("Update Quantity");
         btnUpdateQuantity.setEnabled(true);
+        btnDeleteProduct.setEnabled(true);
+        refresh();
     }//GEN-LAST:event_btnCancelProductActionPerformed
 
     private void btnEditProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditProductActionPerformed
@@ -902,10 +900,11 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
     private void btnSearchProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchProductActionPerformed
         // TÌM KIẾM SẢN PHẨM THEO TÊN
         String cateName;
-        try{
-            cateName = cbbCategory.getSelectedItem().toString();
-        }catch(Exception ex){
+        System.out.println(cbbCategory.getSelectedIndex());
+        if(cbbCategory.getSelectedIndex()==-1){
             cateName = "";
+        }else{
+            cateName = cbbCategory.getSelectedItem().toString();
         }
         txtProductName.setEnabled(true);
         cbbCategory.setEnabled(true);
@@ -917,7 +916,7 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
         }else if (btnSearchProduct.getText().equals("OKE")) {
             String productName = txtProductName.getText().trim();
             try {
-                GUIInteraction.readToTable("select * from Products where ProductName like N'%" + productName + "%'", tableProduct);
+                GUIInteraction.readToTable("SELECT ProductID,ProductName,QuantityAvailable,Price,Descript,CategoryName,Volume FROM Products,Categories where Categories.CategoryID=Products.CategoryID and ProductName like N'%" + productName + "%' and CategoryName like N'%" + cateName + "%'", tableProduct);
             } catch (SQLException ex) {
                 Logger.getLogger(frmCategory_Product.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -937,21 +936,11 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
         resetButton();
     }//GEN-LAST:event_tabCategoryProductsMouseClicked
 
-    private void txtCategoryNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCategoryNameKeyReleased
-        // TODO add your handling code here:
-        String cateName = txtCategoryName.getText();
-        String sql = "select * from Categories where CategoryName like '%"+cateName+"%'";
-        try {
-            GUIInteraction.readToTable(sql, tableCategory);
-        } catch (SQLException ex) {
-            Logger.getLogger(frmCreateBill.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_txtCategoryNameKeyReleased
-
     private void btnUpdateQuantityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateQuantityActionPerformed
         // TODO add your handling code here:
         btnAddProduct.setEnabled(false);
         btnDeleteProduct.setEnabled(false);
+        btnEditProduct.setEnabled(false);
         if(txtProductName.getText().trim().length()==0){
             JOptionPane.showMessageDialog(this, "Please chose one row from table");
             return;
@@ -985,10 +974,11 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
             int sumAvailable = countQuantity+Integer.valueOf(txtQuantity.getText());
             DataInteraction.exec("update Products set QuantityAvailable='"+sumAvailable+"' where ProductID='"+productID+"'");
             refresh();
-            btnEditProduct.setText("Edit");
+            btnUpdateQuantity.setText("Update Quantity");
             disableTXT();
             btnAddProduct.setEnabled(true);
             btnDeleteProduct.setEnabled(true);
+            btnEditProduct.setEnabled(true);
         }
     }//GEN-LAST:event_btnUpdateQuantityActionPerformed
     
@@ -1077,13 +1067,14 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
     private boolean validateCategory() {
         // VALIDATE DỮ LIỆU NHẬP VÀO KHI INSERT HOẶC UPDATE CATEGORY
         boolean flag = true;
+        String categoryName = CheckForm.strFormat(txtCategoryName.getText());
         String nameCategory = DataInteraction.getCode("Categories", "CategoryID", txtCategoryID.getText(), "CategoryName");
         if (!interact.CheckForm.isEmpty(txtCategoryName.getText())) {
             JOptionPane.showMessageDialog(this, "Name is not blank", "Required", JOptionPane.ERROR_MESSAGE);
             txtCategoryName.requestFocus();
             txtCategoryName.setBackground(Color.red);
             flag = false;
-        } else if (!interact.GUIInteraction.checkDuplicateName(txtCategoryName.getText().trim(), "select * from Categories", "CategoryName")&&!txtCategoryName.getText().trim().equals(nameCategory)) {
+        } else if (!interact.GUIInteraction.checkDuplicateName(categoryName, "select * from Categories", "CategoryName")&&!categoryName.equals(nameCategory)) {
             JOptionPane.showMessageDialog(this, "Category name is duplicated", "Error", JOptionPane.ERROR_MESSAGE);
             txtCategoryName.requestFocus();
             txtCategoryName.setBackground(Color.red);
@@ -1098,12 +1089,13 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
     private boolean validateAddProduct() {
         // VALIDATE DỮ LIỆU NHẬP VÀO KHI INSERT PRODUCT 
         boolean flag = true;
+        String productName = CheckForm.strFormat(txtProductName.getText());
         if (!CheckForm.isEmpty(txtProductName.getText())) {
             JOptionPane.showMessageDialog(this, "Name is not blank", "Error", JOptionPane.ERROR_MESSAGE);
             txtProductName.setBackground(Color.red);
             txtProductName.requestFocus();
             flag = false;
-        }else if (!GUIInteraction.checkDuplicateName(txtProductName.getText().trim(), "select * from Products", "ProductName")) {
+        }else if (!GUIInteraction.checkDuplicateName(productName, "select * from Products", "ProductName")) {
             JOptionPane.showMessageDialog(this, "Name is not duplicatated", "Error", JOptionPane.ERROR_MESSAGE);
             txtProductName.setBackground(Color.red);
             txtProductName.requestFocus();
@@ -1136,8 +1128,9 @@ public class frmCategory_Product extends javax.swing.JInternalFrame {
     public boolean validateEditProduct(){
         // VALIDATE DỮ LIỆU NHẬP VÀO KHI UPDATE PRODUCT 
         boolean flag = true;
+        String productName = CheckForm.strFormat(txtProductName.getText());
         String name = DataInteraction.getCode("Products", "ProductID", txtProductID.getText(), "ProductName");
-        if(!GUIInteraction.checkDuplicateName(txtProductName.getText(), "select * from Products", "ProductName")&&!txtProductName.getText().trim().equals(name)){
+        if(!GUIInteraction.checkDuplicateName(productName, "select * from Products", "ProductName")&&!productName.equals(name)){
             JOptionPane.showMessageDialog(this, "Name is not duplicate");
             txtProductName.setBackground(Color.red);
             txtProductName.requestFocus();

@@ -144,7 +144,7 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel4.setText("Payment :");
 
-        cboPayment.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "---Choosing payment---", "Cash", "Credit Card", "Visa" }));
+        cboPayment.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "---Choosing payment---", "Cash", "CreditCard", "Visa" }));
 
         txtDiscount.setText("0");
         txtDiscount.setEnabled(false);
@@ -688,6 +688,7 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
             count = count + 1;
             if (detail.getProductID().equals(product.getProductID())) {
                 detail.setQuantity(detail.getQuantity() + iQuantity);
+                int s = detail.getQuantity() + iQuantity;
                 countQuantityOrder = detail.getQuantity() + iQuantity;
                 flag = true;
                 break;
@@ -720,6 +721,11 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
             }
             
             // GIỚI HẠN SỐ LƯỢNG ORDER PHẢI ÍT HƠN SỐ LƯỢNG SẢN PHẨM HIỆN CÓ
+            System.out.println("--------------");
+            System.out.println(product.getQuantityAvailable());
+            System.out.println(countQuantityOrder);
+            System.out.println(product.getQuantityAvailable());
+            System.out.println(iQuantity);
             if (product.getQuantityAvailable() - countQuantityOrder < 0 || product.getQuantityAvailable() - iQuantity < 0) {
                 JOptionPane.showMessageDialog(null, "This product of quantity not enough");
                 return;
