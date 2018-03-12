@@ -180,7 +180,12 @@ public class frmChangePassword extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+private void clear ()
+{
+    txtOldPassword.setText("");
+    txtNewPassword.setText("");
+    txtReNewPassword.setText("");
+}
     private void btnChangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangeActionPerformed
         try {
             if (!interact.CheckForm.isPwdUsername(txtOldPassword.getText())) {
@@ -222,6 +227,7 @@ public class frmChangePassword extends javax.swing.JInternalFrame {
         } catch (SQLException ex) {
             Logger.getLogger(frmChangePassword.class.getName()).log(Level.SEVERE, null, ex);
         }
+        clear();
     }//GEN-LAST:event_btnChangeActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed

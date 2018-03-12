@@ -36,6 +36,7 @@ public class formMain extends javax.swing.JFrame {
     public formMain() {
         initComponents();
         this.setLocationRelativeTo(this);
+	setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
         setTitle("Perfume Store Management System");
         permissing();
     }
@@ -78,23 +79,27 @@ public class formMain extends javax.swing.JFrame {
         nemuItemManagementStore = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
+        jMail = new javax.swing.JMenuItem();
         menuManagement = new javax.swing.JMenu();
         menuItemManagementSale = new javax.swing.JMenuItem();
         menuItemManagementBill = new javax.swing.JMenuItem();
         jMenuItem17 = new javax.swing.JMenuItem();
         jMenuItem20 = new javax.swing.JMenuItem();
         jMenuItem21 = new javax.swing.JMenuItem();
+        jMail1 = new javax.swing.JMenuItem();
         menuInventory = new javax.swing.JMenu();
         menuItemInventoryStatus = new javax.swing.JMenuItem();
         menuItemCategory_Product = new javax.swing.JMenuItem();
         jMenuItem16 = new javax.swing.JMenuItem();
         jMenuItem18 = new javax.swing.JMenuItem();
         jMenuItem19 = new javax.swing.JMenuItem();
+        jMail2 = new javax.swing.JMenuItem();
         menuSales = new javax.swing.JMenu();
         menuCreateBill = new javax.swing.JMenuItem();
         menuItemSearchProduct = new javax.swing.JMenuItem();
         menuItemCustomer = new javax.swing.JMenuItem();
         menuItemInformationSale = new javax.swing.JMenuItem();
+        jMail3 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -316,6 +321,16 @@ public class formMain extends javax.swing.JFrame {
         });
         menuDirector.add(jMenuItem6);
 
+        jMail.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jMail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconMail.png"))); // NOI18N
+        jMail.setText("Mail");
+        jMail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMailActionPerformed(evt);
+            }
+        });
+        menuDirector.add(jMail);
+
         jMenuBar1.add(menuDirector);
 
         menuManagement.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconManager.png"))); // NOI18N
@@ -371,6 +386,16 @@ public class formMain extends javax.swing.JFrame {
             }
         });
         menuManagement.add(jMenuItem21);
+
+        jMail1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jMail1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconMail.png"))); // NOI18N
+        jMail1.setText("Mail");
+        jMail1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMail1ActionPerformed(evt);
+            }
+        });
+        menuManagement.add(jMail1);
 
         jMenuBar1.add(menuManagement);
 
@@ -428,6 +453,16 @@ public class formMain extends javax.swing.JFrame {
         });
         menuInventory.add(jMenuItem19);
 
+        jMail2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jMail2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconMail.png"))); // NOI18N
+        jMail2.setText("Mail");
+        jMail2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMail2ActionPerformed(evt);
+            }
+        });
+        menuInventory.add(jMail2);
+
         jMenuBar1.add(menuInventory);
 
         menuSales.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconStaff.png"))); // NOI18N
@@ -473,6 +508,16 @@ public class formMain extends javax.swing.JFrame {
             }
         });
         menuSales.add(menuItemInformationSale);
+
+        jMail3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jMail3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconMail.png"))); // NOI18N
+        jMail3.setText("Mail");
+        jMail3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMail3ActionPerformed(evt);
+            }
+        });
+        menuSales.add(jMail3);
 
         jMenuBar1.add(menuSales);
 
@@ -651,11 +696,11 @@ public class formMain extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             Connection conn = DataInteraction.getConnect();
-            JasperDesign jd = JRXmlLoader.load("E:\\Lap Trinh\\FPT\\Java\\Project Sem 2\\nhom2\\src\\gui\\reportUnsold.jrxml");
-            JasperReport jr = JasperCompileManager.compileReport("E:\\Lap Trinh\\FPT\\Java\\Project Sem 2\\nhom2\\src\\gui\\reportUnsold.jrxml");
+            JasperDesign jd = JRXmlLoader.load("reportUnsold.jrxml");
+            JasperReport jr = JasperCompileManager.compileReport("reportUnsold.jrxml");
             JasperPrint jp = JasperFillManager.fillReport(jr, new HashMap(), conn);
             JasperViewer.viewReport(jp);
-            JasperExportManager.exportReportToPdfFile(jp, "E:\\Lap Trinh\\FPT\\Java\\Project Sem 2\\nhom2\\src\\gui\\reportUnsold.pdf");
+            JasperExportManager.exportReportToPdfFile(jp, "reportUnsold.pdf");
         } catch (JRException ex) {
             Logger.getLogger(formMain.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -667,11 +712,11 @@ public class formMain extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             Connection conn = DataInteraction.getConnect();
-            JasperDesign jd = JRXmlLoader.load("E:\\Lap Trinh\\FPT\\Java\\Project Sem 2\\nhom2\\src\\gui\\reportReceipt.jrxml");
-            JasperReport jr = JasperCompileManager.compileReport("E:\\Lap Trinh\\FPT\\Java\\Project Sem 2\\nhom2\\src\\gui\\reportReceipt.jrxml");
+            JasperDesign jd = JRXmlLoader.load("reportReceipt.jrxml");
+            JasperReport jr = JasperCompileManager.compileReport("reportReceipt.jrxml");
             JasperPrint jp = JasperFillManager.fillReport(jr, new HashMap(), conn);
             JasperViewer.viewReport(jp);
-            JasperExportManager.exportReportToPdfFile(jp, "E:\\Lap Trinh\\FPT\\Java\\Project Sem 2\\nhom2\\src\\gui\\reportReceipt.pdf");
+            JasperExportManager.exportReportToPdfFile(jp, "reportReceipt.pdf");
         } catch (JRException ex) {
             Logger.getLogger(formMain.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -682,11 +727,11 @@ public class formMain extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             Connection conn = DataInteraction.getConnect();
-            JasperDesign jd = JRXmlLoader.load("E:\\Lap Trinh\\FPT\\Java\\Project Sem 2\\nhom2\\src\\gui\\reportExpire.jrxml");
-            JasperReport jr = JasperCompileManager.compileReport("E:\\Lap Trinh\\FPT\\Java\\Project Sem 2\\nhom2\\src\\gui\\reportExpire.jrxml");
+            JasperDesign jd = JRXmlLoader.load("reportExpire.jrxml");
+            JasperReport jr = JasperCompileManager.compileReport("reportExpire.jrxml");
             JasperPrint jp = JasperFillManager.fillReport(jr, new HashMap(), conn);
             JasperViewer.viewReport(jp);
-            JasperExportManager.exportReportToPdfFile(jp, "E:\\Lap Trinh\\FPT\\Java\\Project Sem 2\\nhom2\\src\\gui\\reportExpire.pdf");
+            JasperExportManager.exportReportToPdfFile(jp, "reportExpire.pdf");
         } catch (JRException ex) {
             Logger.getLogger(formMain.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -697,11 +742,11 @@ public class formMain extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             Connection conn = DataInteraction.getConnect();
-            JasperDesign jd = JRXmlLoader.load("E:\\Lap Trinh\\FPT\\Java\\Project Sem 2\\nhom2\\src\\gui\\reportTransfer.jrxml");
-            JasperReport jr = JasperCompileManager.compileReport("E:\\Lap Trinh\\FPT\\Java\\Project Sem 2\\nhom2\\src\\gui\\reportTransfer.jrxml");
+            JasperDesign jd = JRXmlLoader.load("reportTransfer.jrxml");
+            JasperReport jr = JasperCompileManager.compileReport("reportTransfer.jrxml");
             JasperPrint jp = JasperFillManager.fillReport(jr, new HashMap(), conn);
             JasperViewer.viewReport(jp);
-            JasperExportManager.exportReportToPdfFile(jp, "E:\\Lap Trinh\\FPT\\Java\\Project Sem 2\\nhom2\\src\\gui\\reportTransfer.pdf");
+            JasperExportManager.exportReportToPdfFile(jp, "reportTransfer.pdf");
         } catch (JRException ex) {
             Logger.getLogger(formMain.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -712,11 +757,11 @@ public class formMain extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             Connection conn = DataInteraction.getConnect();
-            JasperDesign jd = JRXmlLoader.load("E:\\Lap Trinh\\FPT\\Java\\Project Sem 2\\nhom2\\src\\gui\\reportIncome.jrxml");
-            JasperReport jr = JasperCompileManager.compileReport("E:\\Lap Trinh\\FPT\\Java\\Project Sem 2\\nhom2\\src\\gui\\reportIncome.jrxml");
+            JasperDesign jd = JRXmlLoader.load("reportIncome.jrxml");
+            JasperReport jr = JasperCompileManager.compileReport("reportIncome.jrxml");
             JasperPrint jp = JasperFillManager.fillReport(jr, new HashMap(), conn);
             JasperViewer.viewReport(jp);
-            JasperExportManager.exportReportToPdfFile(jp, "E:\\Lap Trinh\\FPT\\Java\\Project Sem 2\\nhom2\\src\\gui\\reportIncome.pdf");
+            JasperExportManager.exportReportToPdfFile(jp, "reportIncome.pdf");
         } catch (JRException ex) {
             Logger.getLogger(formMain.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -727,11 +772,11 @@ public class formMain extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             Connection conn = DataInteraction.getConnect();
-            JasperDesign jd = JRXmlLoader.load("E:\\Lap Trinh\\FPT\\Java\\Project Sem 2\\nhom2\\src\\gui\\reportSoldQuantity.jrxml");
-            JasperReport jr = JasperCompileManager.compileReport("E:\\Lap Trinh\\FPT\\Java\\Project Sem 2\\nhom2\\src\\gui\\reportSoldQuantity.jrxml");
+            JasperDesign jd = JRXmlLoader.load("reportSoldQuantity.jrxml");
+            JasperReport jr = JasperCompileManager.compileReport("reportSoldQuantity.jrxml");
             JasperPrint jp = JasperFillManager.fillReport(jr, new HashMap(), conn);
             JasperViewer.viewReport(jp);
-            JasperExportManager.exportReportToPdfFile(jp, "E:\\Lap Trinh\\FPT\\Java\\Project Sem 2\\nhom2\\src\\gui\\reportSoldQuantity.pdf");
+            JasperExportManager.exportReportToPdfFile(jp, "reportSoldQuantity.pdf");
         } catch (JRException ex) {
             Logger.getLogger(formMain.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -741,11 +786,11 @@ public class formMain extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             Connection conn = DataInteraction.getConnect();
-            JasperDesign jd = JRXmlLoader.load("E:\\Lap Trinh\\FPT\\Java\\Project Sem 2\\nhom2\\src\\gui\\reportIncome.jrxml");
-            JasperReport jr = JasperCompileManager.compileReport("E:\\Lap Trinh\\FPT\\Java\\Project Sem 2\\nhom2\\src\\gui\\reportIncome.jrxml");
+            JasperDesign jd = JRXmlLoader.load("reportIncome.jrxml");
+            JasperReport jr = JasperCompileManager.compileReport("reportIncome.jrxml");
             JasperPrint jp = JasperFillManager.fillReport(jr, new HashMap(), conn);
             JasperViewer.viewReport(jp);
-            JasperExportManager.exportReportToPdfFile(jp, "E:\\Lap Trinh\\FPT\\Java\\Project Sem 2\\nhom2\\src\\gui\\reportIncome.pdf");
+            JasperExportManager.exportReportToPdfFile(jp, "reportIncome.pdf");
         } catch (JRException ex) {
             Logger.getLogger(formMain.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -756,15 +801,39 @@ public class formMain extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             Connection conn = DataInteraction.getConnect();
-            JasperDesign jd = JRXmlLoader.load("E:\\Lap Trinh\\FPT\\Java\\Project Sem 2\\nhom2\\src\\gui\\reportReceipt.jrxml");
-            JasperReport jr = JasperCompileManager.compileReport("E:\\Lap Trinh\\FPT\\Java\\Project Sem 2\\nhom2\\src\\gui\\reportReceipt.jrxml");
+            JasperDesign jd = JRXmlLoader.load("reportReceipt.jrxml");
+            JasperReport jr = JasperCompileManager.compileReport("reportReceipt.jrxml");
             JasperPrint jp = JasperFillManager.fillReport(jr, new HashMap(), conn);
             JasperViewer.viewReport(jp);
-            JasperExportManager.exportReportToPdfFile(jp, "E:\\Lap Trinh\\FPT\\Java\\Project Sem 2\\nhom2\\src\\gui\\reportReceipt.pdf");
+            JasperExportManager.exportReportToPdfFile(jp, "reportReceipt.pdf");
         } catch (JRException ex) {
             Logger.getLogger(formMain.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMail3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMail3ActionPerformed
+        frmMailAll mailAll=new frmMailAll();
+        mailAll.main = this;
+        mailAll.show();
+    }//GEN-LAST:event_jMail3ActionPerformed
+
+    private void jMail2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMail2ActionPerformed
+        frmMailAll mailAll=new frmMailAll();
+        mailAll.main = this;
+        mailAll.show();
+    }//GEN-LAST:event_jMail2ActionPerformed
+
+    private void jMail1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMail1ActionPerformed
+        frmMailAll mailAll=new frmMailAll();
+        mailAll.main = this;
+        mailAll.show();
+    }//GEN-LAST:event_jMail1ActionPerformed
+
+    private void jMailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMailActionPerformed
+        frmMailAll mailAll=new frmMailAll();
+        mailAll.main = this;
+        mailAll.show();
+    }//GEN-LAST:event_jMailActionPerformed
     public void permissing() {
         // PHƯƠNG THỨC PHÂN QUYỀN
         if (Login.getAdminID() == null && Login.getUsername() == null && Login.getPassword() == null && Login.getPermit() == null) {
@@ -860,6 +929,10 @@ public class formMain extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JMenuItem jMail;
+    private javax.swing.JMenuItem jMail1;
+    private javax.swing.JMenuItem jMail2;
+    private javax.swing.JMenuItem jMail3;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem16;

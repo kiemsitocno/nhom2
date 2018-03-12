@@ -99,12 +99,28 @@ public class CheckForm {
 
     public static boolean checkPhoneNumber(String value) {
         // KIỂM TRA THÔNG TIN NHẬP VÀO CÓ PHẢI LÀ SỐ ĐIỆN THOẠI HAY KHÔNG
-        Pattern pattern = Pattern.compile("[0]{1}[1,9]{1}[0-9]{8,9}$");
+         Pattern pattern = Pattern.compile("^[0-9]*$");
         Matcher matcher = pattern.matcher(value);
-        if (!matcher.find()) {
+       // if (!matcher.find()) {
+        //    return false;
+       // } else {
+        //    return true;
+       //}
+        if (!matcher.matches()) {
             return false;
+        } else
+        if (value.length() == 10 || value.length() == 11) {
+            if (value.length() == 10) {
+                if (value.substring(0, 2).equals("09")||value.substring(0, 2).equals("01")||value.substring(0, 2).equals("08")) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else
+             return false;   
+            
         } else {
-            return true;
+            return false;
         }
     }
 

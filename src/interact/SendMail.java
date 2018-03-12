@@ -20,7 +20,7 @@ import javax.swing.JOptionPane;
  *
  * @author KhanhLong
  */
-interface configMail {
+interface configMail1 {
     Session CheckMail(String username,String password);
     Properties checknameMail(String name);
     

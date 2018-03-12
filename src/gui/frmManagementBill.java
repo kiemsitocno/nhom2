@@ -131,15 +131,15 @@ public class frmManagementBill extends javax.swing.JInternalFrame {
         jLabel9.setText("To :");
 
         txtDateTo.setDateFormatString("yyyy-MM-dd");
-        txtDateTo.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                txtDateToPropertyChange(evt);
-            }
-        });
 
         btnView.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnView.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconView.png"))); // NOI18N
         btnView.setText("View");
+        btnView.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewActionPerformed(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel8.setText("Total Bills :");
@@ -550,24 +550,6 @@ public class frmManagementBill extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtDateToPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_txtDateToPropertyChange
-        // SEARCH BILL THEO NGÀY
-        try {
-            String fromTest = txtDateFrom.getDate().toString();
-            String toTest = txtDateTo.getDate().toString();
-        } catch (Exception ex) {
-            return;
-        }
-        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
-        String sql = "select * from View_Bills where Status=1 and Date Between '"+sf.format(txtDateFrom.getDate())+" 00:00:00'"
-                + " and '"+sf.format(txtDateTo.getDate())+" 00:00:00'";
-        try {
-            GUIInteraction.readToTable(sql, tableBills);
-        } catch (SQLException ex) {
-            Logger.getLogger(frmManagementBill.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_txtDateToPropertyChange
-
     private void btnViewCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewCancelActionPerformed
         // NHẤN BUTTON SẼ CHUYỂN TAB
         tab.setSelectedIndex(1);
@@ -576,7 +558,7 @@ public class frmManagementBill extends javax.swing.JInternalFrame {
     private void btnViewAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewAllActionPerformed
         try {
             // LOAD DỮ LIỆU TỪ SQL RA BẢNG
-            GUIInteraction.readToTable("select * from View_Bills where StoreName='"+storeName+"'", tableBills);
+            GUIInteraction.readToTable("select * from View_Bills where StoreName=N'"+storeName+"'", tableBills);
         } catch (SQLException ex) {
             Logger.getLogger(frmManagementBill.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -600,6 +582,11 @@ public class frmManagementBill extends javax.swing.JInternalFrame {
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         // HỦY YÊU CẦU XÓA HÓA ĐƠN TỪ SALES
+        int i = tableBill.getSelectedRow();
+        String id = String.valueOf(tableBill.getValueAt(i, 0));
+        String sql = "update Bills set Status=1,Descript='"+txtReason.getText()+"' where BillID='"+id+"'";
+        DataInteraction.exec(sql);
+        refresh();
         frmSendMail sendMail = new frmSendMail();
         sendMail.code = this;
         sendMail.show();
@@ -618,14 +605,32 @@ public class frmManagementBill extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
+    private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
+        // TODO add your handling code here:
+        try {
+            String fromTest = txtDateFrom.getDate().toString();
+            String toTest = txtDateTo.getDate().toString();
+        } catch (Exception ex) {
+            return;
+        }
+        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+        String sql = "select * from View_Bills where Status=1 and Date Between '"+sf.format(txtDateFrom.getDate())+" 00:00:00'"
+                + " and '"+sf.format(txtDateTo.getDate())+" 00:00:00' and StoreName=N'"+storeName+"'";
+        try {
+            GUIInteraction.readToTable(sql, tableBills);
+        } catch (SQLException ex) {
+            Logger.getLogger(frmManagementBill.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnViewActionPerformed
+
     private void count(){
         // BỘ ĐẾM
         try {
-            int countBill = GUIInteraction.countRecord("select DISTINCT BillID from View_Bills where StoreName='"+storeName+"'");
+            int countBill = GUIInteraction.countRecord("select DISTINCT BillID from View_Bills where StoreName=N'"+storeName+"'");
             txtTotalBill.setText(String.valueOf(countBill));
-            int countBillM = GUIInteraction.countQuantity("select sum(Total) as Total from View_Bills where StoreName='"+storeName+"'");
+            int countBillM = GUIInteraction.countQuantity("select sum(Total) as Total from View_Bills where StoreName=N'"+storeName+"'");
             txtTotalBillM.setText(String.valueOf(countBillM));
-            int countBillC = GUIInteraction.countRecord("select * from View_Bills where StoreName='"+storeName+"' and Status=0");
+            int countBillC = GUIInteraction.countRecord("select * from Bills where Status=0");
             txtTotalBillC.setText(String.valueOf(countBillC));
         } catch (SQLException ex) {
             Logger.getLogger(frmManagementBill.class.getName()).log(Level.SEVERE, null, ex);
@@ -635,8 +640,8 @@ public class frmManagementBill extends javax.swing.JInternalFrame {
     private void refresh(){
         // LOAD DỮ LIỆU TỪ SQL RA BẢNG
         try {
-            GUIInteraction.readToTable("select * from View_Bills where StoreName='"+storeName+"' and Status='0'" , tableBill);
-            GUIInteraction.readToTable("select * from View_Bills where StoreName='"+storeName+"' and Status='1'", tableBills);
+            GUIInteraction.readToTable("select * from Bills where Status=0" , tableBill);
+            GUIInteraction.readToTable("select * from View_Bills where StoreName=N'"+storeName+"' and Status='1'", tableBills);
         } catch (SQLException ex) {
             Logger.getLogger(frmManagementBill.class.getName()).log(Level.SEVERE, null, ex);
         }
