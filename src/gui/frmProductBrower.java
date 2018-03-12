@@ -43,7 +43,6 @@ public class frmProductBrower extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         btnRefresh = new javax.swing.JButton();
         txtPrice = new javax.swing.JTextField();
-        cboCategory = new javax.swing.JComboBox();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblItems = new javax.swing.JTable(){
             public boolean isCellEditable(int rowIndex, int colIndex) {
@@ -52,7 +51,6 @@ public class frmProductBrower extends javax.swing.JFrame {
         };
         tblItems.getTableHeader().setReorderingAllowed(false);
         jLabel1 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         btnSelect = new javax.swing.JButton();
         txtPriceTo = new javax.swing.JTextField();
 
@@ -74,13 +72,6 @@ public class frmProductBrower extends javax.swing.JFrame {
             }
         });
 
-        cboCategory.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "All" }));
-        cboCategory.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cboCategoryItemStateChanged(evt);
-            }
-        });
-
         tblItems.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -92,8 +83,6 @@ public class frmProductBrower extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tblItems);
 
         jLabel1.setText("Price:");
-
-        jLabel4.setText("Category");
 
         btnSelect.setText("Select");
         btnSelect.addActionListener(new java.awt.event.ActionListener() {
@@ -121,7 +110,7 @@ public class frmProductBrower extends javax.swing.JFrame {
                     .add(layout.createSequentialGroup()
                         .add(38, 38, 38)
                         .add(btnRefresh))
-                    .add(jScrollPane1, 0, 0, Short.MAX_VALUE)
+                    .add(jScrollPane1, 0, 382, Short.MAX_VALUE)
                     .add(layout.createSequentialGroup()
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(jLabel3)
@@ -131,13 +120,7 @@ public class frmProductBrower extends javax.swing.JFrame {
                             .add(txtPrice)
                             .add(txtItemName, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE))
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(layout.createSequentialGroup()
-                                .add(jLabel4)
-                                .add(32, 32, 32)
-                                .add(cboCategory, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 101, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                .add(0, 0, Short.MAX_VALUE))
-                            .add(txtPriceTo))))
+                        .add(txtPriceTo)))
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -151,9 +134,7 @@ public class frmProductBrower extends javax.swing.JFrame {
                 .add(31, 31, 31)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jLabel3)
-                    .add(txtItemName, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(cboCategory, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jLabel4))
+                    .add(txtItemName, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .add(18, 18, 18)
                 .add(btnRefresh)
                 .add(18, 18, 18)
@@ -184,22 +165,6 @@ public class frmProductBrower extends javax.swing.JFrame {
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
         refresh();
 }//GEN-LAST:event_btnRefreshActionPerformed
-
-    private void cboCategoryItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboCategoryItemStateChanged
-        String cateName = cboCategory.getSelectedItem().toString();
-        try {
-            ResultSet rs = DataInteraction.queryResultSet("select CategoryID from Categories where CategoryName='" + cateName + "'");
-            String cateid = "";
-            while (rs.next()) {
-                cateid = rs.getString("CategoryID");
-            }
-
-            String sql = "select * from Products where CategoryID=" + cateid;
-            interact.GUIInteraction.readToTable(sql, tblItems);
-        } catch (SQLException ex) {
-            Logger.getLogger(frmCustomer.class.getName()).log(Level.SEVERE, null, ex);
-        }
-}//GEN-LAST:event_cboCategoryItemStateChanged
 
     private void btnSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectActionPerformed
         int itemID = tblItems.getSelectedRow();
@@ -235,7 +200,6 @@ public class frmProductBrower extends javax.swing.JFrame {
     private void refresh() {
         try {
             interact.GUIInteraction.readToTable("select * from Products", tblItems);
-            interact.GUIInteraction.readToCombo("select * from Categories", cboCategory, "CategoryName");
         } catch (SQLException ex) {
             Logger.getLogger(frmSearchProducts.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -247,10 +211,8 @@ public class frmProductBrower extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRefresh;
     private javax.swing.JButton btnSelect;
-    private javax.swing.JComboBox cboCategory;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblItems;
     private javax.swing.JTextField txtItemName;

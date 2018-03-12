@@ -6,14 +6,23 @@
 package gui;
 
 import entity.DayWork;
+import interact.DataInteraction;
 import interact.GUIInteraction;
 import interact.Login;
 import java.awt.Toolkit;
 import java.beans.PropertyVetoException;
+import java.sql.Connection;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  * GIAO DIỆN CHÍNH
@@ -73,18 +82,19 @@ public class formMain extends javax.swing.JFrame {
         menuItemManagementSale = new javax.swing.JMenuItem();
         menuItemManagementBill = new javax.swing.JMenuItem();
         jMenuItem17 = new javax.swing.JMenuItem();
+        jMenuItem20 = new javax.swing.JMenuItem();
+        jMenuItem21 = new javax.swing.JMenuItem();
         menuInventory = new javax.swing.JMenu();
         menuItemInventoryStatus = new javax.swing.JMenuItem();
         menuItemCategory_Product = new javax.swing.JMenuItem();
         jMenuItem16 = new javax.swing.JMenuItem();
+        jMenuItem18 = new javax.swing.JMenuItem();
+        jMenuItem19 = new javax.swing.JMenuItem();
         menuSales = new javax.swing.JMenu();
         menuCreateBill = new javax.swing.JMenuItem();
         menuItemSearchProduct = new javax.swing.JMenuItem();
         menuItemCustomer = new javax.swing.JMenuItem();
         menuItemInformationSale = new javax.swing.JMenuItem();
-        jMenu6 = new javax.swing.JMenu();
-        jMenuItem7 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -289,11 +299,21 @@ public class formMain extends javax.swing.JFrame {
         jMenuItem5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconReport.png"))); // NOI18N
         jMenuItem5.setText("View Report Manager");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         menuDirector.add(jMenuItem5);
 
         jMenuItem6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconReport2.png"))); // NOI18N
         jMenuItem6.setText("View Report Inventory");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         menuDirector.add(jMenuItem6);
 
         jMenuBar1.add(menuDirector);
@@ -324,8 +344,33 @@ public class formMain extends javax.swing.JFrame {
 
         jMenuItem17.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jMenuItem17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconReport.png"))); // NOI18N
-        jMenuItem17.setText("View Report Sales");
+        jMenuItem17.setText("View Transfer Report");
+        jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem17ActionPerformed(evt);
+            }
+        });
         menuManagement.add(jMenuItem17);
+
+        jMenuItem20.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jMenuItem20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconReport.png"))); // NOI18N
+        jMenuItem20.setText("View Income Report");
+        jMenuItem20.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem20ActionPerformed(evt);
+            }
+        });
+        menuManagement.add(jMenuItem20);
+
+        jMenuItem21.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jMenuItem21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconReport.png"))); // NOI18N
+        jMenuItem21.setText("View Sold ProductReport");
+        jMenuItem21.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem21ActionPerformed(evt);
+            }
+        });
+        menuManagement.add(jMenuItem21);
 
         jMenuBar1.add(menuManagement);
 
@@ -355,13 +400,33 @@ public class formMain extends javax.swing.JFrame {
 
         jMenuItem16.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jMenuItem16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconReport2.png"))); // NOI18N
-        jMenuItem16.setText("View Report Inventory");
+        jMenuItem16.setText("View Unsold Report");
         jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem16ActionPerformed(evt);
             }
         });
         menuInventory.add(jMenuItem16);
+
+        jMenuItem18.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jMenuItem18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconReport2.png"))); // NOI18N
+        jMenuItem18.setText("View Receipt Report");
+        jMenuItem18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem18ActionPerformed(evt);
+            }
+        });
+        menuInventory.add(jMenuItem18);
+
+        jMenuItem19.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jMenuItem19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconReport2.png"))); // NOI18N
+        jMenuItem19.setText("View Expire Report");
+        jMenuItem19.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem19ActionPerformed(evt);
+            }
+        });
+        menuInventory.add(jMenuItem19);
 
         jMenuBar1.add(menuInventory);
 
@@ -410,22 +475,6 @@ public class formMain extends javax.swing.JFrame {
         menuSales.add(menuItemInformationSale);
 
         jMenuBar1.add(menuSales);
-
-        jMenu6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconHelp.png"))); // NOI18N
-        jMenu6.setText("Help");
-        jMenu6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-
-        jMenuItem7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jMenuItem7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconSupport.png"))); // NOI18N
-        jMenuItem7.setText("Support");
-        jMenu6.add(jMenuItem7);
-
-        jMenuItem8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jMenuItem8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconAbout.png"))); // NOI18N
-        jMenuItem8.setText("About");
-        jMenu6.add(jMenuItem8);
-
-        jMenuBar1.add(jMenu6);
 
         setJMenuBar(jMenuBar1);
 
@@ -599,9 +648,123 @@ public class formMain extends javax.swing.JFrame {
     }//GEN-LAST:event_menuItemExitActionPerformed
 
     private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
-        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            Connection conn = DataInteraction.getConnect();
+            JasperDesign jd = JRXmlLoader.load("E:\\Lap Trinh\\FPT\\Java\\Project Sem 2\\nhom2\\src\\gui\\reportUnsold.jrxml");
+            JasperReport jr = JasperCompileManager.compileReport("E:\\Lap Trinh\\FPT\\Java\\Project Sem 2\\nhom2\\src\\gui\\reportUnsold.jrxml");
+            JasperPrint jp = JasperFillManager.fillReport(jr, new HashMap(), conn);
+            JasperViewer.viewReport(jp);
+            JasperExportManager.exportReportToPdfFile(jp, "E:\\Lap Trinh\\FPT\\Java\\Project Sem 2\\nhom2\\src\\gui\\reportUnsold.pdf");
+        } catch (JRException ex) {
+            Logger.getLogger(formMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }//GEN-LAST:event_jMenuItem16ActionPerformed
+
+    private void jMenuItem18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem18ActionPerformed
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            Connection conn = DataInteraction.getConnect();
+            JasperDesign jd = JRXmlLoader.load("E:\\Lap Trinh\\FPT\\Java\\Project Sem 2\\nhom2\\src\\gui\\reportReceipt.jrxml");
+            JasperReport jr = JasperCompileManager.compileReport("E:\\Lap Trinh\\FPT\\Java\\Project Sem 2\\nhom2\\src\\gui\\reportReceipt.jrxml");
+            JasperPrint jp = JasperFillManager.fillReport(jr, new HashMap(), conn);
+            JasperViewer.viewReport(jp);
+            JasperExportManager.exportReportToPdfFile(jp, "E:\\Lap Trinh\\FPT\\Java\\Project Sem 2\\nhom2\\src\\gui\\reportReceipt.pdf");
+        } catch (JRException ex) {
+            Logger.getLogger(formMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenuItem18ActionPerformed
+
+    private void jMenuItem19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem19ActionPerformed
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            Connection conn = DataInteraction.getConnect();
+            JasperDesign jd = JRXmlLoader.load("E:\\Lap Trinh\\FPT\\Java\\Project Sem 2\\nhom2\\src\\gui\\reportExpire.jrxml");
+            JasperReport jr = JasperCompileManager.compileReport("E:\\Lap Trinh\\FPT\\Java\\Project Sem 2\\nhom2\\src\\gui\\reportExpire.jrxml");
+            JasperPrint jp = JasperFillManager.fillReport(jr, new HashMap(), conn);
+            JasperViewer.viewReport(jp);
+            JasperExportManager.exportReportToPdfFile(jp, "E:\\Lap Trinh\\FPT\\Java\\Project Sem 2\\nhom2\\src\\gui\\reportExpire.pdf");
+        } catch (JRException ex) {
+            Logger.getLogger(formMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenuItem19ActionPerformed
+
+    private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            Connection conn = DataInteraction.getConnect();
+            JasperDesign jd = JRXmlLoader.load("E:\\Lap Trinh\\FPT\\Java\\Project Sem 2\\nhom2\\src\\gui\\reportTransfer.jrxml");
+            JasperReport jr = JasperCompileManager.compileReport("E:\\Lap Trinh\\FPT\\Java\\Project Sem 2\\nhom2\\src\\gui\\reportTransfer.jrxml");
+            JasperPrint jp = JasperFillManager.fillReport(jr, new HashMap(), conn);
+            JasperViewer.viewReport(jp);
+            JasperExportManager.exportReportToPdfFile(jp, "E:\\Lap Trinh\\FPT\\Java\\Project Sem 2\\nhom2\\src\\gui\\reportTransfer.pdf");
+        } catch (JRException ex) {
+            Logger.getLogger(formMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenuItem17ActionPerformed
+
+    private void jMenuItem20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem20ActionPerformed
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            Connection conn = DataInteraction.getConnect();
+            JasperDesign jd = JRXmlLoader.load("E:\\Lap Trinh\\FPT\\Java\\Project Sem 2\\nhom2\\src\\gui\\reportIncome.jrxml");
+            JasperReport jr = JasperCompileManager.compileReport("E:\\Lap Trinh\\FPT\\Java\\Project Sem 2\\nhom2\\src\\gui\\reportIncome.jrxml");
+            JasperPrint jp = JasperFillManager.fillReport(jr, new HashMap(), conn);
+            JasperViewer.viewReport(jp);
+            JasperExportManager.exportReportToPdfFile(jp, "E:\\Lap Trinh\\FPT\\Java\\Project Sem 2\\nhom2\\src\\gui\\reportIncome.pdf");
+        } catch (JRException ex) {
+            Logger.getLogger(formMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenuItem20ActionPerformed
+
+    private void jMenuItem21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem21ActionPerformed
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            Connection conn = DataInteraction.getConnect();
+            JasperDesign jd = JRXmlLoader.load("E:\\Lap Trinh\\FPT\\Java\\Project Sem 2\\nhom2\\src\\gui\\reportSoldQuantity.jrxml");
+            JasperReport jr = JasperCompileManager.compileReport("E:\\Lap Trinh\\FPT\\Java\\Project Sem 2\\nhom2\\src\\gui\\reportSoldQuantity.jrxml");
+            JasperPrint jp = JasperFillManager.fillReport(jr, new HashMap(), conn);
+            JasperViewer.viewReport(jp);
+            JasperExportManager.exportReportToPdfFile(jp, "E:\\Lap Trinh\\FPT\\Java\\Project Sem 2\\nhom2\\src\\gui\\reportSoldQuantity.pdf");
+        } catch (JRException ex) {
+            Logger.getLogger(formMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenuItem21ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        try {
+            // TODO add your handling code here:
+            Connection conn = DataInteraction.getConnect();
+            JasperDesign jd = JRXmlLoader.load("E:\\Lap Trinh\\FPT\\Java\\Project Sem 2\\nhom2\\src\\gui\\reportIncome.jrxml");
+            JasperReport jr = JasperCompileManager.compileReport("E:\\Lap Trinh\\FPT\\Java\\Project Sem 2\\nhom2\\src\\gui\\reportIncome.jrxml");
+            JasperPrint jp = JasperFillManager.fillReport(jr, new HashMap(), conn);
+            JasperViewer.viewReport(jp);
+            JasperExportManager.exportReportToPdfFile(jp, "E:\\Lap Trinh\\FPT\\Java\\Project Sem 2\\nhom2\\src\\gui\\reportIncome.pdf");
+        } catch (JRException ex) {
+            Logger.getLogger(formMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            Connection conn = DataInteraction.getConnect();
+            JasperDesign jd = JRXmlLoader.load("E:\\Lap Trinh\\FPT\\Java\\Project Sem 2\\nhom2\\src\\gui\\reportReceipt.jrxml");
+            JasperReport jr = JasperCompileManager.compileReport("E:\\Lap Trinh\\FPT\\Java\\Project Sem 2\\nhom2\\src\\gui\\reportReceipt.jrxml");
+            JasperPrint jp = JasperFillManager.fillReport(jr, new HashMap(), conn);
+            JasperViewer.viewReport(jp);
+            JasperExportManager.exportReportToPdfFile(jp, "E:\\Lap Trinh\\FPT\\Java\\Project Sem 2\\nhom2\\src\\gui\\reportReceipt.pdf");
+        } catch (JRException ex) {
+            Logger.getLogger(formMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
     public void permissing() {
         // PHƯƠNG THỨC PHÂN QUYỀN
         if (Login.getAdminID() == null && Login.getUsername() == null && Login.getPassword() == null && Login.getPermit() == null) {
@@ -698,14 +861,15 @@ public class formMain extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem17;
+    private javax.swing.JMenuItem jMenuItem18;
+    private javax.swing.JMenuItem jMenuItem19;
+    private javax.swing.JMenuItem jMenuItem20;
+    private javax.swing.JMenuItem jMenuItem21;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JMenuItem menuCreateBill;
     private javax.swing.JMenu menuDirector;

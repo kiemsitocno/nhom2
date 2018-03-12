@@ -693,6 +693,7 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
                 flag = true;
                 break;
             }
+            countQuantityOrder = detail.getQuantity() + iQuantity;
         }
 
         // TĂNG ID
@@ -721,20 +722,27 @@ public class frmCreateBill extends javax.swing.JInternalFrame {
             }
             
             // GIỚI HẠN SỐ LƯỢNG ORDER PHẢI ÍT HƠN SỐ LƯỢNG SẢN PHẨM HIỆN CÓ
-            System.out.println("--------------");
-            System.out.println(product.getQuantityAvailable());
-            System.out.println(countQuantityOrder);
-            System.out.println(product.getQuantityAvailable());
-            System.out.println(iQuantity);
-            if (product.getQuantityAvailable() - countQuantityOrder < 0 || product.getQuantityAvailable() - iQuantity < 0) {
-                JOptionPane.showMessageDialog(null, "This product of quantity not enough");
-                return;
-            }
+//            entity.Order detai = new entity.Order();
+//            System.out.println("--------------");
+//            System.out.println(product.getQuantityAvailable());
+//            System.out.println(countQuantityOrder);
+//            System.out.println(product.getQuantityAvailable());
+//            System.out.println(iQuantity);
+//            System.out.println(detai.getQuantity());
+//            if (product.getQuantityAvailable() - countQuantityOrder < 0 || product.getQuantityAvailable() -iQuantity < 0) {
+//                JOptionPane.showMessageDialog(null, "This product of quantity not enough");
+//                return;
+//            }
 
             entity.Order detail = new entity.Order();
             detail.setOrderID(orderID);
             detail.setProductID(product.getProductID());
             detail.setPrice(product.getPrice());
+            System.out.println(detail.getQuantity());
+            if (product.getQuantityAvailable() - detail.getQuantity()-iQuantity < 0 || product.getQuantityAvailable() -iQuantity < 0) {
+                JOptionPane.showMessageDialog(null, "This product of quantity not enough");
+                return;
+            }
             detail.setQuantity(iQuantity);
             alDetails.add(detail);
         }
