@@ -39,6 +39,7 @@ public class formMain extends javax.swing.JFrame {
 	setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
         setTitle("Perfume Store Management System");
         permissing();
+        wellcome();
     }
 
     /**
@@ -69,6 +70,8 @@ public class formMain extends javax.swing.JFrame {
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         dtContent = new javax.swing.JDesktopPane();
+        lblName = new javax.swing.JLabel();
+        lblStoreName = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menuItemChangePass = new javax.swing.JMenuItem();
@@ -242,6 +245,14 @@ public class formMain extends javax.swing.JFrame {
             dtContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
+
+        lblName.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblName.setForeground(new java.awt.Color(255, 0, 0));
+        lblName.setText("HELLO");
+
+        lblStoreName.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblStoreName.setForeground(new java.awt.Color(255, 0, 0));
+        lblStoreName.setText("WELLCOME TO");
 
         jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iconSystem.png"))); // NOI18N
         jMenu1.setText("System");
@@ -530,7 +541,13 @@ public class formMain extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblName)
+                            .addComponent(lblStoreName))
+                        .addGap(123, 123, 123))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(1, 1, 1)
@@ -540,8 +557,15 @@ public class formMain extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(lblName)
+                        .addGap(51, 51, 51)
+                        .addComponent(lblStoreName)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -874,6 +898,16 @@ public class formMain extends javax.swing.JFrame {
             menuSales.setVisible(true);
         }
     }
+    
+    public void wellcome(){
+        String userID = Login.getAdminID();
+        String name = DataInteraction.getCode("Users", "UserID", userID, "Name");
+        String storeID = DataInteraction.getCode("Users", "UserID", userID, "StoreID");
+        String storeName = DataInteraction.getCode("Stores", "StoreID", storeID, "StoreName");
+        JOptionPane.showMessageDialog(null, "Hello "+name+", Wellcome to "+storeName);
+        lblName.setText("Hello "+name);
+        lblStoreName.setText("Wellcome to "+storeName);
+    }
 
     /**
      * @param args the command line arguments
@@ -944,6 +978,8 @@ public class formMain extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel lblName;
+    private javax.swing.JLabel lblStoreName;
     private javax.swing.JMenuItem menuCreateBill;
     private javax.swing.JMenu menuDirector;
     private javax.swing.JMenu menuInventory;

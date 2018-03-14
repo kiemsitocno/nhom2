@@ -109,7 +109,7 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
         jLabel3.setText("Total products :");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel4.setText("Products avaliale :");
+        jLabel4.setText("Quantity of Products available :");
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel6.setText("Quantity of Sold Products previous day :");
@@ -165,21 +165,24 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtTotalProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(41, 41, 41)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtTotalProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtTotalCate, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtTotalCate, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addComponent(jLabel4)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(txtProductAvailable, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(79, 79, 79)
+                .addGap(37, 37, 37)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel9)
@@ -378,7 +381,7 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
     private void btnExpireDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExpireDateActionPerformed
         // ĐẾM SỐ LƯỢNG SẢN PHẨM HẾT HẠN
         try {
-            GUIInteraction.readToTable("select * from ImportDetails where datediff(dd,ExpireDate,getdate())<30", tableInventory);
+            GUIInteraction.readToTable("select * from ImportDetails where datediff(dd,getdate(),ExpireDate)<30 ORDER BY ExpireDate ASC", tableInventory);
         } catch (SQLException ex) {
             Logger.getLogger(frmInventoryManagement.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -487,7 +490,7 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
         txtProductTranstract.setText(String.valueOf(productTranstract));
         int productSold=GUIInteraction.countQuantity("select sum(Sold) as Total from View_ProductSold where datediff(dd,Date,getdate())=1");
         txtSoldQuantity.setText(String.valueOf(productSold));
-        int productExpire=GUIInteraction.countQuantity("select count(*) from ImportDetails where datediff(dd,ExpireDate,getdate())<30");
+        int productExpire=GUIInteraction.countQuantity("select count(*) from ImportDetails where datediff(dd,getdate(),ExpireDate)<30");
         txtExpireDate.setText(String.valueOf(productExpire));
     }
     
@@ -518,11 +521,11 @@ public class frmInventoryManagement extends javax.swing.JInternalFrame {
         // SHOW CẢNH BÁO NẾU CÓ SẢN PHẨM HẾT HÀNG HOẶC HẾT HẠN
         int productNotAvaliable=GUIInteraction.countQuantity("select count(*) as Total from Products where QuantityAvailable=0");
         if(productNotAvaliable!=0){
-            JOptionPane.showMessageDialog(null, "CẢNH BÁO! CÓ " + productNotAvaliable + " SẢN PHẨM HẾT HÀNG, HÃY NHẬP VỀ NGAY");
+            JOptionPane.showMessageDialog(null, "WARNING! HAVE " + productNotAvaliable + " PRODUCT NOT AVAILABLE, LET ADD QUANTITY");
         }
-        int productExpire=GUIInteraction.countQuantity("select count(*) from ImportDetails where datediff(dd,ExpireDate,getdate())>7");
+        int productExpire=GUIInteraction.countQuantity("select count(*) from ImportDetails where datediff(dd,getdate(),ExpireDate)<30");
         if(productExpire!=0){
-            JOptionPane.showMessageDialog(null, "CẢNH BÁO! CÓ " + productExpire + " SẢN PHẨM SẮP HẾT HẠN SỬ DỤNG");
+            JOptionPane.showMessageDialog(null, "WARNING! HAVE " + productExpire + " PRODUCT WILL BE EXPIRED SOON");
         }
     }
 
